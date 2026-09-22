@@ -576,6 +576,112 @@
       min-width: 70px;
       text-align: center;
     }
+    .tbl-dyn.marca-mx th, .tbl-dyn.marca-mx td {
+      text-align: right;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+    .tbl-dyn.marca-mx th:first-child, .tbl-dyn.marca-mx td:first-child {
+      text-align: left;
+    }
+    .tbl-dyn.marca-mx thead tr.grp th {
+      border-bottom: 0;
+      padding-bottom: 2px;
+    }
+    .tbl-dyn.marca-mx thead tr.grp th.mes {
+      background: #f5f5f5;
+      border-left: 1px solid #e0e0e0;
+      text-align: center;
+    }
+    .tbl-dyn.marca-mx thead tr.sub th {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: .02em;
+      text-transform: none;
+      color: #8a8a8a;
+    }
+    .tbl-dyn.marca-mx thead tr.sub th.mes-start,
+    .tbl-dyn.marca-mx td.mes-start {
+      border-left: 1px solid #ececec;
+    }
+    .tbl-dyn.marca-mx th.var-pct {
+      font-size: 9px;
+      color: var(--muted);
+      min-width: 78px;
+      max-width: 92px;
+      text-align: center;
+      white-space: normal;
+      line-height: 1.25;
+      background: #fafafa;
+    }
+    .tbl-dyn.marca-mx td.var-pct {
+      font-size: 9px;
+      font-weight: 700;
+      min-width: 78px;
+      text-align: center;
+      background: #fafafa;
+    }
+    .tbl-dyn.marca-mx td.var-pct .var-pill {
+      display: inline-block;
+      min-width: 58px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      font-size: 9px;
+      font-weight: 700;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+    .tbl-dyn.marca-mx td.var-pct .var-pill.var-up {
+      background: #e8f5ec;
+      color: #2f6b45;
+    }
+    .tbl-dyn.marca-mx td.var-pct .var-pill.var-down {
+      background: #fde8ea;
+      color: var(--marca);
+    }
+    .tbl-dyn.marca-mx td.var-pct .var-pill.var-flat {
+      background: #f0f0f0;
+      color: var(--muted);
+    }
+    .tbl-dyn.marca-mx td.qbar-cell {
+      min-width: 108px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    .tbl-dyn.marca-mx .qbar {
+      display: block;
+      width: 100%;
+      height: 18px;
+      background: #f0f0f0;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .tbl-dyn.marca-mx .qbar i {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      background: var(--marca);
+      border-radius: 99px;
+      min-width: 28px;
+      padding: 0 8px;
+      color: #fff;
+      font-style: normal;
+      font-size: 10px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+    .tbl-dyn.marca-mx td.val-cell {
+      color: var(--forte);
+      font-weight: 600;
+    }
+    .tbl-dyn.marca-mx tfoot td {
+      font-weight: 700;
+      background: #fafafa;
+    }
+    .tbl-dyn.marca-mx tfoot td.var-pct {
+      background: #f3f3f3;
+    }
     .donut-tip {
       position: fixed;
       z-index: 40;
@@ -1228,7 +1334,13 @@
           </div>
         </section>
         <section>
-          <h2 data-i18n="marcas_titulo">Vendas por marca</h2>
+          <div class="sec-tempo-head">
+            <h2 data-i18n="marcas_titulo">Vendas por marca</h2>
+            <div class="tabs-tempo" role="tablist">
+              <button type="button" class="activo" id="tabMarcaConsol" role="tab" aria-selected="true" data-i18n="tab_consolidado">Consolidado</button>
+              <button type="button" id="tabMarcaMensual" role="tab" aria-selected="false" data-i18n="tab_desglose_mensual">Detalhamento mensal</button>
+            </div>
+          </div>
           <div class="sec-marca-head">
             <label class="ordenar-marca"><span data-i18n="ordenar">Ordenar</span>
               <select id="ordenMarca" aria-label="Ordenar marcas">
@@ -1237,8 +1349,16 @@
               </select>
             </label>
           </div>
-          <div class="hbars" id="chartMarca"></div>
-          <p class="leyenda-marca"><i>n</i> <span data-i18n="marcas_leyenda">Valor em vermelho = quantidade de solicitações</span></p>
+          <div id="marcaConsolPanel">
+            <div class="hbars" id="chartMarca"></div>
+            <p class="leyenda-marca"><i>n</i> <span data-i18n="marcas_leyenda">Valor em vermelho = quantidade de solicitações</span></p>
+          </div>
+          <div id="marcaMensualPanel" hidden>
+            <div class="tbl-dyn-wrap">
+              <div class="tbl-dyn-scroll" id="marcaMensualTabla"></div>
+            </div>
+            <p class="leyenda-marca"><i>n</i> <span data-i18n="marcas_leyenda_mensual">Barra vermelha = quantidade · Valor em preto · Var. % (Vendas) só sobre valor</span></p>
+          </div>
         </section>
         <section>
           <h2 data-i18n="regioes_titulo">Vendas por região</h2>
@@ -1389,6 +1509,8 @@
         aria_heat: "Mapa de calor de vendas outorgadas por dia da semana e franja horária",
         marcas_titulo: "Vendas por marca", ordenar: "Ordenar", ord_valor: "Valor de vendas", ord_qtd: "Quantidade de vendas",
         marcas_leyenda: "Valor em vermelho = quantidade de solicitações",
+        marcas_leyenda_mensual: "Barra vermelha = quantidade · Valor em preto · Var. % (Vendas) só sobre valor",
+        th_marca: "Marca", th_qtd: "Qtd", th_valor: "Valor", th_var_pct_ventas: "Var. % (Vendas)",
         regioes_titulo: "Vendas por região",
         regioes_leyenda: "Valor em vermelho = quantidade de solicitações outorgadas",
         lojas_titulo: "Vendas por sucursal",
@@ -1487,6 +1609,8 @@
         aria_heat: "Mapa de calor de ventas otorgadas por día de la semana y franja horaria",
         marcas_titulo: "Ventas por marca", ordenar: "Ordenar", ord_valor: "Valor de ventas", ord_qtd: "Cantidad de ventas",
         marcas_leyenda: "Valor en rojo = cantidad de solicitudes",
+        marcas_leyenda_mensual: "Barra roja = cantidad · Valor en negro · Var. % (Ventas) solo sobre valor",
+        th_marca: "Marca", th_qtd: "Qtd", th_valor: "Valor", th_var_pct_ventas: "Var. % (Ventas)",
         regioes_titulo: "Ventas por región",
         regioes_leyenda: "Valor en rojo = cantidad de solicitudes otorgadas",
         lojas_titulo: "Ventas por sucursal",
@@ -2765,6 +2889,8 @@
       });
     }
     let marcasAtual = [];
+    let marcasListaAtual = [];
+    let modoMarcaVista = "consol";
     let regioesAtual = [];
     let lojasAtual = [];
     let vendedoresAtual = [];
@@ -2776,6 +2902,23 @@
     let composicaoTotalAtual = 1;
     let composicaoListaAtual = [];
     let modoCompVista = "consol";
+    function syncTabsMarca() {
+      const consol = modoMarcaVista === "consol";
+      const tabC = document.getElementById("tabMarcaConsol");
+      const tabM = document.getElementById("tabMarcaMensual");
+      if (tabC) {
+        tabC.classList.toggle("activo", consol);
+        tabC.setAttribute("aria-selected", consol ? "true" : "false");
+      }
+      if (tabM) {
+        tabM.classList.toggle("activo", !consol);
+        tabM.setAttribute("aria-selected", consol ? "false" : "true");
+      }
+      const pC = document.getElementById("marcaConsolPanel");
+      const pM = document.getElementById("marcaMensualPanel");
+      if (pC) pC.hidden = !consol;
+      if (pM) pM.hidden = consol;
+    }
     function syncTabsComp() {
       const consol = modoCompVista === "consol";
       const tabC = document.getElementById("tabCompConsol");
@@ -3136,7 +3279,177 @@
         el.appendChild(row);
       });
     }
+    function pintarMarcasMensual() {
+      const host = document.getElementById("marcaMensualTabla");
+      if (!host) return;
+      host.innerHTML = "";
+      const lista = marcasListaAtual || [];
+      if (!lista.length) {
+        const v = document.createElement("div");
+        v.className = "vazio";
+        v.textContent = t("vazio_concedidas");
+        host.appendChild(v);
+        return;
+      }
+      const mesesMap = {};
+      const marcaTot = {};
+      lista.forEach(function (r) {
+        const ym = String(r.dc || "").slice(0, 7);
+        const mk = r.m || t("sem_marca");
+        if (!ym || ym.length < 7) return;
+        if (!mesesMap[ym]) mesesMap[ym] = { totalC: 0, totalV: 0, by: {} };
+        if (!mesesMap[ym].by[mk]) mesesMap[ym].by[mk] = { c: 0, v: 0 };
+        const val = valorMonetario(r);
+        mesesMap[ym].by[mk].c += 1;
+        mesesMap[ym].by[mk].v += val;
+        mesesMap[ym].totalC += 1;
+        mesesMap[ym].totalV += val;
+        if (!marcaTot[mk]) marcaTot[mk] = { n: mk, c: 0, v: 0 };
+        marcaTot[mk].c += 1;
+        marcaTot[mk].v += val;
+      });
+      const meses = Object.keys(mesesMap).sort();
+      const orden = document.getElementById("ordenMarca");
+      const modo = orden ? orden.value : "valor";
+      const marcas = Object.keys(marcaTot).map(function (k) { return marcaTot[k]; }).sort(function (a, b) {
+        if (modo === "cantidad") return b.c - a.c || b.v - a.v;
+        return b.v - a.v || b.c - a.c;
+      });
+      if (!meses.length || !marcas.length) {
+        const v = document.createElement("div");
+        v.className = "vazio";
+        v.textContent = t("vazio_concedidas");
+        host.appendChild(v);
+        return;
+      }
+      const maxQtdMes = {};
+      meses.forEach(function (ym) {
+        let m = 1;
+        marcas.forEach(function (mk) {
+          m = Math.max(m, (mesesMap[ym].by[mk.n] || {}).c || 0);
+        });
+        maxQtdMes[ym] = m;
+      });
+      const maxQtdTot = Math.max(1, marcas.reduce(function (m, x) { return Math.max(m, x.c || 0); }, 1));
+      function tdQbar(n, maxN, mesStart) {
+        const cell = document.createElement("td");
+        cell.className = "qbar-cell" + (mesStart ? " mes-start" : "");
+        if (!n) {
+          cell.textContent = "—";
+          return cell;
+        }
+        const track = document.createElement("span");
+        track.className = "qbar";
+        const fill = document.createElement("i");
+        fill.style.width = Math.max(14, Math.round(100 * n / maxN)) + "%";
+        fill.textContent = brNum(n, 0);
+        track.appendChild(fill);
+        cell.appendChild(track);
+        return cell;
+      }
+      function tdValor(v, mesStart) {
+        const cell = document.createElement("td");
+        cell.className = "num val-cell" + (mesStart ? " mes-start" : "");
+        cell.textContent = v ? brMoney(v) : "—";
+        return cell;
+      }
+      const table = document.createElement("table");
+      table.className = "tbl-dyn marca-mx";
+      const thead = document.createElement("thead");
+      const trGrp = document.createElement("tr");
+      trGrp.className = "grp";
+      const thMarca = document.createElement("th");
+      thMarca.rowSpan = 2;
+      thMarca.textContent = t("th_marca");
+      thMarca.style.minWidth = "110px";
+      trGrp.appendChild(thMarca);
+      meses.forEach(function (ym, idx) {
+        if (idx > 0) {
+          const thV = document.createElement("th");
+          thV.className = "var-pct";
+          thV.rowSpan = 2;
+          thV.textContent = t("th_var_pct_ventas");
+          trGrp.appendChild(thV);
+        }
+        const thM = document.createElement("th");
+        thM.className = "mes";
+        thM.colSpan = 2;
+        thM.textContent = rotuloMesCurto(ym);
+        trGrp.appendChild(thM);
+      });
+      const thTot = document.createElement("th");
+      thTot.className = "mes";
+      thTot.colSpan = 2;
+      thTot.textContent = t("th_total");
+      trGrp.appendChild(thTot);
+      thead.appendChild(trGrp);
+      const trSub = document.createElement("tr");
+      trSub.className = "sub";
+      meses.forEach(function () {
+        const thQ = document.createElement("th");
+        thQ.className = "mes-start";
+        thQ.textContent = t("th_qtd");
+        trSub.appendChild(thQ);
+        const thVal = document.createElement("th");
+        thVal.textContent = t("th_valor");
+        trSub.appendChild(thVal);
+      });
+      const thTQ = document.createElement("th");
+      thTQ.className = "mes-start";
+      thTQ.textContent = t("th_qtd");
+      trSub.appendChild(thTQ);
+      const thTV = document.createElement("th");
+      thTV.textContent = t("th_valor");
+      trSub.appendChild(thTV);
+      thead.appendChild(trSub);
+      table.appendChild(thead);
+      const tbody = document.createElement("tbody");
+      marcas.forEach(function (mk) {
+        const tr = document.createElement("tr");
+        tr.appendChild(tdDyn(mk.n, false));
+        let prevV = null;
+        meses.forEach(function (ym, idx) {
+          const cell = mesesMap[ym].by[mk.n] || { c: 0, v: 0 };
+          if (idx > 0) tr.appendChild(tdVarPct(prevV, cell.v));
+          tr.appendChild(tdQbar(cell.c, maxQtdMes[ym], true));
+          tr.appendChild(tdValor(cell.v, false));
+          prevV = cell.v;
+        });
+        tr.appendChild(tdQbar(mk.c, maxQtdTot, true));
+        tr.appendChild(tdValor(mk.v, false));
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody);
+      const tfoot = document.createElement("tfoot");
+      const trf = document.createElement("tr");
+      trf.appendChild(tdDyn(t("th_total"), false));
+      let granC = 0;
+      let granV = 0;
+      let prevTotV = null;
+      const maxTotMes = Math.max(1, meses.reduce(function (m, y) { return Math.max(m, mesesMap[y].totalC); }, 1));
+      meses.forEach(function (ym, idx) {
+        const c = mesesMap[ym].totalC;
+        const v = mesesMap[ym].totalV;
+        granC += c;
+        granV += v;
+        if (idx > 0) trf.appendChild(tdVarPct(prevTotV, v));
+        trf.appendChild(tdQbar(c, maxTotMes, true));
+        trf.appendChild(tdValor(v, false));
+        prevTotV = v;
+      });
+      trf.appendChild(tdQbar(granC, Math.max(1, granC), true));
+      trf.appendChild(tdValor(granV, false));
+      tfoot.appendChild(trf);
+      table.appendChild(tfoot);
+      bindColumnResize(table);
+      host.appendChild(table);
+    }
     function pintarMarcas() {
+      syncTabsMarca();
+      if (modoMarcaVista === "mensual") {
+        pintarMarcasMensual();
+        return;
+      }
       pintarHbarsConcedidas("chartMarca", "ordenMarca", marcasAtual);
     }
     function pintarRegioes() {
@@ -3508,6 +3821,7 @@
         porMarca[k].v += valorMonetario(r);
       });
       marcasAtual = Object.keys(porMarca).map(function (k) { return porMarca[k]; });
+      marcasListaAtual = conc.slice();
       pintarMarcas();
       const porRegiao = {};
       conc.forEach(function (r) {
@@ -3633,6 +3947,14 @@
       pintarHeatmap();
     });
     document.getElementById("ordenMarca").addEventListener("change", pintarMarcas);
+    document.getElementById("tabMarcaConsol").addEventListener("click", function () {
+      modoMarcaVista = "consol";
+      pintarMarcas();
+    });
+    document.getElementById("tabMarcaMensual").addEventListener("click", function () {
+      modoMarcaVista = "mensual";
+      pintarMarcas();
+    });
     document.getElementById("ordenRegiao").addEventListener("change", pintarRegioes);
     document.getElementById("ordenLoja").addEventListener("change", pintarLojas);
     document.getElementById("ordenVendedor").addEventListener("change", pintarVendedores);

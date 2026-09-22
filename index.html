@@ -543,15 +543,37 @@
     .tbl-dyn.comp-mx td.var-pct {
       font-size: 11px;
       font-weight: 700;
-      min-width: 72px;
+      min-width: 78px;
+      text-align: center;
+      vertical-align: middle;
     }
-    .tbl-dyn.comp-mx td.var-up { color: #2f6b45; }
-    .tbl-dyn.comp-mx td.var-down { color: var(--marca); }
-    .tbl-dyn.comp-mx td.var-flat { color: var(--muted); }
+    .tbl-dyn.comp-mx td.var-pct .var-pill {
+      display: inline-block;
+      min-width: 68px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+    .tbl-dyn.comp-mx td.var-pct .var-pill.var-up {
+      background: #e8f5ec;
+      color: #2f6b45;
+    }
+    .tbl-dyn.comp-mx td.var-pct .var-pill.var-down {
+      background: #fde8ea;
+      color: var(--marca);
+    }
+    .tbl-dyn.comp-mx td.var-pct .var-pill.var-flat {
+      background: #f0f0f0;
+      color: var(--muted);
+    }
     .tbl-dyn.comp-mx th.var-pct {
       font-size: 10px;
       color: var(--muted);
-      min-width: 72px;
+      min-width: 78px;
+      text-align: center;
     }
     .donut-tip {
       position: fixed;
@@ -2442,16 +2464,20 @@
     function tdVarPct(antes, agora) {
       const cell = document.createElement("td");
       cell.className = "num var-pct";
+      const pill = document.createElement("span");
+      pill.className = "var-pill";
       if (!antes) {
-        cell.textContent = "—";
-        cell.classList.add("var-flat");
+        pill.textContent = "—";
+        pill.classList.add("var-flat");
+        cell.appendChild(pill);
         return cell;
       }
       const v = 100 * ((agora || 0) - antes) / antes;
-      cell.textContent = (v > 0 ? "+" : "") + brNum(v, 1) + " %";
-      if (v > 0.05) cell.classList.add("var-up");
-      else if (v < -0.05) cell.classList.add("var-down");
-      else cell.classList.add("var-flat");
+      pill.textContent = (v > 0 ? "+" : "") + brNum(v, 1) + " %";
+      if (v > 0.05) pill.classList.add("var-up");
+      else if (v < -0.05) pill.classList.add("var-down");
+      else pill.classList.add("var-flat");
+      cell.appendChild(pill);
       return cell;
     }
     function statusKeyDeFila(r) {

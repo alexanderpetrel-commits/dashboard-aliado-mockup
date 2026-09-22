@@ -826,25 +826,12 @@
       padding: 7px 10px;
       border-bottom: 1px solid var(--linea);
       background: #fff;
-      background-clip: padding-box;
       white-space: nowrap;
       vertical-align: middle;
     }
-    table.tbl-dyn > thead {
-      position: relative;
-      z-index: 5;
-    }
-    table.tbl-dyn > tbody,
-    table.tbl-dyn > tfoot {
-      position: relative;
-      z-index: 1;
-    }
     table.tbl-dyn > thead th {
-      position: sticky;
-      top: 0;
-      z-index: 1;
+      position: static;
       background: #f3f3f3;
-      background-clip: padding-box;
       color: var(--muted);
       font-size: 9px;
       letter-spacing: .04em;
@@ -853,25 +840,13 @@
       text-align: left;
       user-select: none;
     }
-    table.tbl-dyn > thead th:first-child {
-      left: 0;
-      z-index: 3;
-      box-shadow: 2px 0 0 var(--linea);
-    }
     table.tbl-dyn > tbody > tr > td:first-child,
     table.tbl-dyn > tfoot > tr > td:first-child {
-      position: sticky;
-      left: 0;
-      z-index: 1;
+      position: static;
       background: #fff;
-      background-clip: padding-box;
-      box-shadow: 2px 0 0 var(--linea);
     }
     table.tbl-dyn > tfoot > tr > td:first-child {
       background: #fafafa;
-    }
-    table.tbl-dyn.marca-mx > thead tr.sub th {
-      top: 30px;
     }
     table.tbl-dyn.marca-mx > thead tr.grp th.mes {
       background: #f5f5f5;
@@ -916,7 +891,7 @@
       cursor: col-resize;
       z-index: 3;
     }
-    table.tbl-dyn > thead th:not(:first-child) {
+    table.tbl-dyn > thead th {
       overflow: visible;
     }
     table.tbl-dyn th .col-resize::after {
@@ -1045,8 +1020,7 @@
       table-layout: fixed;
       width: 2480px;
       min-width: 100%;
-      border-collapse: separate;
-      border-spacing: 0;
+      border-collapse: collapse;
       font-size: 12px;
     }
     .grid-exec th, .grid-exec td {
@@ -1058,28 +1032,15 @@
       text-overflow: ellipsis;
       box-sizing: border-box;
       background: #fff;
-      background-clip: padding-box;
     }
     .grid-exec td.num { text-align: right; font-variant-numeric: tabular-nums; }
-    .grid-exec > thead {
-      position: relative;
-      z-index: 5;
-    }
-    .grid-exec > tbody {
-      position: relative;
-      z-index: 1;
-    }
     .grid-exec > thead th {
-      position: sticky;
-      top: 0;
-      z-index: 1;
+      position: static;
       background: #fafafa;
-      background-clip: padding-box;
       font-weight: 600;
       text-align: center;
     }
     .grid-exec > thead .sub th {
-      top: 32px;
       font-weight: 500;
       color: var(--muted);
       font-size: 11px;
@@ -1101,36 +1062,6 @@
     .grid-exec col.c-val { width: 112px; }
     .grid-exec col.c-pct { width: 56px; }
     .grid-exec col.c-money { width: 112px; }
-    .grid-exec > thead > tr:first-child > th:nth-child(1),
-    .grid-exec > tbody > tr > td:nth-child(1) {
-      position: sticky;
-      left: 0;
-      z-index: 1;
-      background: #fff;
-      background-clip: padding-box;
-    }
-    .grid-exec > thead > tr:first-child > th:nth-child(2),
-    .grid-exec > tbody > tr > td:nth-child(2) {
-      position: sticky;
-      left: 150px;
-      z-index: 1;
-      background: #fff;
-      background-clip: padding-box;
-      box-shadow: 2px 0 0 var(--linea);
-    }
-    .grid-exec > thead > tr:first-child > th:nth-child(1),
-    .grid-exec > thead > tr:first-child > th:nth-child(2) {
-      z-index: 3;
-      background: #fafafa;
-    }
-    .grid-exec tr.is-reg td:nth-child(1),
-    .grid-exec tr.is-reg td:nth-child(2) {
-      background: #fff5f6;
-    }
-    .grid-exec tr.is-loja td:nth-child(1),
-    .grid-exec tr.is-loja td:nth-child(2) {
-      background: #fff;
-    }
     .arv { border: 0; background: transparent; color: var(--marca); cursor: pointer; width: 22px; padding: 0; font-size: 10px; line-height: 1; }
     .arv-esp { display: inline-block; width: 22px; }
     .nota { font-size: 12px; color: var(--muted); margin: 10px 0 0; }

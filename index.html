@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="sticky-pane" content="v13-aliado-icono-c1-tienda-20260922">
+  <meta name="sticky-pane" content="v14-periodo-inicial-6-meses-20260922">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <title>Painel executivo do aliado — Smartphone Mastercell Brasil</title>
   <style>
@@ -2173,14 +2173,8 @@
     function periodoInicialFechas() {
       const hoy = hoyIso();
       const d = new Date(hoy + "T12:00:00");
-      const dia = d.getDate();
-      if (dia <= 5) {
-        const ini = new Date(d.getFullYear(), d.getMonth() - 1, 1);
-        const fim = new Date(d.getFullYear(), d.getMonth(), 0);
-        return { inicio: ymd(ini), fin: ymd(fim) };
-      }
-      const iniMes = new Date(d.getFullYear(), d.getMonth(), 1);
-      return { inicio: ymd(iniMes), fin: hoy };
+      const ini = new Date(d.getFullYear(), d.getMonth() - (RANGO_MESES - 1), 1);
+      return { inicio: ymd(ini), fin: hoy };
     }
     function aplicarPeriodoInicial() {
       const p = periodoInicialFechas();

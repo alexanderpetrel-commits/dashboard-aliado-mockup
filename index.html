@@ -1033,10 +1033,10 @@
         risco_Medium: "Médio", risco_High: "Alto", risco_Very_High: "Muito alto",
         ms_status: "Estado da solicitação", ms_regiao: "Região", ms_cidade: "Cidade", ms_lojas: "Lojas", ms_vendedores: "Vendedores", ms_risco: "Risco da filial",
         tip_status: "Seleção múltipla. Aprovada = venda em curso: o crédito já foi aprovado e ainda não passou a Concedida. Também: Concedida, Rejeitada, Cancelada, Finalizado, Default e Default por refinanciamento.",
-        tip_regiao: "Região geográfica das lojas do seu aliado. Pode escolher uma ou várias.",
-        tip_cidade: "Cidade das lojas. Não aparece como coluna na tabela; o filtro fica aqui.",
-        tip_lojas: "Todas as lojas do seu aliado. Pode escolher uma, várias ou Todas as lojas do aliado.",
-        tip_vendedores: "Vendedores das solicitações. Pode escolher um ou vários.",
+        tip_regiao: "Região geográfica das lojas do seu aliado. Pode escolher uma ou várias. Ao filtrar, cidade, lojas e vendedores passam a mostrar só o que pertence à região.",
+        tip_cidade: "Cidade das lojas. Só lista cidades da região escolhida. Ao filtrar, lojas e vendedores passam a mostrar só o que pertence à cidade.",
+        tip_lojas: "Lojas do aliado. Só lista lojas da região e cidade escolhidas. Ao filtrar, vendedores passam a mostrar só os da loja.",
+        tip_vendedores: "Vendedores das solicitações. Só lista vendedores das lojas (e região/cidade) já filtradas.",
         tip_risco: "Risco atribuído à filial: Medium, High ou Very High. Não é o risco do cliente.",
         tip_inicio: "Filtra pela data de criação da solicitação. Só entram datas em que a loja tem dados.",
         tip_fim: "Data final do período. O intervalo com a data de início não pode passar de seis meses.",
@@ -1121,10 +1121,10 @@
         risco_Medium: "Medio", risco_High: "Alto", risco_Very_High: "Muy alto",
         ms_status: "Estado de la solicitud", ms_regiao: "Región", ms_cidade: "Ciudad", ms_lojas: "Tiendas", ms_vendedores: "Vendedores", ms_risco: "Riesgo de la sucursal",
         tip_status: "Selección múltiple. Aprobada = venta en curso: el crédito ya fue aprobado y aún no pasó a Concedida. También: Concedida, Rechazada, Cancelada, Finalizado, Default y Default por refinanciamiento.",
-        tip_regiao: "Región geográfica de las tiendas de su aliado. Puede elegir una o varias.",
-        tip_cidade: "Ciudad de las tiendas. No aparece como columna en la tabla; el filtro queda aquí.",
-        tip_lojas: "Todas las tiendas de su aliado. Puede elegir una, varias o Todas las tiendas del aliado.",
-        tip_vendedores: "Vendedores de las solicitudes. Puede elegir uno o varios.",
+        tip_regiao: "Región geográfica de las tiendas de su aliado. Puede elegir una o varias. Al filtrar, ciudad, tiendas y vendedores muestran solo lo de esa región.",
+        tip_cidade: "Ciudad de las tiendas. Solo lista ciudades de la región elegida. Al filtrar, tiendas y vendedores muestran solo lo de esa ciudad.",
+        tip_lojas: "Tiendas del aliado. Solo lista tiendas de la región y ciudad elegidas. Al filtrar, vendedores muestran solo los de la tienda.",
+        tip_vendedores: "Vendedores de las solicitudes. Solo lista vendedores de las tiendas (y región/ciudad) ya filtradas.",
         tip_risco: "Riesgo asignado a la sucursal: Medium, High o Very High. No es el riesgo del cliente.",
         tip_inicio: "Filtra por la fecha de creación de la solicitud. Solo entran fechas en las que la tienda tiene datos.",
         tip_fim: "Fecha final del período. El intervalo con la fecha de inicio no puede superar seis meses.",
@@ -1426,14 +1426,61 @@
     }
     aviso.textContent = t("aviso_ref").replace("{n}", brNum(meta.n || rowsAll.length, 0)).replace("{min}", brData(meta.dcMin)).replace("{max}", brData(meta.dcMax));
 
+    function filasCascataHasta(nivel) {
+      return rowsAll.filter(function (r) {
+        if (nivel !== "regiao" && seleccion.regiao.length && (!r.e || seleccion.regiao.indexOf(r.e) === -1)) return false;
+        if ((nivel === "lojas" || nivel === "vendedores") && seleccion.cidade.length && (!r.c || seleccion.cidade.indexOf(r.c) === -1)) return false;
+        if (nivel === "vendedores" && seleccion.lojas.length && (!r.f || seleccion.lojas.indexOf(r.f) === -1)) return false;
+        return true;
+      });
+    }
+    function unicosDe(filas, campo) {
+      const mapa = {};
+      filas.forEach(function (r) {
+        const k = r[campo];
+        if (!k) return;
+        mapa[k] = true;
+      });
+      return Object.keys(mapa).sort(function (a, b) {
+        return String(a).localeCompare(String(b), "pt-BR", { sensitivity: "base" });
+      });
+    }
     function opciones(key) {
-      if (key === "lojas") return [TODAS].concat(catalogs.lojas.map(function (x) { return x.n; }));
       if (key === "risco") {
         return catalogs.risco.map(function (x) { return x.n; }).slice().sort(function (a, b) {
           return (ORDEM_RISCO[b] || 0) - (ORDEM_RISCO[a] || 0);
         });
       }
-      return catalogs[key].map(function (x) { return x.n; });
+      if (key === "status" || key === "regiao") {
+        return catalogs[key].map(function (x) { return x.n; });
+      }
+      if (key === "cidade") return unicosDe(filasCascataHasta("cidade"), "c");
+      if (key === "lojas") return [TODAS].concat(unicosDe(filasCascataHasta("lojas"), "f"));
+      if (key === "vendedores") return unicosDe(filasCascataHasta("vendedores"), "v");
+      return catalogs[key] ? catalogs[key].map(function (x) { return x.n; }) : [];
+    }
+    function podarSeleccionCascata() {
+      const okCidade = {};
+      opciones("cidade").forEach(function (n) { okCidade[n] = true; });
+      seleccion.cidade = seleccion.cidade.filter(function (n) { return okCidade[n]; });
+      const okLojas = {};
+      opciones("lojas").forEach(function (n) { if (n !== TODAS) okLojas[n] = true; });
+      seleccion.lojas = seleccion.lojas.filter(function (n) { return okLojas[n]; });
+      const okVend = {};
+      opciones("vendedores").forEach(function (n) { okVend[n] = true; });
+      seleccion.vendedores = seleccion.vendedores.filter(function (n) { return okVend[n]; });
+    }
+    function refrescarMsCascata(desde) {
+      podarSeleccionCascata();
+      const dependientes = {
+        regiao: ["cidade", "lojas", "vendedores"],
+        cidade: ["lojas", "vendedores"],
+        lojas: ["vendedores"]
+      };
+      (dependientes[desde] || []).forEach(function (k) {
+        const box = document.querySelector('.ms[data-key="' + k + '"]');
+        if (box) renderMs(box);
+      });
     }
     function rotuloOpcion(key, item) {
       if (key === "risco") return LABELS_RISCO[item] || item;
@@ -1493,6 +1540,7 @@
           b.addEventListener("click", function () {
             seleccion[key] = seleccion[key].filter(function (x) { return x !== val; });
             pintarChips();
+            if (key === "regiao" || key === "cidade" || key === "lojas") refrescarMsCascata(key);
           });
           span.appendChild(b);
           chips.appendChild(span);
@@ -1508,6 +1556,7 @@
         ul.style.display = "none";
         foco = -1;
         pintarChips();
+        if (key === "regiao" || key === "cidade" || key === "lojas") refrescarMsCascata(key);
       }
       function itensVisiveis() {
         const q = inp.value.toLowerCase();

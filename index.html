@@ -3407,11 +3407,6 @@
         thM.textContent = rotuloMesCurto(ym);
         trGrp.appendChild(thM);
       });
-      const thTot = document.createElement("th");
-      thTot.className = "mes";
-      thTot.colSpan = 2;
-      thTot.textContent = t("th_total");
-      trGrp.appendChild(thTot);
       thead.appendChild(trGrp);
       const trSub = document.createElement("tr");
       trSub.className = "sub";
@@ -3430,13 +3425,6 @@
           trSub.appendChild(thV);
         }
       });
-      const thTQ = document.createElement("th");
-      thTQ.className = "mes-start";
-      thTQ.textContent = t("th_qtd");
-      trSub.appendChild(thTQ);
-      const thTV = document.createElement("th");
-      thTV.textContent = t("th_valor");
-      trSub.appendChild(thTV);
       thead.appendChild(trSub);
       table.appendChild(thead);
       const tbody = document.createElement("tbody");
@@ -3451,30 +3439,22 @@
           if (idx > 0) tr.appendChild(tdVarPct(prevV, cell.v));
           prevV = cell.v;
         });
-        tr.appendChild(tdQbar(mk.c, maxQtdTot, true));
-        tr.appendChild(tdValor(mk.v, false));
         tbody.appendChild(tr);
       });
       table.appendChild(tbody);
       const tfoot = document.createElement("tfoot");
       const trf = document.createElement("tr");
       trf.appendChild(tdDyn(t("th_total"), false));
-      let granC = 0;
-      let granV = 0;
       let prevTotV = null;
       const maxTotMes = Math.max(1, meses.reduce(function (m, y) { return Math.max(m, mesesMap[y].totalC); }, 1));
       meses.forEach(function (ym, idx) {
         const c = mesesMap[ym].totalC;
         const v = mesesMap[ym].totalV;
-        granC += c;
-        granV += v;
         trf.appendChild(tdQbar(c, maxTotMes, true));
         trf.appendChild(tdValor(v, false));
         if (idx > 0) trf.appendChild(tdVarPct(prevTotV, v));
         prevTotV = v;
       });
-      trf.appendChild(tdQbar(granC, Math.max(1, granC), true));
-      trf.appendChild(tdValor(granV, false));
       tfoot.appendChild(trf);
       table.appendChild(tfoot);
       bindColumnResize(table);

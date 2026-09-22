@@ -471,7 +471,7 @@
       width: 140px;
       height: 8px;
       border-radius: 4px;
-      background: linear-gradient(90deg, #ffe8eb, #DD0520);
+      background: linear-gradient(90deg, #fecaca, #fde68a, #16a34a);
     }
     .pie-wrap { display: grid; grid-template-columns: 200px 1fr; gap: 12px; align-items: center; }
     .pie-wrap svg { width: 200px; height: 200px; display: block; }
@@ -2093,9 +2093,9 @@
       return "rgb(" + Math.round(c.r) + "," + Math.round(c.g) + "," + Math.round(c.b) + ")";
     }
     function heatColor(t) {
-      const c0 = { r: 255, g: 232, b: 235 };
-      const c1 = { r: 245, g: 163, b: 171 };
-      const c2 = { r: 221, g: 5, b: 32 };
+      const c0 = { r: 254, g: 202, b: 202 };
+      const c1 = { r: 253, g: 230, b: 138 };
+      const c2 = { r: 22, g: 163, b: 74 };
       if (t <= 0.5) return heatMix(c0, c1, t * 2);
       return heatMix(c1, c2, (t - 0.5) * 2);
     }
@@ -2193,7 +2193,7 @@
           rect.setAttribute("y", String(T + r * ch + 3));
           rect.setAttribute("width", String(cw - 6));
           rect.setAttribute("height", String(ch - 6));
-          rect.setAttribute("rx", "4");
+          rect.setAttribute("rx", "6");
           rect.setAttribute("fill", heatRgb(col));
           svg.appendChild(rect);
           if (n > 0) {
@@ -2202,7 +2202,7 @@
             tx.setAttribute("y", String(T + r * ch + ch / 2 + 4));
             tx.setAttribute("text-anchor", "middle");
             tx.setAttribute("font-size", modoHeat === "valor" ? "11" : "13");
-            tx.setAttribute("font-weight", "700");
+            tx.setAttribute("font-weight", "800");
             tx.setAttribute("fill", heatLuma(col) > 0.55 ? "#1f1f1f" : "#ffffff");
             tx.textContent = fmtHeatCelda(n);
             svg.appendChild(tx);

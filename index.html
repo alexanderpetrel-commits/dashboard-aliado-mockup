@@ -1323,7 +1323,7 @@
         else if (r.s === "DEFAULT") { a.def += 1; a.defV += vm; }
         else if (r.s === "DEFAULT_BY_REFINANCE") { a.refi += 1; a.refiV += vm; }
       });
-      const serie = (document.getElementById("metricaValor") || {}).value === "ventas" ? a.vd : a.vs;
+      const serie = metricaValorAplicada === "ventas" ? a.vd : a.vs;
       a.ticket = mediana(serie);
       a.media = serie.length ? a.v / serie.length : null;
       a.aparelho = mediana(a.vd);
@@ -1390,9 +1390,9 @@
       }
       return hidden.value;
     }
+    let metricaValorAplicada = "financiado";
     function valorMonetario(r) {
-      const m = (document.getElementById("metricaValor") || {}).value || "financiado";
-      if (m === "ventas") return Number(r.vd) || 0;
+      if (metricaValorAplicada === "ventas") return Number(r.vd) || 0;
       return Number(r.vs) || 0;
     }
     function aplicarLimitesFechas() {
@@ -2605,6 +2605,7 @@
       syncTabsVendas();
     }
     function consultar() {
+      metricaValorAplicada = (document.getElementById("metricaValor") || {}).value || "financiado";
       const lista = recorte();
       const painel = document.getElementById("painel");
       const vazio = document.getElementById("vazioPainel");
@@ -2888,9 +2889,6 @@
     document.getElementById("productoBusca").addEventListener("blur", function () {
       leerProductoDesdeBusca();
     });
-    document.getElementById("metricaValor").addEventListener("change", function () {
-      if (inicio.value && fin.value) consultar();
-    });
     document.getElementById("btnLimpar").addEventListener("click", function () {
       seleccion.status = [];
       seleccion.regiao = [];
@@ -2902,6 +2900,7 @@
       fin.value = "";
       sincronizarProductoUi("smartphone");
       document.getElementById("metricaValor").value = "financiado";
+      metricaValorAplicada = "financiado";
       document.getElementById("msgFecha").className = "msg";
       document.getElementById("msgFecha").textContent = "";
       aplicarLimitesFechas();

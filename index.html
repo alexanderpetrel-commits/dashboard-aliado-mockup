@@ -147,7 +147,7 @@
     .vista-existente { padding: 48px 16px; text-align: center; color: var(--muted); }
     .vista-existente h2 { margin: 0 0 8px; font-size: 20px; color: var(--texto-forte); font-weight: 600; }
     main { max-width: 1440px; margin: 0 auto; padding: 8px 0 56px; min-width: 0; overflow-x: clip; }
-    .filtros { background: var(--tarjeta); border-radius: 12px; padding: 16px 18px; margin-bottom: 18px; box-shadow: var(--sombra); }
+    .filtros { background: var(--tarjeta); border-radius: 12px; padding: 16px 18px; margin-bottom: 18px; box-shadow: var(--sombra); overflow: visible; }
     .filtros-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 12px; }
     .filtros-head h2 { margin: 0; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
     .btn-excel {
@@ -156,8 +156,8 @@
     }
     .btn-excel svg { width: 18px; height: 18px; flex: 0 0 18px; }
     .btn-excel:disabled { opacity: 0.5; cursor: not-allowed; }
-    .fila { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px 12px; align-items: start; margin-bottom: 10px; }
-    .campo, .ms { display: flex; flex-direction: column; min-width: 0; width: auto; }
+    .fila { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px 12px; align-items: start; margin-bottom: 10px; overflow: visible; }
+    .campo, .ms { display: flex; flex-direction: column; min-width: 0; width: auto; overflow: visible; }
     label { display: flex; align-items: center; gap: 4px; font-size: 13px; color: var(--muted); margin-bottom: 4px; line-height: 1.2; min-height: 16px; }
     .tip {
       position: relative;

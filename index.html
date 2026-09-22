@@ -107,7 +107,7 @@
     .app-content { flex: 1; min-width: 0; background: #fafafa; padding: 8px 28px 40px; }
     .vista-existente { padding: 48px 16px; text-align: center; color: var(--muted); }
     .vista-existente h2 { margin: 0 0 8px; font-size: 20px; color: var(--texto-forte); font-weight: 600; }
-    main { max-width: 1440px; margin: 0 auto; padding: 8px 0 56px; }
+    main { max-width: 1440px; margin: 0 auto; padding: 8px 0 56px; min-width: 0; overflow-x: hidden; }
     .filtros { background: var(--tarjeta); border-radius: 12px; padding: 16px 18px; margin-bottom: 18px; box-shadow: var(--sombra); }
     .filtros-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 12px; }
     .filtros-head h2 { margin: 0; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
@@ -434,8 +434,16 @@
       font-variant-numeric: tabular-nums;
     }
     .kpi-chip.bad strong { color: var(--marca); }
-    .grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
-    section { background: var(--tarjeta); border-radius: 12px; padding: 18px 18px 16px; margin-bottom: 14px; box-shadow: var(--sombra); }
+    .grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
+    section {
+      background: var(--tarjeta);
+      border-radius: 12px;
+      padding: 18px 18px 16px;
+      margin-bottom: 14px;
+      box-shadow: var(--sombra);
+      min-width: 0;
+      max-width: 100%;
+    }
     h2 { margin: 0 0 14px; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
     .chart-tempo { height: 360px; width: 100%; }
     .chart-tempo svg { width: 100%; height: 340px; display: block; }
@@ -607,8 +615,8 @@
     .tbl-dyn.marca-mx th.var-pct {
       font-size: 9px;
       color: var(--muted);
-      min-width: 78px;
-      max-width: 92px;
+      min-width: 72px;
+      max-width: 88px;
       text-align: center;
       white-space: normal;
       line-height: 1.25;
@@ -617,13 +625,13 @@
     .tbl-dyn.marca-mx td.var-pct {
       font-size: 9px;
       font-weight: 700;
-      min-width: 78px;
+      min-width: 72px;
       text-align: center;
       background: #fafafa;
     }
     .tbl-dyn.marca-mx td.var-pct .var-pill {
       display: inline-block;
-      min-width: 58px;
+      min-width: 54px;
       padding: 2px 6px;
       border-radius: 999px;
       font-size: 9px;
@@ -644,9 +652,11 @@
       color: var(--muted);
     }
     .tbl-dyn.marca-mx td.qbar-cell {
-      min-width: 108px;
-      padding-left: 10px;
-      padding-right: 10px;
+      min-width: 88px;
+      max-width: 120px;
+      width: 100px;
+      padding-left: 8px;
+      padding-right: 8px;
     }
     .tbl-dyn.marca-mx .qbar {
       display: block;
@@ -674,6 +684,7 @@
     .tbl-dyn.marca-mx td.val-cell {
       color: var(--forte);
       font-weight: 600;
+      min-width: 96px;
     }
     .tbl-dyn.marca-mx tfoot td {
       font-weight: 700;
@@ -681,6 +692,32 @@
     }
     .tbl-dyn.marca-mx tfoot td.var-pct {
       background: #f3f3f3;
+    }
+    .tbl-dyn.marca-mx th:first-child,
+    .tbl-dyn.marca-mx td:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 3;
+      background: #fff;
+      box-shadow: 2px 0 0 var(--linea);
+    }
+    .tbl-dyn.marca-mx thead th:first-child {
+      z-index: 4;
+      background: #f3f3f3;
+    }
+    .tbl-dyn.marca-mx tfoot td:first-child {
+      background: #fafafa;
+    }
+    #marcaMensualPanel {
+      min-width: 0;
+      max-width: 100%;
+    }
+    #marcaMensualPanel .tbl-dyn-wrap {
+      width: 100%;
+      max-width: 100%;
+    }
+    #marcaMensualPanel .tbl-dyn-scroll {
+      max-height: 420px;
     }
     .donut-tip {
       position: fixed;
@@ -1357,7 +1394,7 @@
             <div class="tbl-dyn-wrap">
               <div class="tbl-dyn-scroll" id="marcaMensualTabla"></div>
             </div>
-            <p class="leyenda-marca"><i>n</i> <span data-i18n="marcas_leyenda_mensual">Barra vermelha = quantidade · Valor em preto · Var. % (Vendas) só sobre valor</span></p>
+            <p class="leyenda-marca"><i>n</i> <span data-i18n="marcas_leyenda_mensual">Barra vermelha = quantidade · Valor em preto · Var. % (Vendas) = valor vs mês anterior (não há no 1.º mês)</span></p>
           </div>
         </section>
         <section>
@@ -1509,7 +1546,7 @@
         aria_heat: "Mapa de calor de vendas outorgadas por dia da semana e franja horária",
         marcas_titulo: "Vendas por marca", ordenar: "Ordenar", ord_valor: "Valor de vendas", ord_qtd: "Quantidade de vendas",
         marcas_leyenda: "Valor em vermelho = quantidade de solicitações",
-        marcas_leyenda_mensual: "Barra vermelha = quantidade · Valor em preto · Var. % (Vendas) só sobre valor",
+        marcas_leyenda_mensual: "Barra vermelha = quantidade · Valor em preto · Var. % (Vendas) = valor vs mês anterior (não há no 1.º mês)",
         th_marca: "Marca", th_qtd: "Qtd", th_valor: "Valor", th_var_pct_ventas: "Var. % (Vendas)",
         regioes_titulo: "Vendas por região",
         regioes_leyenda: "Valor em vermelho = quantidade de solicitações outorgadas",
@@ -1609,7 +1646,7 @@
         aria_heat: "Mapa de calor de ventas otorgadas por día de la semana y franja horaria",
         marcas_titulo: "Ventas por marca", ordenar: "Ordenar", ord_valor: "Valor de ventas", ord_qtd: "Cantidad de ventas",
         marcas_leyenda: "Valor en rojo = cantidad de solicitudes",
-        marcas_leyenda_mensual: "Barra roja = cantidad · Valor en negro · Var. % (Ventas) solo sobre valor",
+        marcas_leyenda_mensual: "Barra roja = cantidad · Valor en negro · Var. % (Ventas) = valor vs mes anterior (no hay en el 1.er mes)",
         th_marca: "Marca", th_qtd: "Qtd", th_valor: "Valor", th_var_pct_ventas: "Var. % (Ventas)",
         regioes_titulo: "Ventas por región",
         regioes_leyenda: "Valor en rojo = cantidad de solicitudes otorgadas",
@@ -3364,16 +3401,9 @@
       thMarca.style.minWidth = "110px";
       trGrp.appendChild(thMarca);
       meses.forEach(function (ym, idx) {
-        if (idx > 0) {
-          const thV = document.createElement("th");
-          thV.className = "var-pct";
-          thV.rowSpan = 2;
-          thV.textContent = t("th_var_pct_ventas");
-          trGrp.appendChild(thV);
-        }
         const thM = document.createElement("th");
         thM.className = "mes";
-        thM.colSpan = 2;
+        thM.colSpan = idx > 0 ? 3 : 2;
         thM.textContent = rotuloMesCurto(ym);
         trGrp.appendChild(thM);
       });
@@ -3385,7 +3415,7 @@
       thead.appendChild(trGrp);
       const trSub = document.createElement("tr");
       trSub.className = "sub";
-      meses.forEach(function () {
+      meses.forEach(function (ym, idx) {
         const thQ = document.createElement("th");
         thQ.className = "mes-start";
         thQ.textContent = t("th_qtd");
@@ -3393,6 +3423,12 @@
         const thVal = document.createElement("th");
         thVal.textContent = t("th_valor");
         trSub.appendChild(thVal);
+        if (idx > 0) {
+          const thV = document.createElement("th");
+          thV.className = "var-pct";
+          thV.textContent = t("th_var_pct_ventas");
+          trSub.appendChild(thV);
+        }
       });
       const thTQ = document.createElement("th");
       thTQ.className = "mes-start";
@@ -3410,9 +3446,9 @@
         let prevV = null;
         meses.forEach(function (ym, idx) {
           const cell = mesesMap[ym].by[mk.n] || { c: 0, v: 0 };
-          if (idx > 0) tr.appendChild(tdVarPct(prevV, cell.v));
           tr.appendChild(tdQbar(cell.c, maxQtdMes[ym], true));
           tr.appendChild(tdValor(cell.v, false));
+          if (idx > 0) tr.appendChild(tdVarPct(prevV, cell.v));
           prevV = cell.v;
         });
         tr.appendChild(tdQbar(mk.c, maxQtdTot, true));
@@ -3432,9 +3468,9 @@
         const v = mesesMap[ym].totalV;
         granC += c;
         granV += v;
-        if (idx > 0) trf.appendChild(tdVarPct(prevTotV, v));
         trf.appendChild(tdQbar(c, maxTotMes, true));
         trf.appendChild(tdValor(v, false));
+        if (idx > 0) trf.appendChild(tdVarPct(prevTotV, v));
         prevTotV = v;
       });
       trf.appendChild(tdQbar(granC, Math.max(1, granC), true));

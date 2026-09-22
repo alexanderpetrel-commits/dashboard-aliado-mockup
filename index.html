@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="sticky-pane" content="v14-periodo-inicial-6-meses-20260922">
+  <meta name="sticky-pane" content="v15-mockup-6m-anclado-dcmax-20260922">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <title>Painel executivo do aliado — Smartphone Mastercell Brasil</title>
   <style>
@@ -1694,7 +1694,7 @@
       </div>
     </div>
   </div>
-  <script src="2026-09-15-dashboard-ejecutivo-aliado-datos.js?v=20260922-qtd-quantidade"></script>
+  <script src="2026-09-15-dashboard-ejecutivo-aliado-datos.js?v=20260922-mockup6m-dcmax"></script>
   <script>
     (function () {
       const side = document.getElementById("sidebar");
@@ -2171,10 +2171,12 @@
       }
     }
     function periodoInicialFechas() {
-      const hoy = hoyIso();
-      const d = new Date(hoy + "T12:00:00");
+      const finRef = meta.dcMax || hoyIso();
+      const d = new Date(finRef + "T12:00:00");
       const ini = new Date(d.getFullYear(), d.getMonth() - (RANGO_MESES - 1), 1);
-      return { inicio: ymd(ini), fin: hoy };
+      let inicioIso = ymd(ini);
+      if (meta.dcMin) inicioIso = maxIso(inicioIso, meta.dcMin);
+      return { inicio: inicioIso, fin: finRef };
     }
     function aplicarPeriodoInicial() {
       const p = periodoInicialFechas();

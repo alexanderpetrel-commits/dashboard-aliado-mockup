@@ -285,22 +285,16 @@
       color: var(--muted);
       line-height: 1.2;
     }
+    .funnel-stage .lab-with-tip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .funnel-stage .lab-with-tip .tip {
+      flex: 0 0 auto;
+    }
     .funnel-stage.ok .lab { color: #2f6b45; }
     .funnel-stage.loss .lab { color: var(--marca); }
-    .funnel-stage .sub {
-      display: block;
-      margin-top: 1px;
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0;
-      text-transform: none;
-      color: var(--muted);
-      font-variant-numeric: tabular-nums;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .funnel-stage .sub b { color: var(--texto-forte); font-weight: 700; }
     .funnel-stage .track {
       height: 7px;
       background: #f0f0f0;
@@ -945,7 +939,6 @@
             <div class="funnel-stage base">
               <div>
                 <span class="lab" data-i18n="kpi_criadas">Criadas</span>
-                <span class="sub" data-i18n="kpi_criadas_sub">Base do funil</span>
               </div>
               <div class="track"><i id="kpiBarCriadas" style="width:100%"></i></div>
               <div>
@@ -956,7 +949,6 @@
             <div class="funnel-stage ok">
               <div>
                 <span class="lab" data-i18n="kpi_concedidas">Outorgadas</span>
-                <span class="sub" id="kpiConcedidasSub">—</span>
               </div>
               <div class="track"><i class="ok" id="kpiBarConcedidas" style="width:0%"></i></div>
               <div>
@@ -967,7 +959,6 @@
             <div class="funnel-stage">
               <div>
                 <span class="lab" data-i18n="kpi_aprovadas">Aprovadas</span>
-                <span class="sub" id="kpiAprovadasSub">—</span>
               </div>
               <div class="track"><i class="warn" id="kpiBarAprovadas" style="width:0%"></i></div>
               <div>
@@ -976,9 +967,9 @@
               </div>
             </div>
             <div class="funnel-stage loss">
-              <div>
+              <div class="lab-with-tip">
                 <span class="lab" data-i18n="kpi_perdas">Perdas</span>
-                <span class="sub" id="kpiPerdasSub">—</span>
+                <span class="tip" id="kpiPerdasTip" tabindex="0" role="img" aria-label="" data-tip="">?</span>
               </div>
               <div class="track"><i class="bad" id="kpiBarPerdas" style="width:0%"></i></div>
               <div>
@@ -1203,6 +1194,7 @@
         kpi_funnel_scale: "Escala 0–100 % das criadas",
         kpi_share_base: "Base", kpi_share_of: "Das criadas",
         kpi_chip_cancel: "canceladas", kpi_chip_rejeit: "rejeitadas",
+        tip_perdas_detalle: "{canc} canceladas · {rej} rejeitadas",
         kpi_aria: "Indicadores do período",
         vol_titulo: "Vendas outorgadas",
         tab_diario: "Diário", tab_mensual: "Mensal",
@@ -1297,6 +1289,7 @@
         kpi_funnel_scale: "Escala 0–100 % de las creadas",
         kpi_share_base: "Base", kpi_share_of: "De las creadas",
         kpi_chip_cancel: "canceladas", kpi_chip_rejeit: "rechazadas",
+        tip_perdas_detalle: "{canc} canceladas · {rej} rechazadas",
         kpi_aria: "Indicadores del período",
         vol_titulo: "Ventas otorgadas",
         tab_diario: "Diario", tab_mensual: "Mensual",
@@ -2918,17 +2911,22 @@
       document.getElementById("kpiShareCriadas").textContent = "100 %";
       document.getElementById("kpiBarCriadas").style.width = "100%";
       document.getElementById("kpiConcedidas").textContent = brNum(a.conc, 0);
-      document.getElementById("kpiConcedidasSub").textContent = t("kpi_das_criadas");
       document.getElementById("kpiShareConcedidas").textContent = pct(a.conc, a.n);
       document.getElementById("kpiBarConcedidas").style.width = pConc.toFixed(1) + "%";
       document.getElementById("kpiAprovadas").textContent = brNum(a.aprov, 0);
-      document.getElementById("kpiAprovadasSub").textContent = brMoney(a.aprovV) + " " + t("kpi_em_curso");
       document.getElementById("kpiShareAprovadas").textContent = pct(a.aprov, a.n);
       document.getElementById("kpiBarAprovadas").style.width = pAprov.toFixed(1) + "%";
       document.getElementById("kpiPerdas").textContent = brNum(perdas, 0);
-      document.getElementById("kpiPerdasSub").textContent = brNum(a.canc, 0) + " " + t("kpi_cancel") + " · " + brNum(a.rej, 0) + " " + t("kpi_rejeit");
       document.getElementById("kpiSharePerdas").textContent = pct(perdas, a.n);
       document.getElementById("kpiBarPerdas").style.width = pPerdas.toFixed(1) + "%";
+      const tipPerdas = document.getElementById("kpiPerdasTip");
+      if (tipPerdas) {
+        const txt = t("tip_perdas_detalle")
+          .replace("{canc}", brNum(a.canc, 0))
+          .replace("{rej}", brNum(a.rej, 0));
+        tipPerdas.setAttribute("aria-label", txt);
+        tipPerdas.setAttribute("data-tip", txt);
+      }
     }
 
     function pintar(lista) {

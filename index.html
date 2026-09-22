@@ -540,6 +540,19 @@
       font-weight: 700;
       background: #fafafa;
     }
+    .tbl-dyn.comp-mx td.var-pct {
+      font-size: 11px;
+      font-weight: 700;
+      min-width: 72px;
+    }
+    .tbl-dyn.comp-mx td.var-up { color: #2f6b45; }
+    .tbl-dyn.comp-mx td.var-down { color: var(--marca); }
+    .tbl-dyn.comp-mx td.var-flat { color: var(--muted); }
+    .tbl-dyn.comp-mx th.var-pct {
+      font-size: 10px;
+      color: var(--muted);
+      min-width: 72px;
+    }
     .donut-tip {
       position: fixed;
       z-index: 40;
@@ -1344,7 +1357,7 @@
         comp_titulo: "Composição das solicitações", risco_titulo: "Risco da filial", regiao_titulo: "Região e lojas",
         tab_consolidado: "Consolidado", tab_desglose_mensual: "Detalhamento mensal",
         comp_mensual_note: "Barras 100 % = mix do mês",
-        th_estado: "Estado", th_total: "Total", th_criadas_row: "Criadas",
+        th_estado: "Estado", th_total: "Total", th_criadas_row: "Criadas", th_var_pct: "Var. %",
         ord_az: "A–Z", ord_za: "Z–A", ord_maior_qtd: "Maior quantidade", ord_menor_qtd: "Menor quantidade",
         ord_maior_risco: "Maior nível de risco", ord_menor_risco: "Menor nível de risco",
         nota_tabela: "Criadas = solicitações com data de criação neste período. A porcentagem de cada situação é sobre as criadas da linha. Aprovada = o crédito já foi aprovado e a venda ainda não passou a Outorgada. Cancelada entra para o total fechar. Neste arquivo, o valor solicitado é igual ao valor aprovado.",
@@ -2426,6 +2439,21 @@
       const raw = d.toLocaleDateString(loc, { month: "short" }).replace(".", "");
       return raw.charAt(0).toUpperCase() + raw.slice(1);
     }
+    function tdVarPct(antes, agora) {
+      const cell = document.createElement("td");
+      cell.className = "num var-pct";
+      if (!antes) {
+        cell.textContent = "—";
+        cell.classList.add("var-flat");
+        return cell;
+      }
+      const v = 100 * ((agora || 0) - antes) / antes;
+      cell.textContent = (v > 0 ? "+" : "") + brNum(v, 1) + " %";
+      if (v > 0.05) cell.classList.add("var-up");
+      else if (v < -0.05) cell.classList.add("var-down");
+      else cell.classList.add("var-flat");
+      return cell;
+    }
     function statusKeyDeFila(r) {
       return r && r.s ? r.s : "";
     }
@@ -2761,8 +2789,13 @@
       const thead = document.createElement("thead");
       const trh = document.createElement("tr");
       trh.appendChild(thDyn(t("th_estado"), "140px", false));
-      meses.forEach(function (ym) {
+      meses.forEach(function (ym, idx) {
         trh.appendChild(thDyn(rotuloMesCurto(ym), "64px", true));
+        if (idx > 0) {
+          const thV = thDyn(t("th_var_pct"), "72px", true);
+          thV.classList.add("var-pct");
+          trh.appendChild(thV);
+        }
       });
       trh.appendChild(thDyn(t("th_total"), "72px", true));
       thead.appendChild(trh);
@@ -2778,10 +2811,13 @@
         nameWrap.appendChild(document.createTextNode(LABELS[st.k] || st.k));
         tr.appendChild(tdDyn(nameWrap, false));
         let tot = 0;
-        meses.forEach(function (ym) {
+        let prev = null;
+        meses.forEach(function (ym, idx) {
           const n = (mesesMap[ym].by[st.k] || 0);
           tot += n;
           tr.appendChild(tdDyn(n ? brNum(n, 0) : "—", true));
+          if (idx > 0) tr.appendChild(tdVarPct(prev, n));
+          prev = n;
         });
         tr.appendChild(tdDyn(brNum(tot, 0), true));
         tbody.appendChild(tr);
@@ -2791,9 +2827,13 @@
       const trf = document.createElement("tr");
       trf.appendChild(tdDyn(t("th_criadas_row"), false));
       let gran = 0;
-      meses.forEach(function (ym) {
-        gran += mesesMap[ym].total;
-        trf.appendChild(tdDyn(brNum(mesesMap[ym].total, 0), true));
+      let prevTot = null;
+      meses.forEach(function (ym, idx) {
+        const n = mesesMap[ym].total;
+        gran += n;
+        trf.appendChild(tdDyn(brNum(n, 0), true));
+        if (idx > 0) trf.appendChild(tdVarPct(prevTot, n));
+        prevTot = n;
       });
       trf.appendChild(tdDyn(brNum(gran, 0), true));
       tfoot.appendChild(trf);

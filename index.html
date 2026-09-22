@@ -1874,9 +1874,9 @@
     }
     function textoFocoVendas(item) {
       const ticket = item.c ? item.v / item.c : 0;
-      return rotuloDia(item.n) + " · " + brNum(item.c, 0) + " " + t("foco_vendas")
-        + " · " + brMoney(item.v)
-        + " · " + t("foco_ticket") + " " + brMoney(ticket);
+      return rotuloDia(item.n) + " | " + brNum(item.c, 0) + " " + t("foco_vendas")
+        + " | " + brMoney(item.v)
+        + " | " + t("foco_ticket") + " " + brMoney(ticket);
     }
     function pintarVendasTempo() {
       const items = modoVendasTempo === "mes" ? vendasMesAtual : vendasDiaAtual;

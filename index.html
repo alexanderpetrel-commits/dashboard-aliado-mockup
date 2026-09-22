@@ -477,12 +477,15 @@
     .pie-wrap svg { width: 200px; height: 200px; display: block; }
     .pie-risco,
     .pie-comp {
-      grid-template-columns: 1fr;
-      justify-items: center;
-      gap: 12px;
+      grid-template-columns: 220px minmax(0, 1fr);
+      justify-items: stretch;
+      align-items: center;
+      gap: 18px;
     }
     .pie-risco svg,
-    .pie-comp svg { width: 120px; height: 120px; margin: 0 auto; }
+    .pie-comp svg { width: 200px; height: 200px; margin: 0; }
+    .tbl-dyn-comp,
+    .tbl-dyn-risco { max-height: 260px; }
     .donut-tip {
       position: fixed;
       z-index: 40;
@@ -526,8 +529,6 @@
       background: #fafafa;
       overflow: hidden;
     }
-    .tbl-dyn-comp { max-height: 230px; }
-    .tbl-dyn-risco { max-height: 170px; }
     .tbl-dyn-scroll {
       width: 100%;
       height: 100%;
@@ -759,6 +760,10 @@
       .grid { grid-template-columns: 1fr; }
       .fila { grid-template-columns: 1fr 1fr; }
       .pie-wrap { grid-template-columns: 1fr; }
+      .pie-risco,
+      .pie-comp { grid-template-columns: 1fr; justify-items: center; }
+      .pie-risco svg,
+      .pie-comp svg { margin: 0 auto; }
       .pie-wrap svg { margin: 0 auto; }
       .app-body { flex-direction: column; }
       nav.cs-side { width: 100%; flex: none; }

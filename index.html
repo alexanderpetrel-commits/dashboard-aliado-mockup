@@ -2164,6 +2164,27 @@
       const W = 1200;
       const H = 280;
       const L = 78;
+      const R = 16;
+      const T = 12;
+      const B = 32;
+      const iw = W - L - R;
+      const ih = H - T - B;
+      const cw = iw / cols;
+      const ch = ih / rows;
+      const svg = svgEl("svg");
+      svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+      svg.setAttribute("preserveAspectRatio", "none");
+      svg.setAttribute("role", "img");
+      svg.setAttribute("aria-label", t("aria_heat"));
+      for (let r = 0; r < rows; r++) {
+        const lab = svgEl("text");
+        lab.setAttribute("x", String(L - 8));
+        lab.setAttribute("y", String(T + r * ch + ch / 2 + 4));
+        lab.setAttribute("text-anchor", "end");
+        lab.setAttribute("font-size", "12");
+        lab.setAttribute("fill", "#8a8a8a");
+        lab.textContent = franjas[r] || "";
+        svg.appendChild(lab);
         for (let c = 0; c < cols; c++) {
           const n = matrix[r][c];
           const col = heatColor(n / maxC);

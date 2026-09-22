@@ -212,21 +212,62 @@
     .msg.ok { display: block; background: #eef7ee; color: var(--ok); }
     .kpis {
       display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
+      grid-template-columns: 1.35fr 1fr;
       gap: 12px;
       margin-bottom: 14px;
     }
-    .kpi {
-      background: var(--tarjeta);
+    .kpi-group {
+      background: #f7f7f7;
+      border: 1px solid #e4e4e4;
       border-radius: 12px;
-      padding: 10px 12px 10px;
-      box-shadow: var(--sombra);
-      min-height: 0;
+      padding: 12px;
+      box-shadow: none;
     }
+    .kpi-group-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 10px;
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 800;
+    }
+    .kpi-group-title i {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--marca);
+      display: inline-block;
+    }
+    .kpi-group-title i.gray { background: #8a8a8a; }
+    .kpi-group .kpi-row {
+      display: grid;
+      gap: 8px;
+    }
+    .kpi-group.result .kpi-row { grid-template-columns: 1.2fr 0.9fr 0.9fr; }
+    .kpi-group.funnel .kpi-row { grid-template-columns: 1fr 1fr 1fr; }
+    .kpi {
+      background: #fafafa;
+      border: 1px solid var(--linea);
+      border-radius: 10px;
+      padding: 10px 11px;
+      box-shadow: none;
+      min-height: 108px;
+      display: flex;
+      flex-direction: column;
+    }
+    .kpi.featured {
+      background: #eef7ee;
+      border-color: #b7d9b9;
+    }
+    .kpi.featured > span:first-child { color: #2f6b45; }
+    .kpi.loss b { color: var(--marca); }
     .kpi span {
       display: block;
       font-size: 10px;
-      letter-spacing: .06em;
+      letter-spacing: .07em;
       text-transform: uppercase;
       color: var(--muted);
       font-weight: 700;
@@ -235,23 +276,48 @@
     }
     .kpi b {
       display: block;
-      margin-top: 4px;
-      font-size: 17px;
+      margin-top: 6px;
+      font-size: 20px;
       color: var(--texto-forte);
       font-variant-numeric: tabular-nums;
       letter-spacing: -.02em;
-      font-weight: 700;
-      line-height: 1.2;
+      font-weight: 800;
+      line-height: 1.15;
     }
+    .kpi.featured b { font-size: 22px; }
     .kpi em {
       display: block;
-      margin-top: 3px;
+      margin-top: 6px;
       font-style: normal;
       font-size: 11px;
       color: var(--muted);
       font-variant-numeric: tabular-nums;
-      line-height: 1.3;
+      line-height: 1.35;
     }
+    .kpi em b { display: inline; font-size: inherit; font-weight: 600; color: var(--texto-forte); margin: 0; letter-spacing: 0; }
+    .kpi-split {
+      margin-top: auto;
+      padding-top: 8px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .kpi-chip {
+      background: #fff;
+      border: 1px solid var(--linea);
+      border-radius: 8px;
+      padding: 6px 7px;
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.25;
+    }
+    .kpi-chip strong {
+      display: block;
+      color: var(--texto-forte);
+      font-size: 13px;
+      font-variant-numeric: tabular-nums;
+    }
+    .kpi-chip.bad strong { color: var(--marca); }
     .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     section { background: var(--tarjeta); border-radius: 12px; padding: 18px 18px 16px; margin-bottom: 14px; box-shadow: var(--sombra); }
     h2 { margin: 0 0 14px; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
@@ -571,7 +637,9 @@
     .stack i { display: block; height: 100%; }
     .vazio { padding: 28px 8px; text-align: center; color: var(--muted); font-size: 14px; }
     @media (max-width: 1100px) {
-      .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .kpis { grid-template-columns: 1fr; }
+      .kpi-group.result .kpi-row,
+      .kpi-group.funnel .kpi-row { grid-template-columns: 1fr; }
       .grid { grid-template-columns: 1fr; }
       .fila { grid-template-columns: 1fr 1fr; }
       .pie-wrap { grid-template-columns: 1fr; }
@@ -760,36 +828,49 @@
     </div>
     <div id="painel">
       <div class="kpis" id="kpisChefe" aria-label="Indicadores do período">
-        <article class="kpi">
-          <span data-i18n="kpi_valor">Valor outorgado</span>
-          <b id="kpiValorConcedido">—</b>
-          <em id="kpiValorConcedidoSub">—</em>
-        </article>
-        <article class="kpi">
-          <span data-i18n="kpi_ticket">Ticket médio</span>
-          <b id="kpiTicket">—</b>
-          <em id="kpiTicketSub" data-i18n="kpi_ticket_sub">Nas outorgadas</em>
-        </article>
-        <article class="kpi">
-          <span data-i18n="kpi_concedidas">Outorgadas</span>
-          <b id="kpiConcedidas">—</b>
-          <em id="kpiConcedidasSub">—</em>
-        </article>
-        <article class="kpi">
-          <span data-i18n="kpi_aprovadas">Aprovadas</span>
-          <b id="kpiAprovadas">—</b>
-          <em id="kpiAprovadasSub">—</em>
-        </article>
-        <article class="kpi">
-          <span data-i18n="kpi_criadas">Criadas</span>
-          <b id="kpiCriadas">—</b>
-          <em id="kpiCriadasSub" data-i18n="kpi_criadas_sub">Topo do funil no período</em>
-        </article>
-        <article class="kpi">
-          <span data-i18n="kpi_perdas">Perdas</span>
-          <b id="kpiPerdas">—</b>
-          <em id="kpiPerdasSub">—</em>
-        </article>
+        <div class="kpi-group result">
+          <p class="kpi-group-title"><i></i><span data-i18n="kpi_grupo_resultado">Resultado do período</span></p>
+          <div class="kpi-row">
+            <article class="kpi featured">
+              <span data-i18n="kpi_valor">Valor outorgado</span>
+              <b id="kpiValorConcedido">—</b>
+              <em id="kpiValorConcedidoSub">—</em>
+            </article>
+            <article class="kpi">
+              <span data-i18n="kpi_ticket">Ticket médio</span>
+              <b id="kpiTicket">—</b>
+              <em id="kpiTicketSub" data-i18n="kpi_ticket_sub">Média nas outorgadas</em>
+            </article>
+            <article class="kpi">
+              <span data-i18n="kpi_concedidas">Outorgadas</span>
+              <b id="kpiConcedidas">—</b>
+              <em id="kpiConcedidasSub">—</em>
+            </article>
+          </div>
+        </div>
+        <div class="kpi-group funnel">
+          <p class="kpi-group-title"><i class="gray"></i><span data-i18n="kpi_grupo_embudo">Funil e fugas</span></p>
+          <div class="kpi-row">
+            <article class="kpi">
+              <span data-i18n="kpi_criadas">Criadas</span>
+              <b id="kpiCriadas">—</b>
+              <em id="kpiCriadasSub" data-i18n="kpi_criadas_sub">Topo do funil</em>
+            </article>
+            <article class="kpi">
+              <span data-i18n="kpi_aprovadas">Aprovadas</span>
+              <b id="kpiAprovadas">—</b>
+              <em id="kpiAprovadasSub">—</em>
+            </article>
+            <article class="kpi loss">
+              <span data-i18n="kpi_perdas">Perdas</span>
+              <b id="kpiPerdas">—</b>
+              <div class="kpi-split">
+                <div class="kpi-chip"><strong id="kpiPerdasCanc">—</strong><span data-i18n="kpi_chip_cancel">canceladas</span></div>
+                <div class="kpi-chip bad"><strong id="kpiPerdasRej">—</strong><span data-i18n="kpi_chip_rejeit">rejeitadas</span></div>
+              </div>
+            </article>
+          </div>
+        </div>
       </div>
       <section>
         <div class="sec-tempo-head">
@@ -997,8 +1078,11 @@
         filtros: "Filtros", baixar: "Baixar relatório", limpar: "Limpar", procurar: "Procurar",
         f_inicio: "Data de início", f_fim: "Data de fim", f_produto: "Produto", f_metrica: "Métrica de valor", f_acoes: "Ações",
         opt_financiado: "Valor financiado", opt_ventas: "Valor de vendas",
-        kpi_valor: "Valor outorgado", kpi_ticket: "Ticket médio", kpi_ticket_sub: "Nas outorgadas",
-        kpi_concedidas: "Outorgadas", kpi_aprovadas: "Aprovadas", kpi_criadas: "Criadas", kpi_criadas_sub: "Topo do funil no período", kpi_perdas: "Perdas",
+        kpi_valor: "Valor outorgado", kpi_ticket: "Ticket médio", kpi_ticket_sub: "Média nas outorgadas",
+        kpi_concedidas: "Outorgadas", kpi_aprovadas: "Aprovadas", kpi_criadas: "Criadas", kpi_criadas_sub: "Topo do funil", kpi_perdas: "Perdas",
+        kpi_grupo_resultado: "Resultado do período", kpi_grupo_embudo: "Funil e fugas",
+        kpi_vendas_periodo: "vendas fechadas no período filtrado",
+        kpi_chip_cancel: "canceladas", kpi_chip_rejeit: "rejeitadas",
         kpi_aria: "Indicadores do período",
         vol_titulo: "Vendas outorgadas",
         tab_diario: "Diário", tab_mensual: "Mensal",
@@ -1085,8 +1169,11 @@
         filtros: "Filtros", baixar: "Descargar informe", limpar: "Limpiar", procurar: "Buscar",
         f_inicio: "Fecha de inicio", f_fim: "Fecha de fin", f_produto: "Producto", f_metrica: "Métrica de valor", f_acoes: "Acciones",
         opt_financiado: "Valor financiado", opt_ventas: "Valor de ventas",
-        kpi_valor: "Valor otorgado", kpi_ticket: "Ticket medio", kpi_ticket_sub: "En las otorgadas",
-        kpi_concedidas: "Otorgadas", kpi_aprovadas: "Aprobadas", kpi_criadas: "Creadas", kpi_criadas_sub: "Tope del embudo en el período", kpi_perdas: "Pérdidas",
+        kpi_valor: "Valor otorgado", kpi_ticket: "Ticket medio", kpi_ticket_sub: "Promedio en las otorgadas",
+        kpi_concedidas: "Otorgadas", kpi_aprovadas: "Aprobadas", kpi_criadas: "Creadas", kpi_criadas_sub: "Tope del embudo", kpi_perdas: "Pérdidas",
+        kpi_grupo_resultado: "Resultado del período", kpi_grupo_embudo: "Embudo y fugas",
+        kpi_vendas_periodo: "ventas cerradas en el período filtrado",
+        kpi_chip_cancel: "canceladas", kpi_chip_rejeit: "rechazadas",
         kpi_aria: "Indicadores del período",
         vol_titulo: "Ventas otorgadas",
         tab_diario: "Diario", tab_mensual: "Mensual",
@@ -2694,17 +2781,18 @@
       const ticket = a.conc ? a.concV / a.conc : null;
       const perdas = a.canc + a.rej;
       document.getElementById("kpiValorConcedido").textContent = brMoney(a.concV);
-      document.getElementById("kpiValorConcedidoSub").textContent = brNum(a.conc, 0) + " " + t("kpi_vendas");
+      document.getElementById("kpiValorConcedidoSub").textContent = brNum(a.conc, 0) + " " + t("kpi_vendas_periodo");
       document.getElementById("kpiTicket").textContent = brMoney(ticket);
       document.getElementById("kpiTicketSub").textContent = t("kpi_ticket_sub");
       document.getElementById("kpiConcedidas").textContent = brNum(a.conc, 0);
-      document.getElementById("kpiConcedidasSub").textContent = pct(a.conc, a.n) + " " + t("kpi_das_criadas");
+      document.getElementById("kpiConcedidasSub").innerHTML = "<b>" + pct(a.conc, a.n) + "</b> " + t("kpi_das_criadas");
       document.getElementById("kpiAprovadas").textContent = brNum(a.aprov, 0);
-      document.getElementById("kpiAprovadasSub").textContent = brMoney(a.aprovV) + " " + t("kpi_em_curso");
+      document.getElementById("kpiAprovadasSub").innerHTML = "<b>" + brMoney(a.aprovV) + "</b> " + t("kpi_em_curso");
       document.getElementById("kpiCriadas").textContent = brNum(a.n, 0);
       document.getElementById("kpiCriadasSub").textContent = t("kpi_criadas_sub");
       document.getElementById("kpiPerdas").textContent = brNum(perdas, 0);
-      document.getElementById("kpiPerdasSub").textContent = brNum(a.canc, 0) + " " + t("kpi_cancel") + " · " + brNum(a.rej, 0) + " " + t("kpi_rejeit") + " · " + pct(perdas, a.n);
+      document.getElementById("kpiPerdasCanc").textContent = brNum(a.canc, 0);
+      document.getElementById("kpiPerdasRej").textContent = brNum(a.rej, 0);
     }
 
     function pintar(lista) {

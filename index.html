@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="sticky-pane" content="v3-20260922">
+  <meta name="sticky-pane" content="v4-periodo-inicial-20260922">
   <title>Painel executivo do aliado — Smartphone Mastercell Brasil</title>
   <style>
     :root {
@@ -1772,7 +1772,7 @@
         tip_produto: "Tipo de produto da solicitação.",
         tip_metrica: "Define se os indicadores e gráficos usam o valor de vendas ou o valor financiado. Por padrão: valor financiado.",
         tip_acoes: "Limpar restaura os filtros. Buscar aplica a consulta e atualiza o painel.",
-        tip_limpar: "Limpa datas e seleções; restaura produto Smartphone e métrica Valor financiado.",
+        tip_limpar: "Limpa seleções; restaura datas do período inicial, produto Smartphone e métrica Valor financiado.",
         tip_procurar: "Aplica os filtros e atualiza o painel.",
         tip_excel: "Baixa o relatório Excel das solicitações do período filtrado.",
         placeholder_busca: "Digite para buscar",
@@ -1799,7 +1799,7 @@
         vazio_concedidas: "Nenhuma solicitação outorgada neste período.",
         vazio_limpo: "Filtros limpos. Clique em Procurar para carregar os dados.",
         err_dados: "Não foi possível ler os dados. Abra este HTML na mesma pasta do arquivo 2026-09-15-dashboard-ejecutivo-aliado-datos.js.",
-        aviso_ref: "Referência visual da Spec. Arquivo de 10/09/2026: {n} solicitações, com data de criação de {min} a {max}. O período inicial é agosto de 2026 (90,9 % do arquivo). Sem nomes de clientes, IMEI nem endereço.",
+        aviso_ref: "Referência visual da Spec. Arquivo de 10/09/2026: {n} solicitações, com data de criação de {min} a {max}. Período inicial = mês em curso (ou mês anterior nos dias 1 a 5). Sem nomes de clientes, IMEI nem endereço.",
         excel_produto: "Não há relatório deste produto neste arquivo.",
         excel_ok: "Download iniciado ({n} linhas). Nomes de clientes, IMEI e endereço aparecem como [oculto] neste mockup.",
         excel_nao: "Não"
@@ -1872,7 +1872,7 @@
         tip_produto: "Tipo de producto de la solicitud.",
         tip_metrica: "Define si los indicadores y gráficos usan el valor de ventas o el valor financiado. Por defecto: valor financiado.",
         tip_acoes: "Limpiar restaura los filtros. Buscar aplica la consulta y actualiza el panel.",
-        tip_limpar: "Limpia fechas y selecciones; restaura producto Smartphone y métrica Valor financiado.",
+        tip_limpar: "Limpia selecciones; restaura fechas del período inicial, producto Smartphone y métrica Valor financiado.",
         tip_procurar: "Aplica los filtros y actualiza el panel.",
         tip_excel: "Descarga el informe Excel de las solicitudes del período filtrado.",
         placeholder_busca: "Escriba para buscar",
@@ -1899,7 +1899,7 @@
         vazio_concedidas: "Ninguna solicitud otorgada en este período.",
         vazio_limpo: "Filtros limpios. Haga clic en Buscar para cargar los datos.",
         err_dados: "No fue posible leer los datos. Abra este HTML en la misma carpeta del archivo 2026-09-15-dashboard-ejecutivo-aliado-datos.js.",
-        aviso_ref: "Referencia visual de la Spec. Archivo del 10/09/2026: {n} solicitudes, con fecha de creación de {min} a {max}. El período inicial es agosto de 2026 (90,9 % del archivo). Sin nombres de clientes, IMEI ni dirección.",
+        aviso_ref: "Referencia visual de la Spec. Archivo del 10/09/2026: {n} solicitudes, con fecha de creación de {min} a {max}. Período inicial = mes en curso (o mes anterior en los días 1 a 5). Sin nombres de clientes, IMEI ni dirección.",
         excel_produto: "No hay informe de este producto en este archivo.",
         excel_ok: "Descarga iniciada ({n} filas). Nombres de clientes, IMEI y dirección aparecen como [oculto] en este mockup.",
         excel_nao: "No"
@@ -2102,7 +2102,33 @@
       { value: "tecnohome", label: "Tecnohome" }
     ];
     function hoyIso() {
-      return ymd(new Date());
+      try {
+        return new Intl.DateTimeFormat("en-CA", {
+          timeZone: "America/Sao_Paulo",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit"
+        }).format(new Date());
+      } catch (e) {
+        return ymd(new Date());
+      }
+    }
+    function periodoInicialFechas() {
+      const hoy = hoyIso();
+      const d = new Date(hoy + "T12:00:00");
+      const dia = d.getDate();
+      if (dia <= 5) {
+        const ini = new Date(d.getFullYear(), d.getMonth() - 1, 1);
+        const fim = new Date(d.getFullYear(), d.getMonth(), 0);
+        return { inicio: ymd(ini), fin: ymd(fim) };
+      }
+      const iniMes = new Date(d.getFullYear(), d.getMonth(), 1);
+      return { inicio: ymd(iniMes), fin: hoy };
+    }
+    function aplicarPeriodoInicial() {
+      const p = periodoInicialFechas();
+      inicio.value = p.inicio;
+      fin.value = p.fin;
     }
     function addMesesIso(iso, meses) {
       const d = new Date(iso + "T12:00:00");
@@ -2160,8 +2186,7 @@
       fin.min = fMin;
       fin.max = fMax;
     }
-    inicio.value = "2026-08-01";
-    fin.value = "2026-08-31";
+    aplicarPeriodoInicial();
     sincronizarProductoUi("smartphone");
     aplicarLimitesFechas();
     function brData(iso) {
@@ -4408,8 +4433,7 @@
       seleccion.lojas = [];
       seleccion.vendedores = [];
       seleccion.risco = [];
-      inicio.value = "";
-      fin.value = "";
+      aplicarPeriodoInicial();
       sincronizarProductoUi("smartphone");
       document.getElementById("metricaValor").value = "financiado";
       metricaValorAplicada = "financiado";
@@ -4419,6 +4443,7 @@
       document.querySelectorAll(".ms").forEach(function (box) {
         renderMs(box);
       });
+      consultar();
     });
     const swIdioma = document.getElementById("swIdioma");
     const langSwitch = document.getElementById("langSwitch");

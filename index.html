@@ -2374,7 +2374,7 @@
           break;
         }
         out += escapeHtmlMs(raw.slice(i, idx));
-        out += '<mark class="ms-hit">' + escapeHtmlMs(raw.slice(idx, idx + q.length)) + "</mark>";
+        out += '<b class="ms-hit">' + escapeHtmlMs(raw.slice(idx, idx + q.length)) + "</b>";
         i = idx + q.length;
       }
       return out;

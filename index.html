@@ -92,6 +92,29 @@
       margin: 0 0 18px; font-size: 16px; font-weight: 700; color: var(--texto-forte);
     }
     .cs-func svg { width: 18px; height: 18px; flex: 0 0 18px; stroke: var(--marca); }
+    .cs-func-head {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+      margin: 0 0 18px;
+      flex-wrap: wrap;
+    }
+    .cs-func-head .cs-func { margin: 0; }
+    .aliado-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 26px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: #ffe8eb;
+      color: var(--marca);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .01em;
+      white-space: nowrap;
+    }
     .app-body { display: flex; align-items: stretch; min-height: calc(100vh - 86px); }
     nav.cs-side {
       width: 248px; flex: 0 0 248px; background: #fff; padding: 12px 8px 32px 20px;
@@ -1292,10 +1315,13 @@
           </div>
         </div>
         <div id="vista-dashboard" class="vista">
-          <h1 class="cs-func">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="5" rx="1.5"/><rect x="13" y="10" width="8" height="11" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/></svg>
-            <span data-i18n="nav_dashboard">Dashboard</span>
-          </h1>
+          <div class="cs-func-head">
+            <h1 class="cs-func">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="5" rx="1.5"/><rect x="13" y="10" width="8" height="11" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/></svg>
+              <span data-i18n="nav_dashboard">Dashboard</span>
+            </h1>
+            <span class="aliado-pill" data-i18n="aliado_nombre">MasterCell</span>
+          </div>
           <main>
     <div class="filtros">
       <div class="filtros-head">
@@ -1710,6 +1736,7 @@
         menu_fechar: "Fechar menu", menu_abrir: "Abrir menu",
         nav_inicio: "Início", nav_historico: "Consultar histórico", nav_simulador: "Simulador de crédito", nav_financeiro: "Financeiro",
         nav_dashboard: "Dashboard", nav_loja: "Perfil da loja", nav_usuario: "Perfil do usuário",
+        aliado_nombre: "MasterCell",
         ola: "Olá, Alex", vista_existe: "Esta opção já existe no CrediSmart.",
         filtros: "Filtros", baixar: "Baixar relatório", limpar: "Limpar", procurar: "Procurar",
         f_inicio: "Data de início", f_fim: "Data de fim", f_produto: "Produto", f_metrica: "Métrica de valor", f_acoes: "Ações",
@@ -1810,6 +1837,7 @@
         menu_fechar: "Cerrar menú", menu_abrir: "Abrir menú",
         nav_inicio: "Inicio", nav_historico: "Consultar historial", nav_simulador: "Simulador de crédito", nav_financeiro: "Financiero",
         nav_dashboard: "Dashboard", nav_loja: "Perfil de la tienda", nav_usuario: "Perfil del usuario",
+        aliado_nombre: "MasterCell",
         ola: "Hola, Alex", vista_existe: "Esta opción ya existe en CrediSmart.",
         filtros: "Filtros", baixar: "Descargar informe", limpar: "Limpiar", procurar: "Buscar",
         f_inicio: "Fecha de inicio", f_fim: "Fecha de fin", f_produto: "Producto", f_metrica: "Métrica de valor", f_acoes: "Acciones",

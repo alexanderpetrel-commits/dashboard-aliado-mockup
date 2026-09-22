@@ -277,72 +277,84 @@
       color: var(--muted);
       white-space: nowrap;
     }
-    .kpi-group.funnel .funnel-steps {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
-      gap: 4px;
-      align-items: stretch;
-    }
-    .funnel-arrow {
+    .funnel-stages {
       display: flex;
-      align-items: center;
-      color: #b5b5b5;
-      font-size: 16px;
-      font-weight: 700;
-      padding: 0 1px;
+      flex-direction: column;
+      gap: 6px;
     }
-    .kpi.step { min-height: 132px; }
-    .kpi.step .step-n {
-      display: inline-flex;
+    .funnel-stage {
+      display: grid;
+      grid-template-columns: 96px 1fr 78px;
+      gap: 10px;
       align-items: center;
-      justify-content: center;
-      width: 18px;
-      height: 18px;
-      border-radius: 5px;
-      background: #f3f3f3;
-      color: var(--muted);
-      font-size: 10px;
-      font-weight: 800;
-      margin-bottom: 6px;
+      background: #fafafa;
+      border: 1px solid var(--linea);
+      border-radius: 10px;
+      padding: 10px 12px;
+      min-height: 58px;
     }
-    .kpi.step.base .step-n { background: #ececec; }
-    .kpi.step.ok {
+    .funnel-stage.ok {
       background: #f7fbf7;
       border-color: #b7d9b9;
     }
-    .kpi.step.ok .step-n { background: #eef7ee; color: #2f6b45; }
-    .kpi.step.ok > span[data-i18n] { color: #2f6b45; }
-    .kpi.step.loss { border-color: #f0d0d4; }
-    .kpi.step.loss .step-n { background: #ffe8eb; color: var(--marca); }
-    .kpi-share {
-      margin-top: auto;
-      padding-top: 8px;
+    .funnel-stage.loss {
+      border-color: #f0d0d4;
+      background: #fffafb;
     }
-    .kpi-share .meta {
-      display: flex;
-      justify-content: space-between;
-      gap: 6px;
-      font-size: 10px;
+    .funnel-stage .lab {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
       color: var(--muted);
-      margin-bottom: 4px;
+      line-height: 1.25;
     }
-    .kpi-share .meta b { color: var(--texto-forte); font-weight: 700; }
-    .kpi-share .track {
-      height: 7px;
+    .funnel-stage.ok .lab { color: #2f6b45; }
+    .funnel-stage.loss .lab { color: var(--marca); }
+    .funnel-stage .sub {
+      display: block;
+      margin-top: 2px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+    .funnel-stage .sub b { color: var(--texto-forte); font-weight: 700; }
+    .funnel-stage .track {
+      height: 10px;
+      background: #f0f0f0;
       border-radius: 99px;
-      background: #ececec;
       overflow: hidden;
     }
-    .kpi-share .track i {
+    .funnel-stage .track i {
       display: block;
       height: 100%;
       border-radius: 99px;
       background: #9a9a9a;
       max-width: 100%;
     }
-    .kpi-share .track i.warn { background: #b86a12; }
-    .kpi-share .track i.ok { background: #2f6b45; }
-    .kpi-share .track i.bad { background: var(--marca); }
+    .funnel-stage .track i.ok { background: #2f6b45; }
+    .funnel-stage .track i.warn { background: #b86a12; }
+    .funnel-stage .track i.bad { background: var(--marca); }
+    .funnel-stage .num {
+      text-align: right;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--texto-forte);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -.02em;
+      line-height: 1.1;
+    }
+    .funnel-stage .pct {
+      display: block;
+      margin-top: 2px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+    .funnel-stage.loss .num { color: var(--marca); }
     .kpi {
       background: #fafafa;
       border: 1px solid var(--linea);
@@ -735,8 +747,7 @@
     @media (max-width: 1100px) {
       .kpis { grid-template-columns: 1fr; }
       .kpi-group.result .kpi-row { grid-template-columns: 1fr; }
-      .kpi-group.funnel .funnel-steps { grid-template-columns: 1fr; }
-      .funnel-arrow { display: none; }
+      .funnel-stage { grid-template-columns: 88px 1fr 72px; }
       .grid { grid-template-columns: 1fr; }
       .fila { grid-template-columns: 1fr 1fr; }
       .pie-wrap { grid-template-columns: 1fr; }
@@ -942,58 +953,56 @@
         </div>
         <div class="kpi-group funnel">
           <p class="kpi-group-title"><i class="gray"></i><span data-i18n="kpi_grupo_embudo">Funil e fugas</span></p>
-          <p class="funnel-note" data-i18n="kpi_funnel_note">Base = solicitações <b>criadas (100 %)</b>. As demais etapas mostram quanto representam dessa base.</p>
+          <p class="funnel-note" data-i18n="kpi_funnel_note">Base = solicitações criadas (100 %). As demais etapas mostram quanto representam dessa base.</p>
           <div class="funnel-scale" aria-hidden="true">
             <div class="track"></div>
             <span class="lbl" data-i18n="kpi_funnel_scale">Escala 0–100 % das criadas</span>
           </div>
-          <div class="funnel-steps">
-            <article class="kpi step base">
-              <span class="step-n">1</span>
-              <span data-i18n="kpi_criadas">Criadas</span>
-              <b id="kpiCriadas">—</b>
-              <em id="kpiCriadasSub" data-i18n="kpi_criadas_sub">Base do funil</em>
-              <div class="kpi-share">
-                <div class="meta"><span data-i18n="kpi_share_base">Base</span><b id="kpiShareCriadas">100 %</b></div>
-                <div class="track"><i id="kpiBarCriadas" style="width:100%"></i></div>
+          <div class="funnel-stages">
+            <div class="funnel-stage base">
+              <div>
+                <span class="lab" data-i18n="kpi_criadas">Criadas</span>
+                <span class="sub" data-i18n="kpi_criadas_sub">Base do funil</span>
               </div>
-            </article>
-            <div class="funnel-arrow" aria-hidden="true">→</div>
-            <article class="kpi step">
-              <span class="step-n">2</span>
-              <span data-i18n="kpi_aprovadas">Aprovadas</span>
-              <b id="kpiAprovadas">—</b>
-              <em id="kpiAprovadasSub">—</em>
-              <div class="kpi-share">
-                <div class="meta"><span data-i18n="kpi_share_of">Das criadas</span><b id="kpiShareAprovadas">—</b></div>
-                <div class="track"><i class="warn" id="kpiBarAprovadas" style="width:0%"></i></div>
+              <div class="track"><i id="kpiBarCriadas" style="width:100%"></i></div>
+              <div>
+                <div class="num" id="kpiCriadas">—</div>
+                <span class="pct" id="kpiShareCriadas">100 %</span>
               </div>
-            </article>
-            <div class="funnel-arrow" aria-hidden="true">→</div>
-            <article class="kpi step ok">
-              <span class="step-n">3</span>
-              <span data-i18n="kpi_concedidas">Outorgadas</span>
-              <b id="kpiConcedidas">—</b>
-              <em id="kpiConcedidasSub">—</em>
-              <div class="kpi-share">
-                <div class="meta"><span data-i18n="kpi_share_of">Das criadas</span><b id="kpiShareConcedidas">—</b></div>
-                <div class="track"><i class="ok" id="kpiBarConcedidas" style="width:0%"></i></div>
+            </div>
+            <div class="funnel-stage ok">
+              <div>
+                <span class="lab" data-i18n="kpi_concedidas">Outorgadas</span>
+                <span class="sub" id="kpiConcedidasSub">—</span>
               </div>
-            </article>
-            <div class="funnel-arrow" aria-hidden="true">→</div>
-            <article class="kpi step loss">
-              <span class="step-n">4</span>
-              <span data-i18n="kpi_perdas">Perdas</span>
-              <b id="kpiPerdas">—</b>
-              <div class="kpi-split">
-                <div class="kpi-chip"><strong id="kpiPerdasCanc">—</strong><span data-i18n="kpi_chip_cancel">canceladas</span></div>
-                <div class="kpi-chip bad"><strong id="kpiPerdasRej">—</strong><span data-i18n="kpi_chip_rejeit">rejeitadas</span></div>
+              <div class="track"><i class="ok" id="kpiBarConcedidas" style="width:0%"></i></div>
+              <div>
+                <div class="num" id="kpiConcedidas">—</div>
+                <span class="pct" id="kpiShareConcedidas">—</span>
               </div>
-              <div class="kpi-share">
-                <div class="meta"><span data-i18n="kpi_share_of">Das criadas</span><b id="kpiSharePerdas">—</b></div>
-                <div class="track"><i class="bad" id="kpiBarPerdas" style="width:0%"></i></div>
+            </div>
+            <div class="funnel-stage">
+              <div>
+                <span class="lab" data-i18n="kpi_aprovadas">Aprovadas</span>
+                <span class="sub" id="kpiAprovadasSub">—</span>
               </div>
-            </article>
+              <div class="track"><i class="warn" id="kpiBarAprovadas" style="width:0%"></i></div>
+              <div>
+                <div class="num" id="kpiAprovadas">—</div>
+                <span class="pct" id="kpiShareAprovadas">—</span>
+              </div>
+            </div>
+            <div class="funnel-stage loss">
+              <div>
+                <span class="lab" data-i18n="kpi_perdas">Perdas</span>
+                <span class="sub" id="kpiPerdasSub">—</span>
+              </div>
+              <div class="track"><i class="bad" id="kpiBarPerdas" style="width:0%"></i></div>
+              <div>
+                <div class="num" id="kpiPerdas">—</div>
+                <span class="pct" id="kpiSharePerdas">—</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -2923,20 +2932,18 @@
       document.getElementById("kpiTicket").textContent = brMoney(ticket);
       document.getElementById("kpiTicketSub").textContent = t("kpi_ticket_sub");
       document.getElementById("kpiCriadas").textContent = brNum(a.n, 0);
-      document.getElementById("kpiCriadasSub").textContent = t("kpi_criadas_sub");
       document.getElementById("kpiShareCriadas").textContent = "100 %";
       document.getElementById("kpiBarCriadas").style.width = "100%";
-      document.getElementById("kpiAprovadas").textContent = brNum(a.aprov, 0);
-      document.getElementById("kpiAprovadasSub").innerHTML = "<b>" + brMoney(a.aprovV) + "</b> " + t("kpi_em_curso");
-      document.getElementById("kpiShareAprovadas").textContent = pct(a.aprov, a.n);
-      document.getElementById("kpiBarAprovadas").style.width = pAprov.toFixed(1) + "%";
       document.getElementById("kpiConcedidas").textContent = brNum(a.conc, 0);
-      document.getElementById("kpiConcedidasSub").innerHTML = "<b>" + pct(a.conc, a.n) + "</b> " + t("kpi_das_criadas");
+      document.getElementById("kpiConcedidasSub").textContent = t("kpi_das_criadas");
       document.getElementById("kpiShareConcedidas").textContent = pct(a.conc, a.n);
       document.getElementById("kpiBarConcedidas").style.width = pConc.toFixed(1) + "%";
+      document.getElementById("kpiAprovadas").textContent = brNum(a.aprov, 0);
+      document.getElementById("kpiAprovadasSub").textContent = brMoney(a.aprovV) + " " + t("kpi_em_curso");
+      document.getElementById("kpiShareAprovadas").textContent = pct(a.aprov, a.n);
+      document.getElementById("kpiBarAprovadas").style.width = pAprov.toFixed(1) + "%";
       document.getElementById("kpiPerdas").textContent = brNum(perdas, 0);
-      document.getElementById("kpiPerdasCanc").textContent = brNum(a.canc, 0);
-      document.getElementById("kpiPerdasRej").textContent = brNum(a.rej, 0);
+      document.getElementById("kpiPerdasSub").textContent = brNum(a.canc, 0) + " " + t("kpi_cancel") + " · " + brNum(a.rej, 0) + " " + t("kpi_rejeit");
       document.getElementById("kpiSharePerdas").textContent = pct(perdas, a.n);
       document.getElementById("kpiBarPerdas").style.width = pPerdas.toFixed(1) + "%";
     }

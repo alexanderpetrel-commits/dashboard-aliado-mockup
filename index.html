@@ -687,6 +687,29 @@
       font-weight: 600;
       min-width: 96px;
     }
+    .tbl-dyn.marca-mx th.spark-col,
+    .tbl-dyn.marca-mx td.spark-col {
+      text-align: center;
+      min-width: 104px;
+      width: 104px;
+      background: #fcfcfc;
+      padding-left: 6px;
+      padding-right: 6px;
+    }
+    .tbl-dyn.marca-mx thead th.spark-col {
+      background: #f5f5f5;
+      color: var(--forte);
+      white-space: normal;
+      line-height: 1.25;
+      font-size: 9px;
+    }
+    .tbl-dyn.marca-mx tfoot td.spark-col {
+      background: #fafafa;
+    }
+    .tbl-dyn.marca-mx .spark-line {
+      display: inline-block;
+      vertical-align: middle;
+    }
     .tbl-dyn.marca-mx tfoot td {
       font-weight: 700;
       background: #fafafa;
@@ -1502,7 +1525,7 @@
             <div class="tbl-dyn-wrap">
               <div class="tbl-dyn-scroll" id="marcaMensualTabla"></div>
             </div>
-            <p class="leyenda-marca"><i>n</i> <span data-i18n="ranking_leyenda_mensual">Barra vermelha = quantidade · Valor em preto · Var. % (Vendas) = valor vs mês anterior (não há no 1.º mês)</span></p>
+            <p class="leyenda-marca"><i>n</i> <span data-i18n="ranking_leyenda_mensual">Barra vermelha = quantidade · Valor em preto · Var. % (Vendas) = valor vs mês anterior · Tendência = sparkline do valor</span></p>
           </div>
         </section>
         <section>
@@ -1529,7 +1552,7 @@
             <div class="tbl-dyn-wrap">
               <div class="tbl-dyn-scroll" id="regiaoMensualTabla"></div>
             </div>
-            <p class="leyenda-marca"><i>n</i> <span data-i18n="ranking_leyenda_mensual">Barra vermelha = quantidade · Valor em preto · Var. % (Vendas) = valor vs mês anterior (não há no 1.º mês)</span></p>
+            <p class="leyenda-marca"><i>n</i> <span data-i18n="ranking_leyenda_mensual">Barra vermelha = quantidade · Valor em preto · Var. % (Vendas) = valor vs mês anterior · Tendência = sparkline do valor</span></p>
           </div>
         </section>
         <section>
@@ -1556,7 +1579,7 @@
             <div class="tbl-dyn-wrap">
               <div class="tbl-dyn-scroll" id="lojaMensualTabla"></div>
             </div>
-            <p class="leyenda-marca"><i>n</i> <span data-i18n="ranking_leyenda_mensual">Barra vermelha = quantidade · Valor em preto · Var. % (Vendas) = valor vs mês anterior (não há no 1.º mês)</span></p>
+            <p class="leyenda-marca"><i>n</i> <span data-i18n="ranking_leyenda_mensual">Barra vermelha = quantidade · Valor em preto · Var. % (Vendas) = valor vs mês anterior · Tendência = sparkline do valor</span></p>
           </div>
         </section>
         <section>
@@ -1583,7 +1606,7 @@
             <div class="tbl-dyn-wrap">
               <div class="tbl-dyn-scroll" id="vendedorMensualTabla"></div>
             </div>
-            <p class="leyenda-marca"><i>n</i> <span data-i18n="ranking_leyenda_mensual">Barra vermelha = quantidade · Valor em preto · Var. % (Vendas) = valor vs mês anterior (não há no 1.º mês)</span></p>
+            <p class="leyenda-marca"><i>n</i> <span data-i18n="ranking_leyenda_mensual">Barra vermelha = quantidade · Valor em preto · Var. % (Vendas) = valor vs mês anterior · Tendência = sparkline do valor</span></p>
           </div>
         </section>
       </div>
@@ -1696,8 +1719,8 @@
         aria_heat: "Mapa de calor de vendas outorgadas por dia da semana e franja horária",
         marcas_titulo: "Vendas por marca", ordenar: "Ordenar", ord_valor: "Valor de vendas", ord_qtd: "Quantidade de vendas",
         marcas_leyenda: "Valor em vermelho = quantidade de solicitações",
-        ranking_leyenda_mensual: "Barra vermelha = quantidade · Valor em preto · Var. % (Vendas) = valor vs mês anterior (não há no 1.º mês)",
-        th_marca: "Marca", th_qtd: "Qtd", th_valor: "Valor", th_var_pct_ventas: "Var. % (Vendas)", th_vendedor: "Vendedor",
+        ranking_leyenda_mensual: "Barra vermelha = quantidade · Valor em preto · Var. % (Vendas) = valor vs mês anterior · Tendência = sparkline do valor",
+        th_marca: "Marca", th_qtd: "Qtd", th_valor: "Valor", th_var_pct_ventas: "Var. % (Vendas)", th_tendencia: "Tendência", th_vendedor: "Vendedor",
         regioes_titulo: "Vendas por região",
         regioes_leyenda: "Valor em vermelho = quantidade de solicitações outorgadas",
         lojas_titulo: "Vendas por sucursal",
@@ -1796,8 +1819,8 @@
         aria_heat: "Mapa de calor de ventas otorgadas por día de la semana y franja horaria",
         marcas_titulo: "Ventas por marca", ordenar: "Ordenar", ord_valor: "Valor de ventas", ord_qtd: "Cantidad de ventas",
         marcas_leyenda: "Valor en rojo = cantidad de solicitudes",
-        ranking_leyenda_mensual: "Barra roja = cantidad · Valor en negro · Var. % (Ventas) = valor vs mes anterior (no hay en el 1.er mes)",
-        th_marca: "Marca", th_qtd: "Qtd", th_valor: "Valor", th_var_pct_ventas: "Var. % (Ventas)", th_vendedor: "Vendedor",
+        ranking_leyenda_mensual: "Barra roja = cantidad · Valor en negro · Var. % (Ventas) = valor vs mes anterior · Tendencia = sparkline del valor",
+        th_marca: "Marca", th_qtd: "Qtd", th_valor: "Valor", th_var_pct_ventas: "Var. % (Ventas)", th_tendencia: "Tendencia", th_vendedor: "Vendedor",
         regioes_titulo: "Ventas por región",
         regioes_leyenda: "Valor en rojo = cantidad de solicitudes otorgadas",
         lojas_titulo: "Ventas por sucursal",
@@ -3569,6 +3592,54 @@
         wrap.appendChild(s);
         return wrap;
       }
+      function sparklineValor(valores) {
+        const cell = document.createElement("td");
+        cell.className = "spark-col";
+        const vals = (valores || []).map(function (v) { return Number(v) || 0; });
+        if (!vals.length || vals.every(function (v) { return v <= 0; })) {
+          cell.textContent = "—";
+          return cell;
+        }
+        const w = 96;
+        const h = 28;
+        const padX = 4;
+        const padY = 4;
+        const minV = Math.min.apply(null, vals);
+        const maxV = Math.max.apply(null, vals);
+        const span = Math.max(maxV - minV, maxV * 0.08, 1);
+        const n = vals.length;
+        const pts = vals.map(function (v, i) {
+          const x = padX + (n === 1 ? (w - padX * 2) / 2 : i * (w - padX * 2) / (n - 1));
+          const y = h - padY - ((v - minV) / span) * (h - padY * 2);
+          return { x: x, y: y };
+        });
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("class", "spark-line");
+        svg.setAttribute("width", String(w));
+        svg.setAttribute("height", String(h));
+        svg.setAttribute("viewBox", "0 0 " + w + " " + h);
+        svg.setAttribute("aria-hidden", "true");
+        const poly = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+        poly.setAttribute("fill", "none");
+        poly.setAttribute("stroke", "#DD0520");
+        poly.setAttribute("stroke-width", "2");
+        poly.setAttribute("stroke-linecap", "round");
+        poly.setAttribute("stroke-linejoin", "round");
+        poly.setAttribute("points", pts.map(function (p) { return p.x.toFixed(1) + "," + p.y.toFixed(1); }).join(" "));
+        svg.appendChild(poly);
+        const last = pts[pts.length - 1];
+        const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        dot.setAttribute("cx", last.x.toFixed(1));
+        dot.setAttribute("cy", last.y.toFixed(1));
+        dot.setAttribute("r", "2.5");
+        dot.setAttribute("fill", "#DD0520");
+        svg.appendChild(dot);
+        cell.appendChild(svg);
+        cell.title = vals.map(function (v, i) {
+          return rotuloMesCurto(meses[i]) + ": " + brMoney(v);
+        }).join(" · ");
+        return cell;
+      }
       const table = document.createElement("table");
       table.className = "tbl-dyn marca-mx";
       const thead = document.createElement("thead");
@@ -3586,6 +3657,11 @@
         thM.textContent = rotuloMesCurto(ym);
         trGrp.appendChild(thM);
       });
+      const thSpark = document.createElement("th");
+      thSpark.className = "spark-col";
+      thSpark.rowSpan = 2;
+      thSpark.textContent = t("th_tendencia");
+      trGrp.appendChild(thSpark);
       thead.appendChild(trGrp);
       const trSub = document.createElement("tr");
       trSub.className = "sub";
@@ -3611,13 +3687,16 @@
         const tr = document.createElement("tr");
         tr.appendChild(tdDyn(nameNode(row), false));
         let prevV = null;
+        const serie = [];
         meses.forEach(function (ym, idx) {
           const cell = mesesMap[ym].by[row.n] || { c: 0, v: 0 };
+          serie.push(cell.v || 0);
           tr.appendChild(tdQbar(cell.c, maxQtdMes[ym], true));
           tr.appendChild(tdValor(cell.v));
           if (idx > 0) tr.appendChild(tdVarPct(prevV, cell.v));
           prevV = cell.v;
         });
+        tr.appendChild(sparklineValor(serie));
         tbody.appendChild(tr);
       });
       table.appendChild(tbody);
@@ -3625,15 +3704,18 @@
       const trf = document.createElement("tr");
       trf.appendChild(tdDyn(t("th_total"), false));
       let prevTotV = null;
+      const serieTot = [];
       const maxTotMes = Math.max(1, meses.reduce(function (m, y) { return Math.max(m, mesesMap[y].totalC); }, 1));
       meses.forEach(function (ym, idx) {
         const c = mesesMap[ym].totalC;
         const v = mesesMap[ym].totalV;
+        serieTot.push(v || 0);
         trf.appendChild(tdQbar(c, maxTotMes, true));
         trf.appendChild(tdValor(v));
         if (idx > 0) trf.appendChild(tdVarPct(prevTotV, v));
         prevTotV = v;
       });
+      trf.appendChild(sparklineValor(serieTot));
       tfoot.appendChild(trf);
       table.appendChild(tfoot);
       bindColumnResize(table);

@@ -731,12 +731,20 @@
         <div class="ms" data-key="lojas"></div>
         <div class="ms" data-key="vendedores"></div>
         <div class="campo">
-          <label for="producto"><span data-i18n="f_produto">Produto</span> <span class="tip" tabindex="0" role="img" aria-label="Tipo de produto da solicitação. Nesta primeira saída só Smartphone tem dados neste arquivo." data-tip="Tipo de produto da solicitação. Nesta primeira saída só Smartphone tem dados neste arquivo.">?</span></label>
-          <select id="producto">
-            <option value="" selected></option>
-            <option value="smartphone">Smartphone</option>
-            <option value="smarttv">Smart TV</option>
-            <option value="tecnohome">Tecnohome</option>
+          <label for="productoBusca"><span data-i18n="f_produto">Produto</span> <span class="tip" tabindex="0" role="img" aria-label="Tipo de produto da solicitação. Nesta primeira saída só Smartphone tem dados neste arquivo." data-tip="Tipo de produto da solicitação. Nesta primeira saída só Smartphone tem dados neste arquivo.">?</span></label>
+          <input id="productoBusca" type="text" list="dlProducto" autocomplete="off" placeholder="Digite para buscar">
+          <datalist id="dlProducto">
+            <option value="Smartphone"></option>
+            <option value="Smart TV"></option>
+            <option value="Tecnohome"></option>
+          </datalist>
+          <input type="hidden" id="producto" value="smartphone">
+        </div>
+        <div class="campo">
+          <label for="metricaValor"><span data-i18n="f_metrica">Métrica de valor</span> <span class="tip" tabindex="0" role="img" aria-label="Escolhe se os painéis usam o valor de vendas (aparelho) ou o valor financiado (crédito)." data-tip="Escolhe se os painéis usam o valor de vendas (aparelho) ou o valor financiado (crédito).">?</span></label>
+          <select id="metricaValor">
+            <option value="financiado" selected data-i18n="opt_financiado">Valor financiado</option>
+            <option value="ventas" data-i18n="opt_ventas">Valor de vendas</option>
           </select>
         </div>
         <div class="ms" data-key="risco"></div>
@@ -987,7 +995,8 @@
         nav_dashboard: "Dashboard", nav_loja: "Perfil da loja", nav_usuario: "Perfil do usuário",
         ola: "Olá, Alex", vista_existe: "Esta opção já existe no CrediSmart.",
         filtros: "Filtros", baixar: "Baixar relatório", limpar: "Limpar", procurar: "Procurar",
-        f_inicio: "Data de início", f_fim: "Data de fim", f_produto: "Produto", f_acoes: "Ações",
+        f_inicio: "Data de início", f_fim: "Data de fim", f_produto: "Produto", f_metrica: "Métrica de valor", f_acoes: "Ações",
+        opt_financiado: "Valor financiado", opt_ventas: "Valor de vendas",
         kpi_valor: "Valor concedido", kpi_ticket: "Ticket médio", kpi_ticket_sub: "Nas concedidas",
         kpi_concedidas: "Concedidas", kpi_aprovadas: "Aprovadas", kpi_criadas: "Criadas", kpi_criadas_sub: "Topo do funil no período", kpi_perdas: "Perdas",
         kpi_aria: "Indicadores do período",
@@ -1032,8 +1041,9 @@
         tip_inicio: "Filtra pela data de criação da solicitação. Só entram datas em que a loja tem dados.",
         tip_fim: "Data final do período. O intervalo com a data de início não pode passar de seis meses.",
         tip_produto: "Tipo de produto da solicitação. Nesta primeira saída só Smartphone tem dados neste arquivo.",
-        tip_acoes: "Limpar esvazia os campos dos filtros. Procurar aplica a consulta.",
-        tip_limpar: "Esvazia datas, produto e seleções dos filtros.",
+        tip_metrica: "Escolhe se os painéis usam o valor de vendas (aparelho) ou o valor financiado (crédito). Por padrão: valor financiado.",
+        tip_acoes: "Limpar esvazia os campos dos filtros e deixa Produto em Smartphone. Procurar aplica a consulta.",
+        tip_limpar: "Esvazia datas e seleções; o produto volta para Smartphone e a métrica para Valor financiado.",
         tip_procurar: "Aplica os filtros e atualiza o painel.",
         tip_excel: "Baixa o Excel das solicitações do período filtrado, com os 41 cabeçalhos do arquivo de solicitações.",
         placeholder_busca: "Digite para buscar",
@@ -1050,7 +1060,9 @@
         kpi_vendas: "vendas fechadas", kpi_das_criadas: "das criadas", kpi_em_curso: "em curso",
         kpi_cancel: "cancel.", kpi_rejeit: "rejeit.",
         err_datas: "Informe a data inicial e a data final.",
+        err_futuro: "A data de início e a data de fim não podem ser posteriores à data de hoje.",
         err_rango: "O intervalo entre as datas ultrapassa o limite de seis meses ou a data final é anterior à data inicial. A consulta não é feita.",
+        err_rango_pick: "O intervalo máximo é de seis meses. Ajuste a data de início ou a data de fim.",
         vazio_datas: "A consulta não é feita enquanto as datas estiverem inválidas.",
         vazio_produto: "Neste arquivo só há solicitações de Smartphone Mastercell. Não há linhas de Smart TV nem de Tecnohome.",
         vazio_lista: "Nenhuma solicitação neste período. Ajuste as datas, as lojas, a região, a cidade, os vendedores, o risco ou o estado da solicitação.",
@@ -1071,7 +1083,8 @@
         nav_dashboard: "Dashboard", nav_loja: "Perfil de la tienda", nav_usuario: "Perfil del usuario",
         ola: "Hola, Alex", vista_existe: "Esta opción ya existe en CrediSmart.",
         filtros: "Filtros", baixar: "Descargar informe", limpar: "Limpiar", procurar: "Buscar",
-        f_inicio: "Fecha de inicio", f_fim: "Fecha de fin", f_produto: "Producto", f_acoes: "Acciones",
+        f_inicio: "Fecha de inicio", f_fim: "Fecha de fin", f_produto: "Producto", f_metrica: "Métrica de valor", f_acoes: "Acciones",
+        opt_financiado: "Valor financiado", opt_ventas: "Valor de ventas",
         kpi_valor: "Valor concedido", kpi_ticket: "Ticket medio", kpi_ticket_sub: "En las concedidas",
         kpi_concedidas: "Concedidas", kpi_aprovadas: "Aprobadas", kpi_criadas: "Creadas", kpi_criadas_sub: "Tope del embudo en el período", kpi_perdas: "Pérdidas",
         kpi_aria: "Indicadores del período",
@@ -1116,8 +1129,9 @@
         tip_inicio: "Filtra por la fecha de creación de la solicitud. Solo entran fechas en las que la tienda tiene datos.",
         tip_fim: "Fecha final del período. El intervalo con la fecha de inicio no puede superar seis meses.",
         tip_produto: "Tipo de producto de la solicitud. En esta primera salida solo Smartphone tiene datos en este archivo.",
-        tip_acoes: "Limpiar vacía los campos de los filtros. Buscar aplica la consulta.",
-        tip_limpar: "Vacía fechas, producto y selecciones de los filtros.",
+        tip_metrica: "Elige si los paneles usan el valor de ventas (dispositivo) o el valor financiado (crédito). Por defecto: valor financiado.",
+        tip_acoes: "Limpiar vacía los campos de los filtros y deja Producto en Smartphone. Buscar aplica la consulta.",
+        tip_limpar: "Vacía fechas y selecciones; el producto vuelve a Smartphone y la métrica a Valor financiado.",
         tip_procurar: "Aplica los filtros y actualiza el panel.",
         tip_excel: "Descarga el Excel de las solicitudes del período filtrado, con los 41 encabezados del archivo de solicitudes.",
         placeholder_busca: "Escriba para buscar",
@@ -1134,7 +1148,9 @@
         kpi_vendas: "ventas cerradas", kpi_das_criadas: "de las creadas", kpi_em_curso: "en curso",
         kpi_cancel: "cancel.", kpi_rejeit: "rechaz.",
         err_datas: "Indique la fecha inicial y la fecha final.",
+        err_futuro: "La fecha de inicio y la fecha de fin no pueden ser posteriores a la fecha de hoy.",
         err_rango: "El intervalo entre las fechas supera el límite de seis meses o la fecha final es anterior a la fecha inicial. La consulta no se realiza.",
+        err_rango_pick: "El intervalo máximo es de seis meses. Ajuste la fecha de inicio o la fecha de fin.",
         vazio_datas: "La consulta no se realiza mientras las fechas estén inválidas.",
         vazio_produto: "En este archivo solo hay solicitudes de Smartphone Mastercell. No hay filas de Smart TV ni de Tecnohome.",
         vazio_lista: "Ninguna solicitud en este período. Ajuste las fechas, las tiendas, la región, la ciudad, los vendedores, el riesgo o el estado de la solicitud.",
@@ -1183,8 +1199,11 @@
       });
       setTip(document.querySelector('label[for="inicio"] .tip'), t("tip_inicio"));
       setTip(document.querySelector('label[for="fin"] .tip'), t("tip_fim"));
-      setTip(document.querySelector('label[for="producto"] .tip'), t("tip_produto"));
+      setTip(document.querySelector('label[for="productoBusca"] .tip'), t("tip_produto"));
+      setTip(document.querySelector('label[for="metricaValor"] .tip'), t("tip_metrica"));
       setTip(document.querySelector('label[for="btnConsultar"] .tip'), t("tip_acoes"));
+      const pb = document.getElementById("productoBusca");
+      if (pb) pb.placeholder = t("placeholder_busca");
       const btnL = document.getElementById("btnLimpar");
       if (btnL) btnL.title = t("tip_limpar");
       const btnC = document.getElementById("btnConsultar");
@@ -1250,7 +1269,9 @@
         if (!k) return;
         mapa[k] = (mapa[k] || 0) + 1;
       });
-      return Object.keys(mapa).sort(function (a, b) { return mapa[b] - mapa[a]; }).map(function (n) { return { n: n, c: mapa[n] }; });
+      return Object.keys(mapa).sort(function (a, b) {
+        return String(a).localeCompare(String(b), "pt-BR", { sensitivity: "base" });
+      }).map(function (n) { return { n: n, c: mapa[n] }; });
     }
     function riscoDe(r) {
       const clave = (r && r.f) ? String(r.f) : "";
@@ -1264,7 +1285,9 @@
       cidade: unico(rowsAll, "c"),
       lojas: unico(rowsAll, "f"),
       vendedores: unico(rowsAll, "v"),
-      risco: NIVEIS_RISCO.map(function (n) {
+      risco: NIVEIS_RISCO.slice().sort(function (a, b) {
+        return (ORDEM_RISCO[b] || 0) - (ORDEM_RISCO[a] || 0);
+      }).map(function (n) {
         return { n: n, c: rowsAll.filter(function (r) { return riscoDe(r) === n; }).length };
       })
     };
@@ -1288,20 +1311,21 @@
       const a = { n: 0, v: 0, conc: 0, concV: 0, aprov: 0, aprovV: 0, canc: 0, cancV: 0, rej: 0, rejV: 0, fin: 0, finV: 0, def: 0, defV: 0, refi: 0, refiV: 0, vs: [], vd: [] };
       rows.forEach(function (r) {
         a.n += 1;
-        const vs = r.vs || 0;
-        a.v += vs;
+        const vm = valorMonetario(r);
+        a.v += vm;
         if (r.vs != null) a.vs.push(r.vs);
         if (r.vd != null) a.vd.push(r.vd);
-        if (r.s === "OTORGADA") { a.conc += 1; a.concV += vs; }
-        else if (r.s === "APROBADA") { a.aprov += 1; a.aprovV += vs; }
-        else if (r.s === "CANCELADA") { a.canc += 1; a.cancV += vs; }
-        else if (r.s === "RECHAZADA") { a.rej += 1; a.rejV += vs; }
-        else if (r.s === "FINALIZADO") { a.fin += 1; a.finV += vs; }
-        else if (r.s === "DEFAULT") { a.def += 1; a.defV += vs; }
-        else if (r.s === "DEFAULT_BY_REFINANCE") { a.refi += 1; a.refiV += vs; }
+        if (r.s === "OTORGADA") { a.conc += 1; a.concV += vm; }
+        else if (r.s === "APROBADA") { a.aprov += 1; a.aprovV += vm; }
+        else if (r.s === "CANCELADA") { a.canc += 1; a.cancV += vm; }
+        else if (r.s === "RECHAZADA") { a.rej += 1; a.rejV += vm; }
+        else if (r.s === "FINALIZADO") { a.fin += 1; a.finV += vm; }
+        else if (r.s === "DEFAULT") { a.def += 1; a.defV += vm; }
+        else if (r.s === "DEFAULT_BY_REFINANCE") { a.refi += 1; a.refiV += vm; }
       });
-      a.ticket = mediana(a.vs);
-      a.media = a.vs.length ? a.v / a.vs.length : null;
+      const serie = (document.getElementById("metricaValor") || {}).value === "ventas" ? a.vd : a.vs;
+      a.ticket = mediana(serie);
+      a.media = serie.length ? a.v / serie.length : null;
       a.aparelho = mediana(a.vd);
       return a;
     }
@@ -1327,13 +1351,74 @@
 
     const inicio = document.getElementById("inicio");
     const fin = document.getElementById("fin");
-    inicio.min = meta.dcMin;
-    inicio.max = meta.dcMax;
-    fin.min = meta.dcMin;
-    fin.max = meta.dcMax;
+    const PRODUCTOS = [
+      { value: "smartphone", label: "Smartphone" },
+      { value: "smarttv", label: "Smart TV" },
+      { value: "tecnohome", label: "Tecnohome" }
+    ];
+    function hoyIso() {
+      return ymd(new Date());
+    }
+    function addMesesIso(iso, meses) {
+      const d = new Date(iso + "T12:00:00");
+      d.setMonth(d.getMonth() + meses);
+      return ymd(d);
+    }
+    function maxIso(a, b) { return a > b ? a : b; }
+    function minIso(a, b) { return a < b ? a : b; }
+    function sincronizarProductoUi(valor) {
+      const v = valor || "smartphone";
+      document.getElementById("producto").value = v;
+      const hit = PRODUCTOS.filter(function (p) { return p.value === v; })[0];
+      const busca = document.getElementById("productoBusca");
+      if (busca) busca.value = hit ? hit.label : "";
+    }
+    function leerProductoDesdeBusca() {
+      const texto = (document.getElementById("productoBusca").value || "").trim().toLowerCase();
+      const hit = PRODUCTOS.filter(function (p) {
+        return p.label.toLowerCase() === texto || p.value === texto;
+      })[0];
+      const hidden = document.getElementById("producto");
+      if (hit) {
+        hidden.value = hit.value;
+        document.getElementById("productoBusca").value = hit.label;
+        return hit.value;
+      }
+      if (!texto) {
+        hidden.value = "";
+        return "";
+      }
+      return hidden.value;
+    }
+    function valorMonetario(r) {
+      const m = (document.getElementById("metricaValor") || {}).value || "financiado";
+      if (m === "ventas") return Number(r.vd) || 0;
+      return Number(r.vs) || 0;
+    }
+    function aplicarLimitesFechas() {
+      const hoy = hoyIso();
+      const dataMin = meta.dcMin || "2020-01-01";
+      let iMin = dataMin;
+      let iMax = hoy;
+      let fMin = dataMin;
+      let fMax = hoy;
+      if (inicio.value) {
+        fMin = maxIso(dataMin, inicio.value);
+        fMax = minIso(hoy, addMesesIso(inicio.value, RANGO_MESES));
+      }
+      if (fin.value) {
+        iMin = maxIso(dataMin, addMesesIso(fin.value, -RANGO_MESES));
+        iMax = minIso(hoy, fin.value);
+      }
+      inicio.min = iMin;
+      inicio.max = iMax;
+      fin.min = fMin;
+      fin.max = fMax;
+    }
     inicio.value = "2026-08-01";
     fin.value = "2026-08-31";
-    document.getElementById("producto").value = "smartphone";
+    sincronizarProductoUi("smartphone");
+    aplicarLimitesFechas();
     function brData(iso) {
       const p = String(iso || "").split("-");
       if (p.length < 3) return iso || "";
@@ -1343,6 +1428,11 @@
 
     function opciones(key) {
       if (key === "lojas") return [TODAS].concat(catalogs.lojas.map(function (x) { return x.n; }));
+      if (key === "risco") {
+        return catalogs.risco.map(function (x) { return x.n; }).slice().sort(function (a, b) {
+          return (ORDEM_RISCO[b] || 0) - (ORDEM_RISCO[a] || 0);
+        });
+      }
       return catalogs[key].map(function (x) { return x.n; });
     }
     function rotuloOpcion(key, item) {
@@ -1786,7 +1876,7 @@
         const d = diaSemanaIdx(r.dc);
         const f = franjaHorariaIdx(r);
         if (d >= 0 && d < cols && f >= 0 && f < rows) {
-          matrix[f][d] += modoHeat === "valor" ? (Number(r.vs) || 0) : 1;
+          matrix[f][d] += modoHeat === "valor" ? valorMonetario(r) : 1;
         }
       });
       let maxC = 1;
@@ -2447,20 +2537,34 @@
       const msg = document.getElementById("msgFecha");
       const i = inicio.value;
       const f = fin.value;
+      const hoy = hoyIso();
       msg.className = "msg";
       msg.textContent = "";
       document.getElementById("btnExcel").disabled = false;
+      aplicarLimitesFechas();
       if (!i || !f) {
         msg.className = "msg error";
         msg.textContent = t("err_datas");
         document.getElementById("btnExcel").disabled = true;
         return false;
       }
+      if (i > hoy || f > hoy) {
+        msg.className = "msg error";
+        msg.textContent = t("err_futuro");
+        document.getElementById("btnExcel").disabled = true;
+        return false;
+      }
       const di = new Date(i + "T00:00:00");
       const df = new Date(f + "T00:00:00");
-      if (Number.isNaN(di.getTime()) || Number.isNaN(df.getTime()) || df < di || superaRango(di, df)) {
+      if (Number.isNaN(di.getTime()) || Number.isNaN(df.getTime()) || df < di) {
         msg.className = "msg error";
         msg.textContent = t("err_rango");
+        document.getElementById("btnExcel").disabled = true;
+        return false;
+      }
+      if (superaRango(di, df)) {
+        msg.className = "msg error";
+        msg.textContent = t("err_rango_pick");
         document.getElementById("btnExcel").disabled = true;
         return false;
       }
@@ -2468,6 +2572,7 @@
     }
 
     function recorte() {
+      leerProductoDesdeBusca();
       const prod = document.getElementById("producto").value;
       if (prod !== (meta.produtoArquivo || "smartphone")) return [];
       if (!validarFechas()) return null;
@@ -2572,7 +2677,7 @@
         const k = riscoDe(r);
         if (!porRisco[k]) porRisco[k] = { n: k, c: 0, v: 0 };
         porRisco[k].c += 1;
-        porRisco[k].v += r.vs || 0;
+        porRisco[k].v += valorMonetario(r);
       });
       riscosAtual = Object.keys(porRisco).map(function (k) { return porRisco[k]; });
       riscoTotalAtual = a.n || 1;
@@ -2586,10 +2691,10 @@
         const mes = String(r.dc).slice(0, 7);
         if (!porDia[dia]) porDia[dia] = { n: dia, c: 0, v: 0 };
         porDia[dia].c += 1;
-        porDia[dia].v += r.vs || 0;
+        porDia[dia].v += valorMonetario(r);
         if (!porMes[mes]) porMes[mes] = { n: mes, c: 0, v: 0 };
         porMes[mes].c += 1;
-        porMes[mes].v += r.vs || 0;
+        porMes[mes].v += valorMonetario(r);
       });
       vendasDiaAtual = Object.keys(porDia).sort().map(function (k) { return porDia[k]; });
       vendasMesAtual = Object.keys(porMes).sort().map(function (k) { return porMes[k]; });
@@ -2601,7 +2706,7 @@
         const k = r.m || t("sem_marca");
         if (!porMarca[k]) porMarca[k] = { n: k, c: 0, v: 0 };
         porMarca[k].c += 1;
-        porMarca[k].v += r.vs || 0;
+        porMarca[k].v += valorMonetario(r);
       });
       marcasAtual = Object.keys(porMarca).map(function (k) { return porMarca[k]; });
       pintarMarcas();
@@ -2610,7 +2715,7 @@
         const k = r.e || t("sem_regiao");
         if (!porRegiao[k]) porRegiao[k] = { n: k, c: 0, v: 0 };
         porRegiao[k].c += 1;
-        porRegiao[k].v += r.vs || 0;
+        porRegiao[k].v += valorMonetario(r);
       });
       regioesAtual = Object.keys(porRegiao).map(function (k) { return porRegiao[k]; });
       pintarRegioes();
@@ -2619,7 +2724,7 @@
         const k = r.f || t("sem_loja");
         if (!porLoja[k]) porLoja[k] = { n: k, e: r.e || t("sem_regiao"), c: 0, v: 0 };
         porLoja[k].c += 1;
-        porLoja[k].v += r.vs || 0;
+        porLoja[k].v += valorMonetario(r);
         if (!porLoja[k].e && r.e) porLoja[k].e = r.e;
       });
       lojasAtual = Object.keys(porLoja).map(function (k) { return porLoja[k]; });
@@ -2629,7 +2734,7 @@
         const k = r.v || t("sem_vendedor");
         if (!porVendedor[k]) porVendedor[k] = { n: k, e: r.f || t("sem_loja"), c: 0, v: 0, _lojas: {} };
         porVendedor[k].c += 1;
-        porVendedor[k].v += r.vs || 0;
+        porVendedor[k].v += valorMonetario(r);
         const loja = r.f || t("sem_loja");
         porVendedor[k]._lojas[loja] = (porVendedor[k]._lojas[loja] || 0) + 1;
       });
@@ -2734,6 +2839,58 @@
     document.getElementById("ordenVendedor").addEventListener("change", pintarVendedores);
     document.getElementById("ordenRisco").addEventListener("change", pintarRisco);
     document.getElementById("ordenComp").addEventListener("change", pintarComposicao);
+    function avisarSiRangoInvalido() {
+      aplicarLimitesFechas();
+      const msg = document.getElementById("msgFecha");
+      if (!inicio.value || !fin.value) return;
+      const hoy = hoyIso();
+      if (inicio.value > hoy || fin.value > hoy) {
+        msg.className = "msg error";
+        msg.textContent = t("err_futuro");
+        return;
+      }
+      const di = new Date(inicio.value + "T00:00:00");
+      const df = new Date(fin.value + "T00:00:00");
+      if (df < di) {
+        msg.className = "msg error";
+        msg.textContent = t("err_rango");
+        return;
+      }
+      if (superaRango(di, df)) {
+        msg.className = "msg error";
+        msg.textContent = t("err_rango_pick");
+        return;
+      }
+      msg.className = "msg";
+      msg.textContent = "";
+    }
+    inicio.addEventListener("change", function () {
+      if (inicio.value && inicio.value > hoyIso()) inicio.value = hoyIso();
+      aplicarLimitesFechas();
+      if (fin.value && fin.value < inicio.value) fin.value = inicio.value;
+      if (fin.value && superaRango(new Date(inicio.value + "T00:00:00"), new Date(fin.value + "T00:00:00"))) {
+        fin.value = minIso(hoyIso(), addMesesIso(inicio.value, RANGO_MESES));
+      }
+      avisarSiRangoInvalido();
+    });
+    fin.addEventListener("change", function () {
+      if (fin.value && fin.value > hoyIso()) fin.value = hoyIso();
+      aplicarLimitesFechas();
+      if (inicio.value && fin.value < inicio.value) inicio.value = fin.value;
+      if (inicio.value && superaRango(new Date(inicio.value + "T00:00:00"), new Date(fin.value + "T00:00:00"))) {
+        inicio.value = maxIso(meta.dcMin || "2020-01-01", addMesesIso(fin.value, -RANGO_MESES));
+      }
+      avisarSiRangoInvalido();
+    });
+    document.getElementById("productoBusca").addEventListener("change", function () {
+      leerProductoDesdeBusca();
+    });
+    document.getElementById("productoBusca").addEventListener("blur", function () {
+      leerProductoDesdeBusca();
+    });
+    document.getElementById("metricaValor").addEventListener("change", function () {
+      if (inicio.value && fin.value) consultar();
+    });
     document.getElementById("btnLimpar").addEventListener("click", function () {
       seleccion.status = [];
       seleccion.regiao = [];
@@ -2743,9 +2900,11 @@
       seleccion.risco = [];
       inicio.value = "";
       fin.value = "";
-      document.getElementById("producto").value = "";
+      sincronizarProductoUi("smartphone");
+      document.getElementById("metricaValor").value = "financiado";
       document.getElementById("msgFecha").className = "msg";
       document.getElementById("msgFecha").textContent = "";
+      aplicarLimitesFechas();
       document.querySelectorAll(".ms").forEach(function (box) {
         renderMs(box);
       });

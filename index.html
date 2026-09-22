@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="sticky-pane" content="v19-ms-hit-rojo-normal-20260922">
+  <meta name="sticky-pane" content="v20-ms-hit-rojo-span-20260922">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <title>Painel executivo do aliado — Smartphone Mastercell Brasil</title>
   <style>
@@ -258,9 +258,9 @@
       line-height: 1.3;
     }
     .opts li:hover, .opts li[aria-selected="true"] { background: var(--chip); }
-    .opts b.ms-hit {
+    .opts span.ms-hit {
       color: var(--marca);
-      font-weight: inherit;
+      font-weight: normal;
       background: none;
       background-color: transparent;
     }
@@ -2374,7 +2374,7 @@
           break;
         }
         out += escapeHtmlMs(raw.slice(i, idx));
-        out += '<b class="ms-hit">' + escapeHtmlMs(raw.slice(idx, idx + q.length)) + "</b>";
+        out += '<span class="ms-hit">' + escapeHtmlMs(raw.slice(idx, idx + q.length)) + "</span>";
         i = idx + q.length;
       }
       return out;

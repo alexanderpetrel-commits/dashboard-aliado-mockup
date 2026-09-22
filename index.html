@@ -1230,7 +1230,7 @@
         heat_leyenda_qtd: "Intensidade = quantidade de vendas outorgadas · dia da semana × franja horária",
         heat_leyenda_valor: "Intensidade = valor de vendas outorgadas · dia da semana × franja horária",
         heat_dias: "Seg,Ter,Qua,Qui,Sex,Sáb,Dom",
-        heat_franjas: "08–10,10–12,12–14,14–16,16–18,18–20",
+        heat_franjas: "08h–10h,10h–12h,12h–14h,14h–16h,16h–18h,18h–20h",
         aria_heat: "Mapa de calor de vendas outorgadas por dia da semana e franja horária",
         marcas_titulo: "Vendas por marca", ordenar: "Ordenar", ord_valor: "Valor de vendas", ord_qtd: "Quantidade de vendas",
         marcas_leyenda: "Valor em vermelho = quantidade de solicitações",
@@ -1325,7 +1325,7 @@
         heat_leyenda_qtd: "Intensidad = cantidad de ventas otorgadas · día de la semana × franja horaria",
         heat_leyenda_valor: "Intensidad = valor de ventas otorgadas · día de la semana × franja horaria",
         heat_dias: "Lun,Mar,Mié,Jue,Vie,Sáb,Dom",
-        heat_franjas: "08–10,10–12,12–14,14–16,16–18,18–20",
+        heat_franjas: "08h–10h,10h–12h,12h–14h,14h–16h,16h–18h,18h–20h",
         aria_heat: "Mapa de calor de ventas otorgadas por día de la semana y franja horaria",
         marcas_titulo: "Ventas por marca", ordenar: "Ordenar", ord_valor: "Valor de ventas", ord_qtd: "Cantidad de ventas",
         marcas_leyenda: "Valor en rojo = cantidad de solicitudes",
@@ -2163,28 +2163,7 @@
       });
       const W = 1200;
       const H = 280;
-      const L = 64;
-      const R = 16;
-      const T = 12;
-      const B = 32;
-      const iw = W - L - R;
-      const ih = H - T - B;
-      const cw = iw / cols;
-      const ch = ih / rows;
-      const svg = svgEl("svg");
-      svg.setAttribute("viewBox", "0 0 " + W + " " + H);
-      svg.setAttribute("preserveAspectRatio", "none");
-      svg.setAttribute("role", "img");
-      svg.setAttribute("aria-label", t("aria_heat"));
-      for (let r = 0; r < rows; r++) {
-        const lab = svgEl("text");
-        lab.setAttribute("x", String(L - 8));
-        lab.setAttribute("y", String(T + r * ch + ch / 2 + 4));
-        lab.setAttribute("text-anchor", "end");
-        lab.setAttribute("font-size", "12");
-        lab.setAttribute("fill", "#8a8a8a");
-        lab.textContent = franjas[r] || "";
-        svg.appendChild(lab);
+      const L = 78;
         for (let c = 0; c < cols; c++) {
           const n = matrix[r][c];
           const col = heatColor(n / maxC);

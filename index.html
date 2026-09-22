@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="sticky-pane" content="v9-aliado-pill-right-20260922">
+  <meta name="sticky-pane" content="v10-es-creadas-cantidad-20260922">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <title>Painel executivo do aliado — Smartphone Mastercell Brasil</title>
   <style>
@@ -1777,6 +1777,8 @@
         marcas_leyenda: "Valor em vermelho = quantidade de solicitações",
         ranking_leyenda_mensual: "Barra vermelha = quantidade · Valor em preto · Var. % (Vendas) = valor vs mês anterior · Tendência = sparkline do valor",
         th_marca: "Marca", th_qtd: "Qtd", th_valor: "Valor", th_var_pct_ventas: "Var. % (Vendas)", th_tendencia: "Tendência", th_vendedor: "Vendedor",
+        th_pct_criadas: "% criadas",
+        donut_center: "CRIADAS",
         regioes_titulo: "Vendas por região",
         regioes_leyenda: "Valor em vermelho = quantidade de solicitações outorgadas",
         lojas_titulo: "Vendas por sucursal",
@@ -1877,7 +1879,9 @@
         marcas_titulo: "Ventas por marca", ordenar: "Ordenar", ord_valor: "Valor de ventas", ord_qtd: "Cantidad de ventas",
         marcas_leyenda: "Valor en rojo = cantidad de solicitudes",
         ranking_leyenda_mensual: "Barra roja = cantidad · Valor en negro · Var. % (Ventas) = valor vs mes anterior · Tendencia = sparkline del valor",
-        th_marca: "Marca", th_qtd: "Qtd", th_valor: "Valor", th_var_pct_ventas: "Var. % (Ventas)", th_tendencia: "Tendencia", th_vendedor: "Vendedor",
+        th_marca: "Marca", th_qtd: "Cantidad", th_valor: "Valor", th_var_pct_ventas: "Var. % (Ventas)", th_tendencia: "Tendencia", th_vendedor: "Vendedor",
+        th_pct_criadas: "% creadas",
+        donut_center: "CREADAS",
         regioes_titulo: "Ventas por región",
         regioes_leyenda: "Valor en rojo = cantidad de solicitudes otorgadas",
         lojas_titulo: "Ventas por sucursal",
@@ -3010,7 +3014,7 @@
       sub.setAttribute("letter-spacing", "0.04em");
       sub.setAttribute("fill", "#6d6d6d");
       sub.style.pointerEvents = "none";
-      sub.textContent = "CRIADAS";
+      sub.textContent = t("donut_center");
       svg.appendChild(sub);
       el.appendChild(svg);
       const table = document.createElement("table");
@@ -3018,9 +3022,9 @@
       const thead = document.createElement("thead");
       const trh = document.createElement("tr");
       trh.appendChild(thDyn(t("th_estado"), "140px", false));
-      trh.appendChild(thDyn("Qtd", "64px", true));
+      trh.appendChild(thDyn(t("th_qtd"), "64px", true));
       trh.appendChild(thDyn("Valor (R$)", "110px", true));
-      trh.appendChild(thDyn("% criadas", "90px", true));
+      trh.appendChild(thDyn(t("th_pct_criadas"), "90px", true));
       thead.appendChild(trh);
       table.appendChild(thead);
       const tbody = document.createElement("tbody");
@@ -3132,7 +3136,7 @@
       sub.setAttribute("letter-spacing", "0.04em");
       sub.setAttribute("fill", "#6d6d6d");
       sub.style.pointerEvents = "none";
-      sub.textContent = "CRIADAS";
+      sub.textContent = t("donut_center");
       svg.appendChild(sub);
       el.appendChild(svg);
       const tableR = document.createElement("table");
@@ -3140,9 +3144,9 @@
       const theadR = document.createElement("thead");
       const trhR = document.createElement("tr");
       trhR.appendChild(thDyn(t("th_nivel"), "120px", false));
-      trhR.appendChild(thDyn("Qtd", "64px", true));
+      trhR.appendChild(thDyn(t("th_qtd"), "64px", true));
       trhR.appendChild(thDyn("Valor (R$)", "110px", true));
-      trhR.appendChild(thDyn("% criadas", "90px", true));
+      trhR.appendChild(thDyn(t("th_pct_criadas"), "90px", true));
       theadR.appendChild(trhR);
       tableR.appendChild(theadR);
       const tbodyR = document.createElement("tbody");
@@ -3979,7 +3983,7 @@
       const r2 = document.createElement("tr");
       r2.className = "sub";
       for (let i = 0; i < 8; i++) {
-        ["#", "R$", "%"].forEach(function (lab) {
+        [t("th_qtd"), "R$", "%"].forEach(function (lab) {
           const th = document.createElement("th");
           th.textContent = lab;
           th.className = "num";

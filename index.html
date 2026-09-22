@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="sticky-pane" content="v8-cachebust-sepdata-20260922">
+  <meta name="sticky-pane" content="v9-aliado-pill-right-20260922">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <title>Painel executivo do aliado — Smartphone Mastercell Brasil</title>
   <style>
     :root {
@@ -95,19 +96,24 @@
     .cs-func-head {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-start;
       gap: 10px;
       margin: 0 0 18px;
-      flex-wrap: wrap;
       width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
     }
-    .cs-func-head .cs-func { margin: 0; }
+    .cs-func-head .cs-func {
+      margin: 0;
+      flex: 0 1 auto;
+    }
     .aliado-pill {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      height: 26px;
-      padding: 0 12px;
+      height: 28px;
+      padding: 0 14px;
+      margin-left: auto;
       border-radius: 999px;
       background: #ffe8eb;
       color: var(--marca);
@@ -115,6 +121,7 @@
       font-weight: 700;
       letter-spacing: .01em;
       white-space: nowrap;
+      flex: 0 0 auto;
     }
     .app-body { display: flex; align-items: stretch; min-height: calc(100vh - 86px); }
     nav.cs-side {
@@ -1316,6 +1323,7 @@
           </div>
         </div>
         <div id="vista-dashboard" class="vista">
+          <main>
           <div class="cs-func-head">
             <h1 class="cs-func">
               <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="5" rx="1.5"/><rect x="13" y="10" width="8" height="11" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/></svg>
@@ -1323,7 +1331,6 @@
             </h1>
             <span class="aliado-pill" data-i18n="aliado_nombre">MasterCell</span>
           </div>
-          <main>
     <div class="filtros">
       <div class="filtros-head">
         <h2 data-i18n="filtros">Filtros</h2>

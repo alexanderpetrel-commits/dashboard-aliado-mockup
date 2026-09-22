@@ -708,16 +708,42 @@
     .tbl-dyn.marca-mx tfoot td:first-child {
       background: #fafafa;
     }
-    #marcaMensualPanel {
+    #marcaMensualPanel,
+    #regiaoMensualPanel,
+    #lojaMensualPanel,
+    #vendedorMensualPanel {
       min-width: 0;
       max-width: 100%;
     }
-    #marcaMensualPanel .tbl-dyn-wrap {
+    #marcaMensualPanel .tbl-dyn-wrap,
+    #regiaoMensualPanel .tbl-dyn-wrap,
+    #lojaMensualPanel .tbl-dyn-wrap,
+    #vendedorMensualPanel .tbl-dyn-wrap {
       width: 100%;
       max-width: 100%;
     }
-    #marcaMensualPanel .tbl-dyn-scroll {
+    #marcaMensualPanel .tbl-dyn-scroll,
+    #regiaoMensualPanel .tbl-dyn-scroll,
+    #lojaMensualPanel .tbl-dyn-scroll,
+    #vendedorMensualPanel .tbl-dyn-scroll {
       max-height: 420px;
+    }
+    .tbl-dyn.marca-mx td .mx-nome p {
+      margin: 0;
+      font-weight: 700;
+      color: var(--forte);
+      max-width: 220px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .tbl-dyn.marca-mx td .mx-nome span {
+      display: block;
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--muted);
+      max-width: 220px;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .donut-tip {
       position: fixed;
@@ -1394,11 +1420,17 @@
             <div class="tbl-dyn-wrap">
               <div class="tbl-dyn-scroll" id="marcaMensualTabla"></div>
             </div>
-            <p class="leyenda-marca"><i>n</i> <span data-i18n="marcas_leyenda_mensual">Barra vermelha = quantidade · Valor em preto · Var. % (Vendas) = valor vs mês anterior (não há no 1.º mês)</span></p>
+            <p class="leyenda-marca"><i>n</i> <span data-i18n="ranking_leyenda_mensual">Barra vermelha = quantidade · Valor em preto · Var. % (Vendas) = valor vs mês anterior (não há no 1.º mês)</span></p>
           </div>
         </section>
         <section>
-          <h2 data-i18n="regioes_titulo">Vendas por região</h2>
+          <div class="sec-tempo-head">
+            <h2 data-i18n="regioes_titulo">Vendas por região</h2>
+            <div class="tabs-tempo" role="tablist">
+              <button type="button" class="activo" id="tabRegiaoConsol" role="tab" aria-selected="true" data-i18n="tab_consolidado">Consolidado</button>
+              <button type="button" id="tabRegiaoMensual" role="tab" aria-selected="false" data-i18n="tab_desglose_mensual">Detalhamento mensal</button>
+            </div>
+          </div>
           <div class="sec-marca-head">
             <label class="ordenar-marca"><span data-i18n="ordenar">Ordenar</span>
               <select id="ordenRegiao" aria-label="Ordenar regiões">
@@ -1407,11 +1439,25 @@
               </select>
             </label>
           </div>
-          <div class="hbars" id="chartRegiao"></div>
-          <p class="leyenda-marca"><i>n</i> <span data-i18n="regioes_leyenda">Valor em vermelho = quantidade de solicitações outorgadas</span></p>
+          <div id="regiaoConsolPanel">
+            <div class="hbars" id="chartRegiao"></div>
+            <p class="leyenda-marca"><i>n</i> <span data-i18n="regioes_leyenda">Valor em vermelho = quantidade de solicitações outorgadas</span></p>
+          </div>
+          <div id="regiaoMensualPanel" hidden>
+            <div class="tbl-dyn-wrap">
+              <div class="tbl-dyn-scroll" id="regiaoMensualTabla"></div>
+            </div>
+            <p class="leyenda-marca"><i>n</i> <span data-i18n="ranking_leyenda_mensual">Barra vermelha = quantidade · Valor em preto · Var. % (Vendas) = valor vs mês anterior (não há no 1.º mês)</span></p>
+          </div>
         </section>
         <section>
-          <h2 data-i18n="lojas_titulo">Vendas por sucursal</h2>
+          <div class="sec-tempo-head">
+            <h2 data-i18n="lojas_titulo">Vendas por sucursal</h2>
+            <div class="tabs-tempo" role="tablist">
+              <button type="button" class="activo" id="tabLojaConsol" role="tab" aria-selected="true" data-i18n="tab_consolidado">Consolidado</button>
+              <button type="button" id="tabLojaMensual" role="tab" aria-selected="false" data-i18n="tab_desglose_mensual">Detalhamento mensal</button>
+            </div>
+          </div>
           <div class="sec-marca-head">
             <label class="ordenar-marca"><span data-i18n="ordenar">Ordenar</span>
               <select id="ordenLoja" aria-label="Ordenar sucursais">
@@ -1420,11 +1466,25 @@
               </select>
             </label>
           </div>
-          <div class="hbars hbars-scroll" id="chartLoja"></div>
-          <p class="leyenda-marca"><i>n</i> <span data-i18n="lojas_leyenda">Valor em vermelho = quantidade de solicitações outorgadas</span></p>
+          <div id="lojaConsolPanel">
+            <div class="hbars hbars-scroll" id="chartLoja"></div>
+            <p class="leyenda-marca"><i>n</i> <span data-i18n="lojas_leyenda">Valor em vermelho = quantidade de solicitações outorgadas</span></p>
+          </div>
+          <div id="lojaMensualPanel" hidden>
+            <div class="tbl-dyn-wrap">
+              <div class="tbl-dyn-scroll" id="lojaMensualTabla"></div>
+            </div>
+            <p class="leyenda-marca"><i>n</i> <span data-i18n="ranking_leyenda_mensual">Barra vermelha = quantidade · Valor em preto · Var. % (Vendas) = valor vs mês anterior (não há no 1.º mês)</span></p>
+          </div>
         </section>
         <section>
-          <h2 data-i18n="vendedores_titulo">Vendas por vendedor</h2>
+          <div class="sec-tempo-head">
+            <h2 data-i18n="vendedores_titulo">Vendas por vendedor</h2>
+            <div class="tabs-tempo" role="tablist">
+              <button type="button" class="activo" id="tabVendedorConsol" role="tab" aria-selected="true" data-i18n="tab_consolidado">Consolidado</button>
+              <button type="button" id="tabVendedorMensual" role="tab" aria-selected="false" data-i18n="tab_desglose_mensual">Detalhamento mensal</button>
+            </div>
+          </div>
           <div class="sec-marca-head">
             <label class="ordenar-marca"><span data-i18n="ordenar">Ordenar</span>
               <select id="ordenVendedor" aria-label="Ordenar vendedores">
@@ -1433,8 +1493,16 @@
               </select>
             </label>
           </div>
-          <div class="hbars hbars-scroll" id="chartVendedor"></div>
-          <p class="leyenda-marca"><i>n</i> <span data-i18n="vendedores_leyenda">Valor em vermelho = quantidade de solicitações outorgadas</span></p>
+          <div id="vendedorConsolPanel">
+            <div class="hbars hbars-scroll" id="chartVendedor"></div>
+            <p class="leyenda-marca"><i>n</i> <span data-i18n="vendedores_leyenda">Valor em vermelho = quantidade de solicitações outorgadas</span></p>
+          </div>
+          <div id="vendedorMensualPanel" hidden>
+            <div class="tbl-dyn-wrap">
+              <div class="tbl-dyn-scroll" id="vendedorMensualTabla"></div>
+            </div>
+            <p class="leyenda-marca"><i>n</i> <span data-i18n="ranking_leyenda_mensual">Barra vermelha = quantidade · Valor em preto · Var. % (Vendas) = valor vs mês anterior (não há no 1.º mês)</span></p>
+          </div>
         </section>
       </div>
       <section>
@@ -1546,8 +1614,8 @@
         aria_heat: "Mapa de calor de vendas outorgadas por dia da semana e franja horária",
         marcas_titulo: "Vendas por marca", ordenar: "Ordenar", ord_valor: "Valor de vendas", ord_qtd: "Quantidade de vendas",
         marcas_leyenda: "Valor em vermelho = quantidade de solicitações",
-        marcas_leyenda_mensual: "Barra vermelha = quantidade · Valor em preto · Var. % (Vendas) = valor vs mês anterior (não há no 1.º mês)",
-        th_marca: "Marca", th_qtd: "Qtd", th_valor: "Valor", th_var_pct_ventas: "Var. % (Vendas)",
+        ranking_leyenda_mensual: "Barra vermelha = quantidade · Valor em preto · Var. % (Vendas) = valor vs mês anterior (não há no 1.º mês)",
+        th_marca: "Marca", th_qtd: "Qtd", th_valor: "Valor", th_var_pct_ventas: "Var. % (Vendas)", th_vendedor: "Vendedor",
         regioes_titulo: "Vendas por região",
         regioes_leyenda: "Valor em vermelho = quantidade de solicitações outorgadas",
         lojas_titulo: "Vendas por sucursal",
@@ -1646,8 +1714,8 @@
         aria_heat: "Mapa de calor de ventas otorgadas por día de la semana y franja horaria",
         marcas_titulo: "Ventas por marca", ordenar: "Ordenar", ord_valor: "Valor de ventas", ord_qtd: "Cantidad de ventas",
         marcas_leyenda: "Valor en rojo = cantidad de solicitudes",
-        marcas_leyenda_mensual: "Barra roja = cantidad · Valor en negro · Var. % (Ventas) = valor vs mes anterior (no hay en el 1.er mes)",
-        th_marca: "Marca", th_qtd: "Qtd", th_valor: "Valor", th_var_pct_ventas: "Var. % (Ventas)",
+        ranking_leyenda_mensual: "Barra roja = cantidad · Valor en negro · Var. % (Ventas) = valor vs mes anterior (no hay en el 1.er mes)",
+        th_marca: "Marca", th_qtd: "Qtd", th_valor: "Valor", th_var_pct_ventas: "Var. % (Ventas)", th_vendedor: "Vendedor",
         regioes_titulo: "Ventas por región",
         regioes_leyenda: "Valor en rojo = cantidad de solicitudes otorgadas",
         lojas_titulo: "Ventas por sucursal",
@@ -2926,11 +2994,14 @@
       });
     }
     let marcasAtual = [];
-    let marcasListaAtual = [];
+    let concedidasListaAtual = [];
     let modoMarcaVista = "consol";
     let regioesAtual = [];
+    let modoRegiaoVista = "consol";
     let lojasAtual = [];
+    let modoLojaVista = "consol";
     let vendedoresAtual = [];
+    let modoVendedorVista = "consol";
     let riscosAtual = [];
     let riscoTotalAtual = 1;
     let riscoListaAtual = [];
@@ -2939,10 +3010,10 @@
     let composicaoTotalAtual = 1;
     let composicaoListaAtual = [];
     let modoCompVista = "consol";
-    function syncTabsMarca() {
-      const consol = modoMarcaVista === "consol";
-      const tabC = document.getElementById("tabMarcaConsol");
-      const tabM = document.getElementById("tabMarcaMensual");
+    function syncTabsRanking(modo, tabCId, tabMId, panelCId, panelMId) {
+      const consol = modo === "consol";
+      const tabC = document.getElementById(tabCId);
+      const tabM = document.getElementById(tabMId);
       if (tabC) {
         tabC.classList.toggle("activo", consol);
         tabC.setAttribute("aria-selected", consol ? "true" : "false");
@@ -2951,10 +3022,22 @@
         tabM.classList.toggle("activo", !consol);
         tabM.setAttribute("aria-selected", consol ? "false" : "true");
       }
-      const pC = document.getElementById("marcaConsolPanel");
-      const pM = document.getElementById("marcaMensualPanel");
+      const pC = document.getElementById(panelCId);
+      const pM = document.getElementById(panelMId);
       if (pC) pC.hidden = !consol;
       if (pM) pM.hidden = consol;
+    }
+    function syncTabsMarca() {
+      syncTabsRanking(modoMarcaVista, "tabMarcaConsol", "tabMarcaMensual", "marcaConsolPanel", "marcaMensualPanel");
+    }
+    function syncTabsRegiao() {
+      syncTabsRanking(modoRegiaoVista, "tabRegiaoConsol", "tabRegiaoMensual", "regiaoConsolPanel", "regiaoMensualPanel");
+    }
+    function syncTabsLoja() {
+      syncTabsRanking(modoLojaVista, "tabLojaConsol", "tabLojaMensual", "lojaConsolPanel", "lojaMensualPanel");
+    }
+    function syncTabsVendedor() {
+      syncTabsRanking(modoVendedorVista, "tabVendedorConsol", "tabVendedorMensual", "vendedorConsolPanel", "vendedorMensualPanel");
     }
     function syncTabsComp() {
       const consol = modoCompVista === "consol";
@@ -3316,11 +3399,11 @@
         el.appendChild(row);
       });
     }
-    function pintarMarcasMensual() {
-      const host = document.getElementById("marcaMensualTabla");
+    function pintarRankingMensual(cfg) {
+      const host = document.getElementById(cfg.hostId);
       if (!host) return;
       host.innerHTML = "";
-      const lista = marcasListaAtual || [];
+      const lista = concedidasListaAtual || [];
       if (!lista.length) {
         const v = document.createElement("div");
         v.className = "vazio";
@@ -3329,30 +3412,31 @@
         return;
       }
       const mesesMap = {};
-      const marcaTot = {};
+      const dimTot = {};
       lista.forEach(function (r) {
         const ym = String(r.dc || "").slice(0, 7);
-        const mk = r.m || t("sem_marca");
-        if (!ym || ym.length < 7) return;
+        const key = cfg.keyOf(r);
+        if (!ym || ym.length < 7 || !key) return;
         if (!mesesMap[ym]) mesesMap[ym] = { totalC: 0, totalV: 0, by: {} };
-        if (!mesesMap[ym].by[mk]) mesesMap[ym].by[mk] = { c: 0, v: 0 };
+        if (!mesesMap[ym].by[key]) mesesMap[ym].by[key] = { c: 0, v: 0 };
         const val = valorMonetario(r);
-        mesesMap[ym].by[mk].c += 1;
-        mesesMap[ym].by[mk].v += val;
+        mesesMap[ym].by[key].c += 1;
+        mesesMap[ym].by[key].v += val;
         mesesMap[ym].totalC += 1;
         mesesMap[ym].totalV += val;
-        if (!marcaTot[mk]) marcaTot[mk] = { n: mk, c: 0, v: 0 };
-        marcaTot[mk].c += 1;
-        marcaTot[mk].v += val;
+        if (!dimTot[key]) dimTot[key] = { n: key, sub: cfg.subOf ? cfg.subOf(r) : "", c: 0, v: 0 };
+        dimTot[key].c += 1;
+        dimTot[key].v += val;
+        if (cfg.subOf && !dimTot[key].sub) dimTot[key].sub = cfg.subOf(r) || "";
       });
       const meses = Object.keys(mesesMap).sort();
-      const orden = document.getElementById("ordenMarca");
+      const orden = document.getElementById(cfg.ordenId);
       const modo = orden ? orden.value : "valor";
-      const marcas = Object.keys(marcaTot).map(function (k) { return marcaTot[k]; }).sort(function (a, b) {
+      const rows = Object.keys(dimTot).map(function (k) { return dimTot[k]; }).sort(function (a, b) {
         if (modo === "cantidad") return b.c - a.c || b.v - a.v;
         return b.v - a.v || b.c - a.c;
       });
-      if (!meses.length || !marcas.length) {
+      if (!meses.length || !rows.length) {
         const v = document.createElement("div");
         v.className = "vazio";
         v.textContent = t("vazio_concedidas");
@@ -3362,12 +3446,11 @@
       const maxQtdMes = {};
       meses.forEach(function (ym) {
         let m = 1;
-        marcas.forEach(function (mk) {
-          m = Math.max(m, (mesesMap[ym].by[mk.n] || {}).c || 0);
+        rows.forEach(function (row) {
+          m = Math.max(m, (mesesMap[ym].by[row.n] || {}).c || 0);
         });
         maxQtdMes[ym] = m;
       });
-      const maxQtdTot = Math.max(1, marcas.reduce(function (m, x) { return Math.max(m, x.c || 0); }, 1));
       function tdQbar(n, maxN, mesStart) {
         const cell = document.createElement("td");
         cell.className = "qbar-cell" + (mesStart ? " mes-start" : "");
@@ -3384,22 +3467,36 @@
         cell.appendChild(track);
         return cell;
       }
-      function tdValor(v, mesStart) {
+      function tdValor(v) {
         const cell = document.createElement("td");
-        cell.className = "num val-cell" + (mesStart ? " mes-start" : "");
+        cell.className = "num val-cell";
         cell.textContent = v ? brMoney(v) : "—";
         return cell;
+      }
+      function nameNode(row) {
+        if (!row.sub) return row.n;
+        const wrap = document.createElement("div");
+        wrap.className = "mx-nome";
+        const p = document.createElement("p");
+        p.textContent = row.n;
+        p.title = row.n;
+        const s = document.createElement("span");
+        s.textContent = row.sub;
+        s.title = row.sub;
+        wrap.appendChild(p);
+        wrap.appendChild(s);
+        return wrap;
       }
       const table = document.createElement("table");
       table.className = "tbl-dyn marca-mx";
       const thead = document.createElement("thead");
       const trGrp = document.createElement("tr");
       trGrp.className = "grp";
-      const thMarca = document.createElement("th");
-      thMarca.rowSpan = 2;
-      thMarca.textContent = t("th_marca");
-      thMarca.style.minWidth = "110px";
-      trGrp.appendChild(thMarca);
+      const thDim = document.createElement("th");
+      thDim.rowSpan = 2;
+      thDim.textContent = t(cfg.thKey);
+      thDim.style.minWidth = cfg.minNameWidth || "110px";
+      trGrp.appendChild(thDim);
       meses.forEach(function (ym, idx) {
         const thM = document.createElement("th");
         thM.className = "mes";
@@ -3428,14 +3525,14 @@
       thead.appendChild(trSub);
       table.appendChild(thead);
       const tbody = document.createElement("tbody");
-      marcas.forEach(function (mk) {
+      rows.forEach(function (row) {
         const tr = document.createElement("tr");
-        tr.appendChild(tdDyn(mk.n, false));
+        tr.appendChild(tdDyn(nameNode(row), false));
         let prevV = null;
         meses.forEach(function (ym, idx) {
-          const cell = mesesMap[ym].by[mk.n] || { c: 0, v: 0 };
+          const cell = mesesMap[ym].by[row.n] || { c: 0, v: 0 };
           tr.appendChild(tdQbar(cell.c, maxQtdMes[ym], true));
-          tr.appendChild(tdValor(cell.v, false));
+          tr.appendChild(tdValor(cell.v));
           if (idx > 0) tr.appendChild(tdVarPct(prevV, cell.v));
           prevV = cell.v;
         });
@@ -3451,7 +3548,7 @@
         const c = mesesMap[ym].totalC;
         const v = mesesMap[ym].totalV;
         trf.appendChild(tdQbar(c, maxTotMes, true));
-        trf.appendChild(tdValor(v, false));
+        trf.appendChild(tdValor(v));
         if (idx > 0) trf.appendChild(tdVarPct(prevTotV, v));
         prevTotV = v;
       });
@@ -3463,18 +3560,57 @@
     function pintarMarcas() {
       syncTabsMarca();
       if (modoMarcaVista === "mensual") {
-        pintarMarcasMensual();
+        pintarRankingMensual({
+          hostId: "marcaMensualTabla",
+          ordenId: "ordenMarca",
+          thKey: "th_marca",
+          keyOf: function (r) { return r.m || t("sem_marca"); }
+        });
         return;
       }
       pintarHbarsConcedidas("chartMarca", "ordenMarca", marcasAtual);
     }
     function pintarRegioes() {
+      syncTabsRegiao();
+      if (modoRegiaoVista === "mensual") {
+        pintarRankingMensual({
+          hostId: "regiaoMensualTabla",
+          ordenId: "ordenRegiao",
+          thKey: "th_regiao",
+          keyOf: function (r) { return r.e || t("sem_regiao"); }
+        });
+        return;
+      }
       pintarHbarsConcedidas("chartRegiao", "ordenRegiao", regioesAtual);
     }
     function pintarLojas() {
+      syncTabsLoja();
+      if (modoLojaVista === "mensual") {
+        pintarRankingMensual({
+          hostId: "lojaMensualTabla",
+          ordenId: "ordenLoja",
+          thKey: "th_loja",
+          minNameWidth: "160px",
+          keyOf: function (r) { return r.f || t("sem_loja"); },
+          subOf: function (r) { return r.e || t("sem_regiao"); }
+        });
+        return;
+      }
       pintarHbarsConcedidas("chartLoja", "ordenLoja", lojasAtual, { showRegion: true });
     }
     function pintarVendedores() {
+      syncTabsVendedor();
+      if (modoVendedorVista === "mensual") {
+        pintarRankingMensual({
+          hostId: "vendedorMensualTabla",
+          ordenId: "ordenVendedor",
+          thKey: "th_vendedor",
+          minNameWidth: "160px",
+          keyOf: function (r) { return r.v || t("sem_vendedor"); },
+          subOf: function (r) { return r.f || t("sem_loja"); }
+        });
+        return;
+      }
       pintarHbarsConcedidas("chartVendedor", "ordenVendedor", vendedoresAtual, { showRegion: true });
     }
     function td(txt, extra) {
@@ -3837,7 +3973,7 @@
         porMarca[k].v += valorMonetario(r);
       });
       marcasAtual = Object.keys(porMarca).map(function (k) { return porMarca[k]; });
-      marcasListaAtual = conc.slice();
+      concedidasListaAtual = conc.slice();
       pintarMarcas();
       const porRegiao = {};
       conc.forEach(function (r) {
@@ -3972,8 +4108,32 @@
       pintarMarcas();
     });
     document.getElementById("ordenRegiao").addEventListener("change", pintarRegioes);
+    document.getElementById("tabRegiaoConsol").addEventListener("click", function () {
+      modoRegiaoVista = "consol";
+      pintarRegioes();
+    });
+    document.getElementById("tabRegiaoMensual").addEventListener("click", function () {
+      modoRegiaoVista = "mensual";
+      pintarRegioes();
+    });
     document.getElementById("ordenLoja").addEventListener("change", pintarLojas);
+    document.getElementById("tabLojaConsol").addEventListener("click", function () {
+      modoLojaVista = "consol";
+      pintarLojas();
+    });
+    document.getElementById("tabLojaMensual").addEventListener("click", function () {
+      modoLojaVista = "mensual";
+      pintarLojas();
+    });
     document.getElementById("ordenVendedor").addEventListener("change", pintarVendedores);
+    document.getElementById("tabVendedorConsol").addEventListener("click", function () {
+      modoVendedorVista = "consol";
+      pintarVendedores();
+    });
+    document.getElementById("tabVendedorMensual").addEventListener("click", function () {
+      modoVendedorVista = "mensual";
+      pintarVendedores();
+    });
     document.getElementById("ordenRisco").addEventListener("change", pintarRisco);
     document.getElementById("ordenComp").addEventListener("change", pintarComposicao);
     document.getElementById("tabCompConsol").addEventListener("click", function () {

@@ -1190,7 +1190,13 @@
           </div>
         </section>
         <section>
-          <h2 data-i18n="risco_titulo">Risco da filial</h2>
+          <div class="sec-tempo-head">
+            <h2 data-i18n="risco_titulo">Risco da filial</h2>
+            <div class="tabs-tempo" role="tablist">
+              <button type="button" class="activo" id="tabRiscoConsol" role="tab" aria-selected="true" data-i18n="tab_consolidado">Consolidado</button>
+              <button type="button" id="tabRiscoMensual" role="tab" aria-selected="false" data-i18n="tab_desglose_mensual">Detalhamento mensal</button>
+            </div>
+          </div>
           <div class="sec-marca-head">
             <label class="ordenar-marca"><span data-i18n="ordenar">Ordenar</span>
               <select id="ordenRisco" aria-label="Ordenar risco da filial">
@@ -1201,10 +1207,23 @@
               </select>
             </label>
           </div>
-          <div class="pie-wrap pie-risco">
-            <div id="pieRisco"></div>
-            <div class="tbl-dyn-wrap tbl-dyn-risco">
-              <div class="tbl-dyn-scroll" id="legRisco"></div>
+          <div id="riscoConsolPanel">
+            <div class="pie-wrap pie-risco">
+              <div id="pieRisco"></div>
+              <div class="tbl-dyn-wrap tbl-dyn-risco">
+                <div class="tbl-dyn-scroll" id="legRisco"></div>
+              </div>
+            </div>
+          </div>
+          <div id="riscoMensualPanel" hidden>
+            <div class="comp-mensual">
+              <div class="tbl-dyn-wrap">
+                <div class="tbl-dyn-scroll" id="riscoMensualTabla"></div>
+              </div>
+              <div>
+                <div class="comp-mensual-bars" id="riscoMensualBars"></div>
+                <p class="comp-mensual-note" data-i18n="comp_mensual_note">Barras 100 % = mix do mês</p>
+              </div>
             </div>
           </div>
         </section>
@@ -1380,7 +1399,7 @@
         comp_titulo: "Composição das solicitações", risco_titulo: "Risco da filial", regiao_titulo: "Região e lojas",
         tab_consolidado: "Consolidado", tab_desglose_mensual: "Detalhamento mensal",
         comp_mensual_note: "Barras 100 % = mix do mês",
-        th_estado: "Estado", th_total: "Total", th_criadas_row: "Criadas", th_var_pct: "Var. %",
+        th_estado: "Estado", th_nivel: "Nível", th_total: "Total", th_criadas_row: "Criadas", th_var_pct: "Var. %",
         ord_az: "A–Z", ord_za: "Z–A", ord_maior_qtd: "Maior quantidade", ord_menor_qtd: "Menor quantidade",
         ord_maior_risco: "Maior nível de risco", ord_menor_risco: "Menor nível de risco",
         nota_tabela: "Criadas = solicitações com data de criação neste período. A porcentagem de cada situação é sobre as criadas da linha. Aprovada = o crédito já foi aprovado e a venda ainda não passou a Outorgada. Cancelada entra para o total fechar. Neste arquivo, o valor solicitado é igual ao valor aprovado.",
@@ -1478,7 +1497,7 @@
         comp_titulo: "Composición de las solicitudes", risco_titulo: "Riesgo de la sucursal", regiao_titulo: "Región y tiendas",
         tab_consolidado: "Consolidado", tab_desglose_mensual: "Desglose mensual",
         comp_mensual_note: "Barras 100 % = mix del mes",
-        th_estado: "Estado", th_total: "Total", th_criadas_row: "Creadas", th_var_pct: "Var. %",
+        th_estado: "Estado", th_nivel: "Nivel", th_total: "Total", th_criadas_row: "Creadas", th_var_pct: "Var. %",
         ord_az: "A–Z", ord_za: "Z–A", ord_maior_qtd: "Mayor cantidad", ord_menor_qtd: "Menor cantidad",
         ord_maior_risco: "Mayor nivel de riesgo", ord_menor_risco: "Menor nivel de riesgo",
         nota_tabela: "Creadas = solicitudes con fecha de creación en este período. El porcentaje de cada situación es sobre las creadas de la fila. Aprobada = el crédito ya fue aprobado y la venta aún no pasó a Otorgada. Cancelada entra para que el total cierre. En este archivo, el valor solicitado es igual al valor aprobado.",
@@ -2689,14 +2708,14 @@
       tableR.className = "tbl-dyn";
       const theadR = document.createElement("thead");
       const trhR = document.createElement("tr");
-      trhR.appendChild(thDyn("Nível", "120px", false));
+      trhR.appendChild(thDyn(t("th_nivel"), "120px", false));
       trhR.appendChild(thDyn("Qtd", "64px", true));
       trhR.appendChild(thDyn("Valor (R$)", "110px", true));
       trhR.appendChild(thDyn("% criadas", "90px", true));
       theadR.appendChild(trhR);
       tableR.appendChild(theadR);
       const tbodyR = document.createElement("tbody");
-      partes.forEach(function (p) {
+      (items || []).filter(function (p) { return (p.c || 0) > 0; }).forEach(function (p) {
         const tr = document.createElement("tr");
         const nameWrap = document.createElement("span");
         const dot = document.createElement("i");
@@ -2751,6 +2770,8 @@
     let vendedoresAtual = [];
     let riscosAtual = [];
     let riscoTotalAtual = 1;
+    let riscoListaAtual = [];
+    let modoRiscoVista = "consol";
     let composicaoAtual = [];
     let composicaoTotalAtual = 1;
     let composicaoListaAtual = [];
@@ -2771,6 +2792,26 @@
       const pM = document.getElementById("compMensualPanel");
       if (pC) pC.hidden = !consol;
       if (pM) pM.hidden = consol;
+    }
+    function syncTabsRisco() {
+      const consol = modoRiscoVista === "consol";
+      const tabC = document.getElementById("tabRiscoConsol");
+      const tabM = document.getElementById("tabRiscoMensual");
+      if (tabC) {
+        tabC.classList.toggle("activo", consol);
+        tabC.setAttribute("aria-selected", consol ? "true" : "false");
+      }
+      if (tabM) {
+        tabM.classList.toggle("activo", !consol);
+        tabM.setAttribute("aria-selected", consol ? "false" : "true");
+      }
+      const pC = document.getElementById("riscoConsolPanel");
+      const pM = document.getElementById("riscoMensualPanel");
+      if (pC) pC.hidden = !consol;
+      if (pM) pM.hidden = consol;
+    }
+    function riscosComDados(items) {
+      return (items || []).filter(function (p) { return (p.c || 0) > 0; });
     }
     function pintarComposicaoMensual() {
       const host = document.getElementById("compMensualTabla");
@@ -2890,10 +2931,133 @@
         bars.appendChild(row);
       });
     }
-    function pintarRisco() {
+    function pintarRiscoMensual() {
+      const host = document.getElementById("riscoMensualTabla");
+      const bars = document.getElementById("riscoMensualBars");
+      if (!host || !bars) return;
+      host.innerHTML = "";
+      bars.innerHTML = "";
+      const lista = riscoListaAtual || [];
+      if (!lista.length) {
+        const v = document.createElement("div");
+        v.className = "vazio";
+        v.textContent = t("vazio_periodo");
+        host.appendChild(v);
+        return;
+      }
+      const mesesMap = {};
+      const riscoTot = {};
+      lista.forEach(function (r) {
+        const ym = String(r.dc || "").slice(0, 7);
+        const rk = riscoDe(r);
+        if (!ym || ym.length < 7 || !rk) return;
+        if (!mesesMap[ym]) mesesMap[ym] = { total: 0, by: {} };
+        mesesMap[ym].total += 1;
+        mesesMap[ym].by[rk] = (mesesMap[ym].by[rk] || 0) + 1;
+        riscoTot[rk] = (riscoTot[rk] || 0) + 1;
+      });
+      const meses = Object.keys(mesesMap).sort();
       const orden = document.getElementById("ordenRisco");
       const modo = orden ? orden.value : "maior_risco";
-      const partes = ordenarRiscos(riscosAtual, modo);
+      const niveis = riscosComDados(Object.keys(riscoTot).map(function (k) {
+        return { n: k, c: riscoTot[k], v: 0 };
+      }));
+      const niveisOrd = ordenarRiscos(niveis, modo);
+      if (!meses.length || !niveisOrd.length) {
+        const v = document.createElement("div");
+        v.className = "vazio";
+        v.textContent = t("vazio_periodo");
+        host.appendChild(v);
+        return;
+      }
+      const table = document.createElement("table");
+      table.className = "tbl-dyn comp-mx";
+      const thead = document.createElement("thead");
+      const trh = document.createElement("tr");
+      trh.appendChild(thDyn(t("th_nivel"), "120px", false));
+      meses.forEach(function (ym, idx) {
+        trh.appendChild(thDyn(rotuloMesCurto(ym), "64px", true));
+        if (idx > 0) {
+          const thV = thDyn(t("th_var_pct"), "72px", true);
+          thV.classList.add("var-pct");
+          trh.appendChild(thV);
+        }
+      });
+      trh.appendChild(thDyn(t("th_total"), "72px", true));
+      thead.appendChild(trh);
+      table.appendChild(thead);
+      const tbody = document.createElement("tbody");
+      niveisOrd.forEach(function (nv) {
+        const tr = document.createElement("tr");
+        const nameWrap = document.createElement("span");
+        const dot = document.createElement("i");
+        dot.className = "dot";
+        dot.style.background = CORES_RISCO[nv.n] || "#8a8a8a";
+        nameWrap.appendChild(dot);
+        nameWrap.appendChild(document.createTextNode(LABELS_RISCO[nv.n] || nv.n));
+        tr.appendChild(tdDyn(nameWrap, false));
+        let tot = 0;
+        let prev = null;
+        meses.forEach(function (ym, idx) {
+          const n = (mesesMap[ym].by[nv.n] || 0);
+          tot += n;
+          tr.appendChild(tdDyn(n ? brNum(n, 0) : "—", true));
+          if (idx > 0) tr.appendChild(tdVarPct(prev, n));
+          prev = n;
+        });
+        tr.appendChild(tdDyn(brNum(tot, 0), true));
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody);
+      const tfoot = document.createElement("tfoot");
+      const trf = document.createElement("tr");
+      trf.appendChild(tdDyn(t("th_criadas_row"), false));
+      let gran = 0;
+      let prevTot = null;
+      meses.forEach(function (ym, idx) {
+        const n = mesesMap[ym].total;
+        gran += n;
+        trf.appendChild(tdDyn(brNum(n, 0), true));
+        if (idx > 0) trf.appendChild(tdVarPct(prevTot, n));
+        prevTot = n;
+      });
+      trf.appendChild(tdDyn(brNum(gran, 0), true));
+      tfoot.appendChild(trf);
+      table.appendChild(tfoot);
+      bindColumnResize(table);
+      host.appendChild(table);
+      meses.forEach(function (ym) {
+        const row = document.createElement("div");
+        row.className = "comp-mensual-row";
+        const lab = document.createElement("div");
+        lab.className = "lab";
+        lab.textContent = rotuloMesCurto(ym);
+        const stack = document.createElement("div");
+        stack.className = "comp-mensual-stack";
+        const totMes = mesesMap[ym].total || 1;
+        niveisOrd.forEach(function (nv) {
+          const n = mesesMap[ym].by[nv.n] || 0;
+          if (!n) return;
+          const seg = document.createElement("i");
+          seg.style.width = (100 * n / totMes).toFixed(2) + "%";
+          seg.style.background = CORES_RISCO[nv.n] || "#8a8a8a";
+          seg.title = (LABELS_RISCO[nv.n] || nv.n) + ": " + brNum(n, 0) + " (" + pct(n, totMes) + ")";
+          stack.appendChild(seg);
+        });
+        row.appendChild(lab);
+        row.appendChild(stack);
+        bars.appendChild(row);
+      });
+    }
+    function pintarRisco() {
+      syncTabsRisco();
+      if (modoRiscoVista === "mensual") {
+        pintarRiscoMensual();
+        return;
+      }
+      const orden = document.getElementById("ordenRisco");
+      const modo = orden ? orden.value : "maior_risco";
+      const partes = ordenarRiscos(riscosComDados(riscosAtual), modo);
       pintarRiscoDonut(document.getElementById("pieRisco"), document.getElementById("legRisco"), partes, riscoTotalAtual);
     }
     function pintarComposicao() {
@@ -3315,6 +3479,7 @@
       });
       riscosAtual = Object.keys(porRisco).map(function (k) { return porRisco[k]; });
       riscoTotalAtual = a.n || 1;
+      riscoListaAtual = lista.slice();
       pintarRisco();
 
       const conc = lista.filter(function (r) { return r.s === "OTORGADA"; });
@@ -3480,6 +3645,14 @@
     document.getElementById("tabCompMensual").addEventListener("click", function () {
       modoCompVista = "mensual";
       pintarComposicao();
+    });
+    document.getElementById("tabRiscoConsol").addEventListener("click", function () {
+      modoRiscoVista = "consol";
+      pintarRisco();
+    });
+    document.getElementById("tabRiscoMensual").addEventListener("click", function () {
+      modoRiscoVista = "mensual";
+      pintarRisco();
     });
     function avisarSiRangoInvalido() {
       aplicarLimitesFechas();

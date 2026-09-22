@@ -215,19 +215,23 @@
       grid-template-columns: 0.78fr 1.22fr;
       gap: 12px;
       margin-bottom: 14px;
+      align-items: stretch;
     }
     .kpi-group {
       background: #f7f7f7;
       border: 1px solid #e4e4e4;
       border-radius: 12px;
-      padding: 10px;
+      padding: 8px 10px;
       box-shadow: none;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
     }
     .kpi-group-title {
       display: flex;
       align-items: center;
       gap: 8px;
-      margin: 0 0 8px;
+      margin: 0 0 6px;
       font-size: 11px;
       letter-spacing: .08em;
       text-transform: uppercase;
@@ -245,6 +249,8 @@
     .kpi-group .kpi-row {
       display: grid;
       gap: 8px;
+      flex: 1;
+      align-items: stretch;
     }
     .kpi-group.result .kpi-row { grid-template-columns: 1.3fr 0.9fr; }
     .kpi-group.funnel .funnel-note {
@@ -256,18 +262,21 @@
     .funnel-stages {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
+      flex: 1;
+      justify-content: space-between;
     }
     .funnel-stage {
       display: grid;
-      grid-template-columns: 84px 1fr 64px;
-      gap: 8px;
+      grid-template-columns: 76px 1fr 52px;
+      gap: 6px;
       align-items: center;
       background: #fafafa;
       border: 1px solid var(--linea);
-      border-radius: 8px;
-      padding: 6px 10px;
+      border-radius: 7px;
+      padding: 3px 8px;
       min-height: 0;
+      flex: 1;
     }
     .funnel-stage.ok {
       background: #f7fbf7;
@@ -278,25 +287,28 @@
       background: #fffafb;
     }
     .funnel-stage .lab {
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 700;
-      letter-spacing: .05em;
+      letter-spacing: .04em;
       text-transform: uppercase;
       color: var(--muted);
-      line-height: 1.2;
+      line-height: 1.15;
     }
     .funnel-stage .lab-with-tip {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
     }
     .funnel-stage .lab-with-tip .tip {
       flex: 0 0 auto;
+      width: 12px;
+      height: 12px;
+      font-size: 9px;
     }
     .funnel-stage.ok .lab { color: #2f6b45; }
     .funnel-stage.loss .lab { color: var(--marca); }
     .funnel-stage .track {
-      height: 7px;
+      height: 5px;
       background: #f0f0f0;
       border-radius: 99px;
       overflow: hidden;
@@ -313,30 +325,32 @@
     .funnel-stage .track i.bad { background: var(--marca); }
     .funnel-stage .num {
       text-align: right;
-      font-size: 15px;
+      font-size: 13px;
       font-weight: 800;
       color: var(--texto-forte);
       font-variant-numeric: tabular-nums;
       letter-spacing: -.02em;
-      line-height: 1.1;
+      line-height: 1.05;
     }
     .funnel-stage .pct {
       display: block;
-      margin-top: 1px;
-      font-size: 9px;
+      margin-top: 0;
+      font-size: 8px;
       font-weight: 700;
       color: var(--muted);
+      line-height: 1.1;
     }
     .funnel-stage.loss .num { color: var(--marca); }
     .kpi {
       background: #fafafa;
       border: 1px solid var(--linea);
       border-radius: 10px;
-      padding: 10px 11px;
+      padding: 8px 10px;
       box-shadow: none;
-      min-height: 108px;
+      min-height: 0;
       display: flex;
       flex-direction: column;
+      justify-content: center;
     }
     .kpi.featured {
       background: #eef7ee;

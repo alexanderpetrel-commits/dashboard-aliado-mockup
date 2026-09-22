@@ -268,8 +268,9 @@
     }
     .funnel-stage {
       display: grid;
-      grid-template-columns: 76px 1fr 52px;
-      gap: 6px;
+      grid-template-columns: 76px minmax(0, 1fr) 64px;
+      column-gap: 14px;
+      row-gap: 0;
       align-items: center;
       background: #fafafa;
       border: 1px solid var(--linea);
@@ -309,20 +310,28 @@
     .funnel-stage.loss .lab { color: var(--marca); }
     .funnel-stage .track {
       height: 5px;
+      width: 88%;
+      max-width: 88%;
       background: #f0f0f0;
       border-radius: 99px;
       overflow: hidden;
+      justify-self: start;
     }
     .funnel-stage .track i {
       display: block;
       height: 100%;
       border-radius: 99px;
-      background: #9a9a9a;
-      max-width: 100%;
+      background: #9aa3ad;
     }
-    .funnel-stage .track i.ok { background: #2f6b45; }
-    .funnel-stage .track i.warn { background: #b86a12; }
-    .funnel-stage .track i.bad { background: var(--marca); }
+    .funnel-stage.ok .track i { background: #2f6b45; }
+    .funnel-stage.base .track i { background: #9aa3ad; }
+    .funnel-stage:not(.ok):not(.loss):not(.base) .track i { background: #c4a35a; }
+    .funnel-stage.loss .track i { background: var(--marca); }
+    .funnel-stage .vals {
+      text-align: right;
+      min-width: 64px;
+      padding-left: 0;
+    }
     .funnel-stage .num {
       text-align: right;
       font-size: 13px;
@@ -331,6 +340,7 @@
       font-variant-numeric: tabular-nums;
       letter-spacing: -.02em;
       line-height: 1.05;
+      white-space: nowrap;
     }
     .funnel-stage .pct {
       display: block;
@@ -339,6 +349,7 @@
       font-weight: 700;
       color: var(--muted);
       line-height: 1.1;
+      white-space: nowrap;
     }
     .funnel-stage.loss .num { color: var(--marca); }
     .kpi {
@@ -743,7 +754,8 @@
     @media (max-width: 1100px) {
       .kpis { grid-template-columns: 1fr; }
       .kpi-group.result .kpi-row { grid-template-columns: 1fr; }
-      .funnel-stage { grid-template-columns: 76px 1fr 56px; gap: 6px; padding: 5px 8px; }
+      .funnel-stage { grid-template-columns: 72px minmax(0, 1fr) 56px; column-gap: 12px; padding: 3px 7px; }
+      .funnel-stage .track { width: 86%; max-width: 86%; }
       .grid { grid-template-columns: 1fr; }
       .fila { grid-template-columns: 1fr 1fr; }
       .pie-wrap { grid-template-columns: 1fr; }

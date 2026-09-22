@@ -584,6 +584,22 @@
       min-width: 70px;
       text-align: center;
     }
+    .tbl-dyn.comp-mx th:first-child,
+    .tbl-dyn.comp-mx td:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 1;
+      background: #fff;
+      box-shadow: 2px 0 0 var(--linea);
+    }
+    .tbl-dyn.comp-mx thead th:first-child {
+      z-index: 5;
+      background: #f3f3f3;
+    }
+    .tbl-dyn.comp-mx tfoot td:first-child {
+      z-index: 2;
+      background: #fafafa;
+    }
     .tbl-dyn.marca-mx th, .tbl-dyn.marca-mx td {
       text-align: right;
       white-space: nowrap;
@@ -595,6 +611,8 @@
     .tbl-dyn.marca-mx thead tr.grp th {
       border-bottom: 0;
       padding-bottom: 2px;
+      top: 0;
+      z-index: 2;
     }
     .tbl-dyn.marca-mx thead tr.grp th.mes {
       background: #f5f5f5;
@@ -607,6 +625,9 @@
       letter-spacing: .02em;
       text-transform: none;
       color: #8a8a8a;
+      top: 30px;
+      z-index: 2;
+      background: #f3f3f3;
     }
     .tbl-dyn.marca-mx thead tr.sub th.mes-start,
     .tbl-dyn.marca-mx td.mes-start {
@@ -693,20 +714,32 @@
     .tbl-dyn.marca-mx tfoot td.var-pct {
       background: #f3f3f3;
     }
-    .tbl-dyn.marca-mx th:first-child,
-    .tbl-dyn.marca-mx td:first-child {
+    .tbl-dyn.marca-mx tbody td:first-child,
+    .tbl-dyn.marca-mx tfoot td:first-child {
       position: sticky;
       left: 0;
-      z-index: 3;
+      z-index: 1;
       background: #fff;
       box-shadow: 2px 0 0 var(--linea);
     }
-    .tbl-dyn.marca-mx thead th:first-child {
-      z-index: 4;
-      background: #f3f3f3;
-    }
     .tbl-dyn.marca-mx tfoot td:first-child {
+      z-index: 2;
       background: #fafafa;
+    }
+    .tbl-dyn.marca-mx thead th:first-child {
+      position: sticky;
+      left: 0;
+      top: 0;
+      z-index: 6;
+      background: #f3f3f3;
+      box-shadow: 2px 0 0 var(--linea);
+      overflow: hidden;
+    }
+    .tbl-dyn.marca-mx thead th:not(:first-child) {
+      z-index: 2;
+    }
+    .tbl-dyn.marca-mx th {
+      overflow: hidden;
     }
     #marcaMensualPanel,
     #regiaoMensualPanel,
@@ -793,6 +826,7 @@
       height: 100%;
       max-height: inherit;
       overflow: auto;
+      isolation: isolate;
     }
     .tbl-dyn-scroll::-webkit-scrollbar { width: 10px; height: 10px; }
     .tbl-dyn-scroll::-webkit-scrollbar-thumb {
@@ -814,14 +848,16 @@
       padding: 7px 10px;
       border-bottom: 1px solid var(--linea);
       background: #fff;
+      background-clip: padding-box;
       white-space: nowrap;
       vertical-align: middle;
     }
-    table.tbl-dyn th {
+    table.tbl-dyn thead th {
       position: sticky;
       top: 0;
       z-index: 2;
       background: #f3f3f3;
+      background-clip: padding-box;
       color: var(--muted);
       font-size: 9px;
       letter-spacing: .04em;
@@ -866,8 +902,7 @@
       cursor: col-resize;
       z-index: 3;
     }
-    table.tbl-dyn th {
-      position: sticky;
+    table.tbl-dyn thead th:not(:first-child) {
       overflow: visible;
     }
     table.tbl-dyn th .col-resize::after {
@@ -991,12 +1026,13 @@
       font-size: 12px; white-space: nowrap;
     }
     .hbar-marca .dir em { font-style: normal; color: var(--muted); font-weight: 500; }
-    .tbl-wrap { overflow: auto; max-height: 520px; border-radius: 10px; }
+    .tbl-wrap { overflow: auto; max-height: 520px; border-radius: 10px; isolation: isolate; }
     .grid-exec {
       table-layout: fixed;
       width: 2480px;
       min-width: 100%;
-      border-collapse: collapse;
+      border-collapse: separate;
+      border-spacing: 0;
       font-size: 12px;
     }
     .grid-exec th, .grid-exec td {
@@ -1007,10 +1043,28 @@
       overflow: hidden;
       text-overflow: ellipsis;
       box-sizing: border-box;
+      background: #fff;
+      background-clip: padding-box;
     }
     .grid-exec td.num { text-align: right; font-variant-numeric: tabular-nums; }
-    .grid-exec thead th { position: sticky; top: 0; z-index: 2; background: #fafafa; font-weight: 600; text-align: center; }
-    .grid-exec thead .sub th { top: 32px; font-weight: 500; color: var(--muted); font-size: 11px; text-align: center; }
+    .grid-exec thead th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: #fafafa;
+      background-clip: padding-box;
+      font-weight: 600;
+      text-align: center;
+    }
+    .grid-exec thead .sub th {
+      top: 32px;
+      z-index: 2;
+      font-weight: 500;
+      color: var(--muted);
+      font-size: 11px;
+      text-align: center;
+      background: #fafafa;
+    }
     .grid-exec .g-cria { background: #f3f3f3; }
     .grid-exec .g-conc { background: #fde8ea; }
     .grid-exec .g-apr { background: #fff6e8; }
@@ -1026,6 +1080,39 @@
     .grid-exec col.c-val { width: 112px; }
     .grid-exec col.c-pct { width: 56px; }
     .grid-exec col.c-money { width: 112px; }
+    .grid-exec thead tr:first-child th:nth-child(1),
+    .grid-exec tbody td:nth-child(1) {
+      position: sticky;
+      left: 0;
+      z-index: 1;
+      background: #fff;
+      background-clip: padding-box;
+    }
+    .grid-exec thead tr:first-child th:nth-child(2),
+    .grid-exec tbody td:nth-child(2) {
+      position: sticky;
+      left: 150px;
+      z-index: 1;
+      background: #fff;
+      background-clip: padding-box;
+      box-shadow: 2px 0 0 var(--linea);
+    }
+    .grid-exec thead tr:first-child th:nth-child(1),
+    .grid-exec thead tr:first-child th:nth-child(2) {
+      z-index: 6;
+      background: #fafafa;
+    }
+    .grid-exec tr.is-reg td:nth-child(1),
+    .grid-exec tr.is-reg td:nth-child(2) {
+      background: #fff5f6;
+    }
+    .grid-exec tr.is-loja td:nth-child(1),
+    .grid-exec tr.is-loja td:nth-child(2) {
+      background: #fff;
+    }
+    .grid-exec thead tr:first-child th:not(:nth-child(1)):not(:nth-child(2)) {
+      z-index: 2;
+    }
     .arv { border: 0; background: transparent; color: var(--marca); cursor: pointer; width: 22px; padding: 0; font-size: 10px; line-height: 1; }
     .arv-esp { display: inline-block; width: 22px; }
     .nota { font-size: 12px; color: var(--muted); margin: 10px 0 0; }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="sticky-pane" content="v12-titulo-aliado-derecha-20260922">
+  <meta name="sticky-pane" content="v13-aliado-icono-c1-tienda-20260922">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <title>Painel executivo do aliado — Smartphone Mastercell Brasil</title>
   <style>
@@ -110,6 +110,7 @@
     .aliado-titulo {
       display: inline-flex;
       align-items: center;
+      gap: 8px;
       margin-left: auto;
       color: var(--texto);
       font-size: 16px;
@@ -118,6 +119,16 @@
       white-space: nowrap;
       flex: 0 0 auto;
       line-height: 1.2;
+    }
+    .aliado-titulo svg {
+      width: 22px;
+      height: 22px;
+      flex: 0 0 22px;
+      stroke: var(--marca);
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
     .app-body { display: flex; align-items: stretch; min-height: calc(100vh - 86px); }
     nav.cs-side {
@@ -1325,7 +1336,17 @@
               <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="5" rx="1.5"/><rect x="13" y="10" width="8" height="11" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/></svg>
               <span data-i18n="nav_dashboard">Dashboard</span>
             </h1>
-            <span class="aliado-titulo" data-i18n="aliado_nombre">MasterCell</span>
+            <span class="aliado-titulo">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 10.5 4.8 5.5h14.4L21 10.5"/>
+                <path d="M4 10.5h16v9.5H4z"/>
+                <path d="M9.5 20v-5.5h5V20"/>
+                <path d="M4 10.5c0 1.4 1.1 2.5 2.5 2.5S9 11.9 9 10.5"/>
+                <path d="M9 10.5c0 1.4 1.1 2.5 2.5 2.5s2.5-1.1 2.5-2.5"/>
+                <path d="M14 10.5c0 1.4 1.1 2.5 2.5 2.5s2.5-1.1 2.5-2.5"/>
+              </svg>
+              <span data-i18n="aliado_nombre">MasterCell</span>
+            </span>
           </div>
     <div class="filtros">
       <div class="filtros-head">

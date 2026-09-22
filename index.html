@@ -733,8 +733,22 @@
     }
     .hbar-marca .dir em { font-style: normal; color: var(--muted); font-weight: 500; }
     .tbl-wrap { overflow: auto; max-height: 520px; border-radius: 10px; }
-    .grid-exec { width: max-content; min-width: 100%; border-collapse: collapse; font-size: 12px; }
-    .grid-exec th, .grid-exec td { border-bottom: 1px solid var(--linea); padding: 8px 10px; text-align: left; white-space: nowrap; }
+    .grid-exec {
+      table-layout: fixed;
+      width: 2480px;
+      min-width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    .grid-exec th, .grid-exec td {
+      border-bottom: 1px solid var(--linea);
+      padding: 8px 10px;
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-sizing: border-box;
+    }
     .grid-exec td.num { text-align: right; font-variant-numeric: tabular-nums; }
     .grid-exec thead th { position: sticky; top: 0; z-index: 2; background: #fafafa; font-weight: 600; text-align: center; }
     .grid-exec thead .sub th { top: 32px; font-weight: 500; color: var(--muted); font-size: 11px; text-align: center; }
@@ -746,6 +760,13 @@
     .grid-exec tr.is-reg td { background: #fff5f6; font-weight: 600; }
     .grid-exec tr.is-cid td { background: #fffafa; }
     .grid-exec tr.is-loja td { font-weight: 400; }
+    .grid-exec col.c-reg { width: 150px; }
+    .grid-exec col.c-loja { width: 220px; }
+    .grid-exec col.c-risco { width: 120px; }
+    .grid-exec col.c-qtd { width: 56px; }
+    .grid-exec col.c-val { width: 112px; }
+    .grid-exec col.c-pct { width: 56px; }
+    .grid-exec col.c-money { width: 112px; }
     .arv { border: 0; background: transparent; color: var(--marca); cursor: pointer; width: 22px; padding: 0; font-size: 10px; line-height: 1; }
     .arv-esp { display: inline-block; width: 22px; }
     .nota { font-size: 12px; color: var(--muted); margin: 10px 0 0; }
@@ -2736,6 +2757,25 @@
       listaTabela = lista;
       const table = document.createElement("table");
       table.className = "grid-exec";
+      const colgroup = document.createElement("colgroup");
+      ["c-reg", "c-loja", "c-risco"].forEach(function (cls) {
+        const col = document.createElement("col");
+        col.className = cls;
+        colgroup.appendChild(col);
+      });
+      for (let i = 0; i < 8; i++) {
+        ["c-qtd", "c-val", "c-pct"].forEach(function (cls) {
+          const col = document.createElement("col");
+          col.className = cls;
+          colgroup.appendChild(col);
+        });
+      }
+      for (let j = 0; j < 3; j++) {
+        const col = document.createElement("col");
+        col.className = "c-money";
+        colgroup.appendChild(col);
+      }
+      table.appendChild(colgroup);
       const thead = document.createElement("thead");
       const r1 = document.createElement("tr");
       [[t("th_regiao"), 2], [t("th_loja"), 2], [t("th_risco"), 2]].forEach(function (x) {
@@ -2798,7 +2838,7 @@
         Object.keys(lojas).sort(function (a, b) { return lojas[b].length - lojas[a].length; }).forEach(function (loja) {
           const trL = document.createElement("tr");
           trL.className = "is-loja";
-          trL.appendChild(tdArvore(reg, false));
+          trL.appendChild(td(""));
           trL.appendChild(td(loja));
           trL.appendChild(td(LABELS_RISCO[riscoDe({ f: loja })] || riscoDe({ f: loja })));
           metricasLinha(trL, resumir(lojas[loja]), nRecorte);

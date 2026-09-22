@@ -761,17 +761,17 @@
     <div id="painel">
       <div class="kpis" id="kpisChefe" aria-label="Indicadores do período">
         <article class="kpi">
-          <span data-i18n="kpi_valor">Valor concedido</span>
+          <span data-i18n="kpi_valor">Valor outorgado</span>
           <b id="kpiValorConcedido">—</b>
           <em id="kpiValorConcedidoSub">—</em>
         </article>
         <article class="kpi">
           <span data-i18n="kpi_ticket">Ticket médio</span>
           <b id="kpiTicket">—</b>
-          <em id="kpiTicketSub" data-i18n="kpi_ticket_sub">Nas concedidas</em>
+          <em id="kpiTicketSub" data-i18n="kpi_ticket_sub">Nas outorgadas</em>
         </article>
         <article class="kpi">
-          <span data-i18n="kpi_concedidas">Concedidas</span>
+          <span data-i18n="kpi_concedidas">Outorgadas</span>
           <b id="kpiConcedidas">—</b>
           <em id="kpiConcedidasSub">—</em>
         </article>
@@ -793,7 +793,7 @@
       </div>
       <section>
         <div class="sec-tempo-head">
-          <h2 data-i18n="vol_titulo">Vendas concedidas</h2>
+          <h2 data-i18n="vol_titulo">Vendas outorgadas</h2>
           <div class="tabs-tempo" role="tablist">
             <button type="button" class="activo" id="tabVendasDia" role="tab" aria-selected="true" data-i18n="tab_diario">Diário</button>
             <button type="button" id="tabVendasMes" role="tab" aria-selected="false" data-i18n="tab_mensual">Mensal</button>
@@ -820,7 +820,7 @@
           <div class="bar" aria-hidden="true"></div>
           <span data-i18n="heat_mais">Mais</span>
         </div>
-        <p class="leyenda-marca" id="heatLeyenda" data-i18n="heat_leyenda_qtd">Intensidade = quantidade de vendas concedidas · dia da semana × franja horária</p>
+        <p class="leyenda-marca" id="heatLeyenda" data-i18n="heat_leyenda_qtd">Intensidade = quantidade de vendas outorgadas · dia da semana × franja horária</p>
       </section>
       <div class="grid">
         <section>
@@ -885,7 +885,7 @@
             </label>
           </div>
           <div class="hbars" id="chartRegiao"></div>
-          <p class="leyenda-marca"><i>n</i> <span data-i18n="regioes_leyenda">Valor em vermelho = quantidade de solicitações concedidas</span></p>
+          <p class="leyenda-marca"><i>n</i> <span data-i18n="regioes_leyenda">Valor em vermelho = quantidade de solicitações outorgadas</span></p>
         </section>
         <section>
           <h2 data-i18n="lojas_titulo">Vendas por sucursal</h2>
@@ -898,7 +898,7 @@
             </label>
           </div>
           <div class="hbars hbars-scroll" id="chartLoja"></div>
-          <p class="leyenda-marca"><i>n</i> <span data-i18n="lojas_leyenda">Valor em vermelho = quantidade de solicitações concedidas</span></p>
+          <p class="leyenda-marca"><i>n</i> <span data-i18n="lojas_leyenda">Valor em vermelho = quantidade de solicitações outorgadas</span></p>
         </section>
         <section>
           <h2 data-i18n="vendedores_titulo">Vendas por vendedor</h2>
@@ -911,13 +911,13 @@
             </label>
           </div>
           <div class="hbars hbars-scroll" id="chartVendedor"></div>
-          <p class="leyenda-marca"><i>n</i> <span data-i18n="vendedores_leyenda">Valor em vermelho = quantidade de solicitações concedidas</span></p>
+          <p class="leyenda-marca"><i>n</i> <span data-i18n="vendedores_leyenda">Valor em vermelho = quantidade de solicitações outorgadas</span></p>
         </section>
       </div>
       <section>
         <h2 data-i18n="regiao_titulo">Região e lojas</h2>
         <div class="tbl-wrap" id="tablaUnica"></div>
-        <p class="nota" data-i18n="nota_tabela">Criadas = solicitações com data de criação neste período. A porcentagem de cada situação é sobre as criadas da linha. Aprovada = o crédito já foi aprovado e a venda ainda não passou a Concedida. Cancelada entra para o total fechar. Neste arquivo, o valor solicitado é igual ao valor aprovado.</p>
+        <p class="nota" data-i18n="nota_tabela">Criadas = solicitações com data de criação neste período. A porcentagem de cada situação é sobre as criadas da linha. Aprovada = o crédito já foi aprovado e a venda ainda não passou a Outorgada. Cancelada entra para o total fechar. Neste arquivo, o valor solicitado é igual ao valor aprovado.</p>
       </section>
     </div>
     <div id="vazioPainel" class="vazio" hidden></div>
@@ -984,8 +984,8 @@
     let idioma = "pt-BR";
     let TODAS = "Todas as lojas do aliado";
     let LABELS_RISCO = { Medium: "Médio", High: "Alto", "Very High": "Muito alto" };
-    let LABELS = { OTORGADA: "Concedida", APROBADA: "Aprovada", CANCELADA: "Cancelada", RECHAZADA: "Rejeitada", FINALIZADO: "Finalizado", DEFAULT: "Default", DEFAULT_BY_REFINANCE: "Default por refinanciamento" };
-    let KEYS = { Concedida: "OTORGADA", Aprovada: "APROBADA", Cancelada: "CANCELADA", Rejeitada: "RECHAZADA", Finalizado: "FINALIZADO", Default: "DEFAULT", "Default por refinanciamento": "DEFAULT_BY_REFINANCE" };
+    let LABELS = { OTORGADA: "Outorgada", APROBADA: "Aprovada", CANCELADA: "Cancelada", RECHAZADA: "Rejeitada", FINALIZADO: "Finalizado", DEFAULT: "Default", DEFAULT_BY_REFINANCE: "Default por refinanciamento" };
+    let KEYS = { Outorgada: "OTORGADA", Aprovada: "APROBADA", Cancelada: "CANCELADA", Rejeitada: "RECHAZADA", Finalizado: "FINALIZADO", Default: "DEFAULT", "Default por refinanciamento": "DEFAULT_BY_REFINANCE" };
     const I18N = {
       "pt-BR": {
         idioma: "Idioma", lang_es: "ES", lang_pt: "PT",
@@ -997,42 +997,42 @@
         filtros: "Filtros", baixar: "Baixar relatório", limpar: "Limpar", procurar: "Procurar",
         f_inicio: "Data de início", f_fim: "Data de fim", f_produto: "Produto", f_metrica: "Métrica de valor", f_acoes: "Ações",
         opt_financiado: "Valor financiado", opt_ventas: "Valor de vendas",
-        kpi_valor: "Valor concedido", kpi_ticket: "Ticket médio", kpi_ticket_sub: "Nas concedidas",
-        kpi_concedidas: "Concedidas", kpi_aprovadas: "Aprovadas", kpi_criadas: "Criadas", kpi_criadas_sub: "Topo do funil no período", kpi_perdas: "Perdas",
+        kpi_valor: "Valor outorgado", kpi_ticket: "Ticket médio", kpi_ticket_sub: "Nas outorgadas",
+        kpi_concedidas: "Outorgadas", kpi_aprovadas: "Aprovadas", kpi_criadas: "Criadas", kpi_criadas_sub: "Topo do funil no período", kpi_perdas: "Perdas",
         kpi_aria: "Indicadores do período",
-        vol_titulo: "Vendas concedidas",
+        vol_titulo: "Vendas outorgadas",
         tab_diario: "Diário", tab_mensual: "Mensal",
         leg_qtd_vendas: "Quantidade de vendas", leg_valor_vendas: "Valor de vendas ($)",
-        leg_criadas: "Criadas", leg_concedidas: "Concedidas", leg_rejeitadas: "Rejeitadas",
+        leg_criadas: "Criadas", leg_concedidas: "Outorgadas", leg_rejeitadas: "Rejeitadas",
         foco_vendas: "vendas", foco_ticket: "ticket médio",
-        aria_vendas: "Quantidade e valor de vendas concedidas no tempo",
+        aria_vendas: "Quantidade e valor de vendas outorgadas no tempo",
         heat_titulo: "Vendas por dia da semana",
         heat_menos: "Menos", heat_mais: "Mais",
-        heat_leyenda: "Intensidade = quantidade de vendas concedidas · dia da semana × franja horária",
-        heat_leyenda_qtd: "Intensidade = quantidade de vendas concedidas · dia da semana × franja horária",
-        heat_leyenda_valor: "Intensidade = valor de vendas concedidas · dia da semana × franja horária",
+        heat_leyenda: "Intensidade = quantidade de vendas outorgadas · dia da semana × franja horária",
+        heat_leyenda_qtd: "Intensidade = quantidade de vendas outorgadas · dia da semana × franja horária",
+        heat_leyenda_valor: "Intensidade = valor de vendas outorgadas · dia da semana × franja horária",
         heat_dias: "Seg,Ter,Qua,Qui,Sex,Sáb,Dom",
         heat_franjas: "08–10,10–12,12–14,14–16,16–18,18–20",
-        aria_heat: "Mapa de calor de vendas concedidas por dia da semana e franja horária",
+        aria_heat: "Mapa de calor de vendas outorgadas por dia da semana e franja horária",
         marcas_titulo: "Vendas por marca", ordenar: "Ordenar", ord_valor: "Valor de vendas", ord_qtd: "Quantidade de vendas",
         marcas_leyenda: "Valor em vermelho = quantidade de solicitações",
         regioes_titulo: "Vendas por região",
-        regioes_leyenda: "Valor em vermelho = quantidade de solicitações concedidas",
+        regioes_leyenda: "Valor em vermelho = quantidade de solicitações outorgadas",
         lojas_titulo: "Vendas por sucursal",
-        lojas_leyenda: "Valor em vermelho = quantidade de solicitações concedidas",
+        lojas_leyenda: "Valor em vermelho = quantidade de solicitações outorgadas",
         vendedores_titulo: "Vendas por vendedor",
-        vendedores_leyenda: "Valor em vermelho = quantidade de solicitações concedidas",
+        vendedores_leyenda: "Valor em vermelho = quantidade de solicitações outorgadas",
         aria_orden_marca: "Ordenar marcas", aria_orden_regiao: "Ordenar regiões", aria_orden_loja: "Ordenar sucursais", aria_orden_vendedor: "Ordenar vendedores", aria_orden_comp: "Ordenar composição das solicitações", aria_orden_risco: "Ordenar risco da filial",
         comp_titulo: "Composição das solicitações", risco_titulo: "Risco da filial", regiao_titulo: "Região e lojas",
         ord_az: "A–Z", ord_za: "Z–A", ord_maior_qtd: "Maior quantidade", ord_menor_qtd: "Menor quantidade",
         ord_maior_risco: "Maior nível de risco", ord_menor_risco: "Menor nível de risco",
-        nota_tabela: "Criadas = solicitações com data de criação neste período. A porcentagem de cada situação é sobre as criadas da linha. Aprovada = o crédito já foi aprovado e a venda ainda não passou a Concedida. Cancelada entra para o total fechar. Neste arquivo, o valor solicitado é igual ao valor aprovado.",
+        nota_tabela: "Criadas = solicitações com data de criação neste período. A porcentagem de cada situação é sobre as criadas da linha. Aprovada = o crédito já foi aprovado e a venda ainda não passou a Outorgada. Cancelada entra para o total fechar. Neste arquivo, o valor solicitado é igual ao valor aprovado.",
         todas: "Todas as lojas do aliado",
-        status_OTORGADA: "Concedida", status_APROBADA: "Aprovada", status_CANCELADA: "Cancelada", status_RECHAZADA: "Rejeitada",
+        status_OTORGADA: "Outorgada", status_APROBADA: "Aprovada", status_CANCELADA: "Cancelada", status_RECHAZADA: "Rejeitada",
         status_FINALIZADO: "Finalizado", status_DEFAULT: "Default", status_DEFAULT_BY_REFINANCE: "Default por refinanciamento",
         risco_Medium: "Médio", risco_High: "Alto", risco_Very_High: "Muito alto",
         ms_status: "Estado da solicitação", ms_regiao: "Região", ms_cidade: "Cidade", ms_lojas: "Lojas", ms_vendedores: "Vendedores", ms_risco: "Risco da filial",
-        tip_status: "Estado da solicitação. Pode escolher um ou vários. Aprovada = crédito aprovado ainda não concedido.",
+        tip_status: "Estado da solicitação. Pode escolher um ou vários. Aprovada = crédito aprovado ainda não outorgado.",
         tip_regiao: "Região das lojas do aliado. Pode escolher uma ou várias. Ao filtrar, cidade, lojas e vendedores mostram só o que pertence à região.",
         tip_cidade: "Cidade das lojas. Lista só cidades da região escolhida. Ao filtrar, lojas e vendedores mostram só o que pertence à cidade.",
         tip_lojas: "Lojas do aliado. Lista só lojas da região e cidade escolhidas. Ao filtrar, vendedores mostram só os da loja.",
@@ -1051,10 +1051,10 @@
         remover: "Remover",
         foco_criadas: "solicitações criadas",
         sem_dados: "Nenhum dado neste período.",
-        aria_volume: "Volume de solicitações criadas, concedidas e rejeitadas por data",
+        aria_volume: "Volume de solicitações criadas, outorgadas e rejeitadas por data",
         sem_marca: "(sem marca)", sem_regiao: "(sem região)", sem_loja: "(sem loja)", sem_vendedor: "(sem vendedor)",
         th_regiao: "Região", th_loja: "Loja", th_risco: "Risco da filial",
-        th_criadas: "Criadas", th_concedidas: "Concedidas", th_aprovadas: "Aprovadas", th_canceladas: "Canceladas", th_rejeitadas: "Rejeitadas",
+        th_criadas: "Criadas", th_concedidas: "Outorgadas", th_aprovadas: "Aprovadas", th_canceladas: "Canceladas", th_rejeitadas: "Rejeitadas",
         th_finalizado: "Finalizado", th_default: "Default", th_default_refi: "Default por refinanciamento",
         th_ticket: "Ticket (mediana)", th_media_sol: "Média solicitada", th_media_apr: "Média aprovada",
         kpi_vendas: "vendas fechadas", kpi_das_criadas: "das criadas", kpi_em_curso: "em curso",
@@ -1067,7 +1067,7 @@
         vazio_produto: "Neste arquivo só há solicitações de Smartphone Mastercell. Não há linhas de Smart TV nem de Tecnohome.",
         vazio_lista: "Nenhuma solicitação neste período. Ajuste as datas, as lojas, a região, a cidade, os vendedores, o risco ou o estado da solicitação.",
         vazio_periodo: "Nenhuma solicitação neste período.",
-        vazio_concedidas: "Nenhuma solicitação concedida neste período.",
+        vazio_concedidas: "Nenhuma solicitação outorgada neste período.",
         vazio_limpo: "Filtros limpos. Clique em Procurar para carregar os dados.",
         err_dados: "Não foi possível ler os dados. Abra este HTML na mesma pasta do arquivo 2026-09-15-dashboard-ejecutivo-aliado-datos.js.",
         aviso_ref: "Referência visual da Spec. Arquivo de 10/09/2026: {n} solicitações, com data de criação de {min} a {max}. O período inicial é agosto de 2026 (90,9 % do arquivo). Sem nomes de clientes, IMEI nem endereço.",
@@ -1085,42 +1085,42 @@
         filtros: "Filtros", baixar: "Descargar informe", limpar: "Limpiar", procurar: "Buscar",
         f_inicio: "Fecha de inicio", f_fim: "Fecha de fin", f_produto: "Producto", f_metrica: "Métrica de valor", f_acoes: "Acciones",
         opt_financiado: "Valor financiado", opt_ventas: "Valor de ventas",
-        kpi_valor: "Valor concedido", kpi_ticket: "Ticket medio", kpi_ticket_sub: "En las concedidas",
-        kpi_concedidas: "Concedidas", kpi_aprovadas: "Aprobadas", kpi_criadas: "Creadas", kpi_criadas_sub: "Tope del embudo en el período", kpi_perdas: "Pérdidas",
+        kpi_valor: "Valor otorgado", kpi_ticket: "Ticket medio", kpi_ticket_sub: "En las otorgadas",
+        kpi_concedidas: "Otorgadas", kpi_aprovadas: "Aprobadas", kpi_criadas: "Creadas", kpi_criadas_sub: "Tope del embudo en el período", kpi_perdas: "Pérdidas",
         kpi_aria: "Indicadores del período",
-        vol_titulo: "Ventas concedidas",
+        vol_titulo: "Ventas otorgadas",
         tab_diario: "Diario", tab_mensual: "Mensual",
         leg_qtd_vendas: "Cantidad de ventas", leg_valor_vendas: "Valor de ventas ($)",
-        leg_criadas: "Creadas", leg_concedidas: "Concedidas", leg_rejeitadas: "Rechazadas",
+        leg_criadas: "Creadas", leg_concedidas: "Otorgadas", leg_rejeitadas: "Rechazadas",
         foco_vendas: "ventas", foco_ticket: "ticket medio",
-        aria_vendas: "Cantidad y valor de ventas concedidas en el tiempo",
+        aria_vendas: "Cantidad y valor de ventas otorgadas en el tiempo",
         heat_titulo: "Ventas por día de la semana",
         heat_menos: "Menos", heat_mais: "Más",
-        heat_leyenda: "Intensidad = cantidad de ventas concedidas · día de la semana × franja horaria",
-        heat_leyenda_qtd: "Intensidad = cantidad de ventas concedidas · día de la semana × franja horaria",
-        heat_leyenda_valor: "Intensidad = valor de ventas concedidas · día de la semana × franja horaria",
+        heat_leyenda: "Intensidad = cantidad de ventas otorgadas · día de la semana × franja horaria",
+        heat_leyenda_qtd: "Intensidad = cantidad de ventas otorgadas · día de la semana × franja horaria",
+        heat_leyenda_valor: "Intensidad = valor de ventas otorgadas · día de la semana × franja horaria",
         heat_dias: "Lun,Mar,Mié,Jue,Vie,Sáb,Dom",
         heat_franjas: "08–10,10–12,12–14,14–16,16–18,18–20",
-        aria_heat: "Mapa de calor de ventas concedidas por día de la semana y franja horaria",
+        aria_heat: "Mapa de calor de ventas otorgadas por día de la semana y franja horaria",
         marcas_titulo: "Ventas por marca", ordenar: "Ordenar", ord_valor: "Valor de ventas", ord_qtd: "Cantidad de ventas",
         marcas_leyenda: "Valor en rojo = cantidad de solicitudes",
         regioes_titulo: "Ventas por región",
-        regioes_leyenda: "Valor en rojo = cantidad de solicitudes concedidas",
+        regioes_leyenda: "Valor en rojo = cantidad de solicitudes otorgadas",
         lojas_titulo: "Ventas por sucursal",
-        lojas_leyenda: "Valor en rojo = cantidad de solicitudes concedidas",
+        lojas_leyenda: "Valor en rojo = cantidad de solicitudes otorgadas",
         vendedores_titulo: "Ventas por vendedor",
-        vendedores_leyenda: "Valor en rojo = cantidad de solicitudes concedidas",
+        vendedores_leyenda: "Valor en rojo = cantidad de solicitudes otorgadas",
         aria_orden_marca: "Ordenar marcas", aria_orden_regiao: "Ordenar regiones", aria_orden_loja: "Ordenar sucursales", aria_orden_vendedor: "Ordenar vendedores", aria_orden_comp: "Ordenar composición de las solicitudes", aria_orden_risco: "Ordenar riesgo de la sucursal",
         comp_titulo: "Composición de las solicitudes", risco_titulo: "Riesgo de la sucursal", regiao_titulo: "Región y tiendas",
         ord_az: "A–Z", ord_za: "Z–A", ord_maior_qtd: "Mayor cantidad", ord_menor_qtd: "Menor cantidad",
         ord_maior_risco: "Mayor nivel de riesgo", ord_menor_risco: "Menor nivel de riesgo",
-        nota_tabela: "Creadas = solicitudes con fecha de creación en este período. El porcentaje de cada situación es sobre las creadas de la fila. Aprobada = el crédito ya fue aprobado y la venta aún no pasó a Concedida. Cancelada entra para que el total cierre. En este archivo, el valor solicitado es igual al valor aprobado.",
+        nota_tabela: "Creadas = solicitudes con fecha de creación en este período. El porcentaje de cada situación es sobre las creadas de la fila. Aprobada = el crédito ya fue aprobado y la venta aún no pasó a Otorgada. Cancelada entra para que el total cierre. En este archivo, el valor solicitado es igual al valor aprobado.",
         todas: "Todas las tiendas del aliado",
-        status_OTORGADA: "Concedida", status_APROBADA: "Aprobada", status_CANCELADA: "Cancelada", status_RECHAZADA: "Rechazada",
+        status_OTORGADA: "Otorgada", status_APROBADA: "Aprobada", status_CANCELADA: "Cancelada", status_RECHAZADA: "Rechazada",
         status_FINALIZADO: "Finalizado", status_DEFAULT: "Default", status_DEFAULT_BY_REFINANCE: "Default por refinanciamiento",
         risco_Medium: "Medio", risco_High: "Alto", risco_Very_High: "Muy alto",
         ms_status: "Estado de la solicitud", ms_regiao: "Región", ms_cidade: "Ciudad", ms_lojas: "Tiendas", ms_vendedores: "Vendedores", ms_risco: "Riesgo de la sucursal",
-        tip_status: "Estado de la solicitud. Puede elegir uno o varios. Aprobada = crédito aprobado aún no concedido.",
+        tip_status: "Estado de la solicitud. Puede elegir uno o varios. Aprobada = crédito aprobado aún no otorgado.",
         tip_regiao: "Región de las tiendas del aliado. Puede elegir una o varias. Al filtrar, ciudad, tiendas y vendedores muestran solo lo de esa región.",
         tip_cidade: "Ciudad de las tiendas. Lista solo ciudades de la región elegida. Al filtrar, tiendas y vendedores muestran solo lo de esa ciudad.",
         tip_lojas: "Tiendas del aliado. Lista solo tiendas de la región y ciudad elegidas. Al filtrar, vendedores muestran solo los de la tienda.",
@@ -1139,10 +1139,10 @@
         remover: "Quitar",
         foco_criadas: "solicitudes creadas",
         sem_dados: "Ningún dato en este período.",
-        aria_volume: "Volumen de solicitudes creadas, concedidas y rechazadas por fecha",
+        aria_volume: "Volumen de solicitudes creadas, otorgadas y rechazadas por fecha",
         sem_marca: "(sin marca)", sem_regiao: "(sin región)", sem_loja: "(sin tienda)", sem_vendedor: "(sin vendedor)",
         th_regiao: "Región", th_loja: "Tienda", th_risco: "Riesgo de la sucursal",
-        th_criadas: "Creadas", th_concedidas: "Concedidas", th_aprovadas: "Aprobadas", th_canceladas: "Canceladas", th_rejeitadas: "Rechazadas",
+        th_criadas: "Creadas", th_concedidas: "Otorgadas", th_aprovadas: "Aprobadas", th_canceladas: "Canceladas", th_rejeitadas: "Rechazadas",
         th_finalizado: "Finalizado", th_default: "Default", th_default_refi: "Default por refinanciamiento",
         th_ticket: "Ticket (mediana)", th_media_sol: "Media solicitada", th_media_apr: "Media aprobada",
         kpi_vendas: "ventas cerradas", kpi_das_criadas: "de las creadas", kpi_em_curso: "en curso",
@@ -1155,7 +1155,7 @@
         vazio_produto: "En este archivo solo hay solicitudes de Smartphone Mastercell. No hay filas de Smart TV ni de Tecnohome.",
         vazio_lista: "Ninguna solicitud en este período. Ajuste las fechas, las tiendas, la región, la ciudad, los vendedores, el riesgo o el estado de la solicitud.",
         vazio_periodo: "Ninguna solicitud en este período.",
-        vazio_concedidas: "Ninguna solicitud concedida en este período.",
+        vazio_concedidas: "Ninguna solicitud otorgada en este período.",
         vazio_limpo: "Filtros limpios. Haga clic en Buscar para cargar los datos.",
         err_dados: "No fue posible leer los datos. Abra este HTML en la misma carpeta del archivo 2026-09-15-dashboard-ejecutivo-aliado-datos.js.",
         aviso_ref: "Referencia visual de la Spec. Archivo del 10/09/2026: {n} solicitudes, con fecha de creación de {min} a {max}. El período inicial es agosto de 2026 (90,9 % del archivo). Sin nombres de clientes, IMEI ni dirección.",

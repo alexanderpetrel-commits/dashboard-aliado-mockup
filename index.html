@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="sticky-pane" content="v15-mockup-6m-anclado-dcmax-20260922">
+  <meta name="sticky-pane" content="v16-ms-p3-highlight-dropdown-below-20260922">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <title>Painel executivo do aliado — Smartphone Mastercell Brasil</title>
   <style>
@@ -227,12 +227,44 @@
     }
     .campo input, .campo select, .ms input { width: 100%; box-sizing: border-box; }
     .ms { position: relative; }
+    .ms-field { position: relative; }
     .chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
     .chip { background: var(--chip); color: var(--marca-escura); font-size: 12px; padding: 2px 8px; border-radius: 999px; }
     .chip button { border: 0; background: transparent; color: var(--marca); cursor: pointer; padding: 0 0 0 4px; }
-    .opts { display: none; position: absolute; z-index: 6; left: 0; right: 0; background: #fff; border: 1px solid var(--linea); border-radius: 8px; max-height: 180px; overflow: auto; margin: 0; padding: 4px 0; list-style: none; box-shadow: var(--sombra); }
-    .opts li { padding: 6px 10px; font-size: 13px; cursor: pointer; }
+    .opts {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      z-index: 40;
+      background: #fff;
+      border: 1px solid var(--linea);
+      border-radius: 8px;
+      max-height: 180px;
+      overflow: auto;
+      margin: 0;
+      padding: 4px 0;
+      list-style: none;
+      box-shadow: var(--sombra);
+    }
+    .opts li {
+      padding: 6px 10px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.3;
+    }
     .opts li:hover, .opts li[aria-selected="true"] { background: var(--chip); }
+    .opts mark.ms-hit {
+      background: #ffe08a;
+      color: var(--texto-forte);
+      font-weight: 700;
+      padding: 0 1px;
+      border-radius: 2px;
+    }
     .vazio-lista { padding: 8px 10px; font-size: 12px; color: var(--muted); }
     .acciones-filtro .btns { display: flex; gap: 4px; width: 100%; }
     .acciones-filtro .btns button {
@@ -2321,6 +2353,34 @@
       return tip;
     }
 
+    function escapeHtmlMs(s) {
+      return String(s)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+    function resaltarCoincidenciaMs(texto, query) {
+      const raw = String(texto || "");
+      const q = String(query || "").trim();
+      if (!q) return escapeHtmlMs(raw);
+      const lower = raw.toLowerCase();
+      const ql = q.toLowerCase();
+      let out = "";
+      let i = 0;
+      while (i < raw.length) {
+        const idx = lower.indexOf(ql, i);
+        if (idx === -1) {
+          out += escapeHtmlMs(raw.slice(i));
+          break;
+        }
+        out += escapeHtmlMs(raw.slice(i, idx));
+        out += '<mark class="ms-hit">' + escapeHtmlMs(raw.slice(idx, idx + q.length)) + "</mark>";
+        i = idx + q.length;
+      }
+      return out;
+    }
+
     function renderMs(box) {
       const key = box.getAttribute("data-key");
       const titulos = { status: t("ms_status"), regiao: t("ms_regiao"), cidade: t("ms_cidade"), lojas: t("ms_lojas"), vendedores: t("ms_vendedores"), risco: t("ms_risco") };
@@ -2338,6 +2398,8 @@
       lab.setAttribute("for", id);
       lab.appendChild(document.createTextNode(titulos[key] + " "));
       if (dicas[key]) lab.appendChild(montarTooltip(dicas[key]));
+      const field = document.createElement("div");
+      field.className = "ms-field";
       const inp = document.createElement("input");
       inp.type = "text";
       inp.id = id;
@@ -2382,16 +2444,27 @@
         if (key === "regiao" || key === "cidade" || key === "lojas") refrescarMsCascata(key);
       }
       function itensVisiveis() {
-        const q = inp.value.toLowerCase();
-        return opciones(key).filter(function (item) {
+        const q = inp.value.toLowerCase().trim();
+        const lista = opciones(key).filter(function (item) {
           const shown = rotuloOpcion(key, item).toLowerCase();
-          if (item.toLowerCase().indexOf(q) === -1 && shown.indexOf(q) === -1) return false;
+          if (q && item.toLowerCase().indexOf(q) === -1 && shown.indexOf(q) === -1) return false;
           if (key === "lojas" && item === TODAS) return true;
           return seleccion[key].indexOf(item) === -1;
-        }).slice(0, 80);
+        });
+        if (!q) return lista.slice(0, 80);
+        lista.sort(function (a, b) {
+          const sa = rotuloOpcion(key, a).toLowerCase();
+          const sb = rotuloOpcion(key, b).toLowerCase();
+          const pa = sa.indexOf(q) === 0 ? 0 : 1;
+          const pb = sb.indexOf(q) === 0 ? 0 : 1;
+          if (pa !== pb) return pa - pb;
+          return sa.localeCompare(sb, "pt-BR", { sensitivity: "base" });
+        });
+        return lista.slice(0, 80);
       }
       function filtrar() {
         const vis = itensVisiveis();
+        const q = inp.value;
         ul.innerHTML = "";
         foco = -1;
         if (!vis.length) {
@@ -2403,10 +2476,12 @@
           return;
         }
         vis.forEach(function (item, idx) {
+          const shown = rotuloOpcion(key, item);
           const li = document.createElement("li");
-          li.textContent = rotuloOpcion(key, item);
+          li.innerHTML = resaltarCoincidenciaMs(shown, q);
           li.setAttribute("data-val", item);
           li.setAttribute("role", "option");
+          li.title = shown;
           li.addEventListener("mousedown", function (ev) {
             ev.preventDefault();
             elegir(item);
@@ -2442,10 +2517,11 @@
         }
       });
       inp.addEventListener("blur", function () { setTimeout(function () { ul.style.display = "none"; }, 120); });
+      field.appendChild(inp);
+      field.appendChild(ul);
       box.appendChild(lab);
-      box.appendChild(inp);
+      box.appendChild(field);
       box.appendChild(chips);
-      box.appendChild(ul);
       pintarChips();
     }
 

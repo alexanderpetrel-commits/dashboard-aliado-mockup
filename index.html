@@ -523,18 +523,22 @@
     .chart-tempo svg { width: 100%; height: 340px; display: block; }
     .sec-tempo-head {
       display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 0 0 10px;
+      flex-wrap: wrap;
     }
-    .sec-tempo-head h2 { margin: 0; }
+    .sec-tempo-head h2 { margin: 0; position: relative; z-index: 0; }
     .tabs-tempo {
       display: inline-flex; background: #f3f3f3; border-radius: 10px; padding: 3px; gap: 2px;
+      position: relative; z-index: 2; flex: 0 0 auto;
     }
     .tabs-tempo button {
       border: 0; background: transparent; font: inherit; font-size: 12px; font-weight: 600;
       color: var(--muted); padding: 7px 14px; border-radius: 8px; cursor: pointer;
+      pointer-events: auto;
     }
     .tabs-tempo button.activo {
       background: #fff; color: var(--texto-forte); box-shadow: 0 1px 4px rgba(0,0,0,.08);
     }
+    [hidden] { display: none !important; }
     .leg-vol { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 20px; font-size: 12px; color: var(--muted); margin-top: 8px; }
     .leg-vol span { display: inline-flex; align-items: center; gap: 6px; }
     .leg-vol i.ln { display: inline-block; width: 18px; height: 3px; border-radius: 2px; }
@@ -1656,10 +1660,10 @@
             </div>
           </div>
         </section>
-        <section>
+        <section id="secRatingCliente" data-build="20261023-rating-tabs2">
           <div class="sec-tempo-head">
             <h2 data-i18n="rating_titulo">Risco do cliente (rating)</h2>
-            <div class="tabs-tempo" role="tablist">
+            <div class="tabs-tempo" role="tablist" aria-label="Vista rating">
               <button type="button" class="activo" id="tabRatingConsol" role="tab" aria-selected="true" data-i18n="tab_consolidado">Consolidado</button>
               <button type="button" id="tabRatingMensual" role="tab" aria-selected="false" data-i18n="tab_desglose_mensual">Detalhamento mensal</button>
             </div>
@@ -1810,7 +1814,7 @@
       </div>
     </div>
   </div>
-  <script src="2026-09-15-dashboard-ejecutivo-aliado-datos.js?v=20260922-mockup6m-dcmax"></script>
+  <script src="2026-09-15-dashboard-ejecutivo-aliado-datos.js?v=20261023-rating-tabs"></script>
   <script>
     (function () {
       const side = document.getElementById("sidebar");
@@ -3741,8 +3745,22 @@
       }
       const pC = document.getElementById("ratingConsolPanel");
       const pM = document.getElementById("ratingMensualPanel");
-      if (pC) pC.hidden = !consol;
-      if (pM) pM.hidden = consol;
+      if (pC) {
+        if (consol) pC.removeAttribute("hidden");
+        else pC.setAttribute("hidden", "");
+      }
+      if (pM) {
+        if (consol) pM.setAttribute("hidden", "");
+        else pM.removeAttribute("hidden");
+      }
+    }
+    function setRatingVista(modo) {
+      modoRatingVista = (modo === "mensual") ? "mensual" : "consol";
+      try {
+        pintarRating();
+      } catch (err) {
+        console.error("pintarRating", err);
+      }
     }
     function pintarRatingBarrasConsol(host, items, total) {
       if (!host) return;
@@ -4822,15 +4840,15 @@
       modoRiscoVista = "mensual";
       pintarRisco();
     });
-    document.getElementById("ordenRating").addEventListener("change", pintarRating);
-    document.getElementById("tabRatingConsol").addEventListener("click", function () {
-      modoRatingVista = "consol";
-      pintarRating();
-    });
-    document.getElementById("tabRatingMensual").addEventListener("click", function () {
-      modoRatingVista = "mensual";
-      pintarRating();
-    });
+    const ordenRatingEl = document.getElementById("ordenRating");
+    if (ordenRatingEl) ordenRatingEl.addEventListener("change", function () { setRatingVista(modoRatingVista); });
+    document.addEventListener("click", function (ev) {
+      const btn = ev.target && ev.target.closest ? ev.target.closest("#tabRatingConsol, #tabRatingMensual") : null;
+      if (!btn) return;
+      ev.preventDefault();
+      if (btn.id === "tabRatingMensual") setRatingVista("mensual");
+      else setRatingVista("consol");
+    }, true);
     function avisarSiRangoInvalido() {
       aplicarLimitesFechas();
       const msg = document.getElementById("msgFecha");

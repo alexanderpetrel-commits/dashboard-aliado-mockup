@@ -4822,6 +4822,15 @@
       modoRiscoVista = "mensual";
       pintarRisco();
     });
+    document.getElementById("ordenRating").addEventListener("change", pintarRating);
+    document.getElementById("tabRatingConsol").addEventListener("click", function () {
+      modoRatingVista = "consol";
+      pintarRating();
+    });
+    document.getElementById("tabRatingMensual").addEventListener("click", function () {
+      modoRatingVista = "mensual";
+      pintarRating();
+    });
     function avisarSiRangoInvalido() {
       aplicarLimitesFechas();
       const msg = document.getElementById("msgFecha");

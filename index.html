@@ -1660,7 +1660,7 @@
             </div>
           </div>
         </section>
-        <section id="secRatingCliente" data-build="20261023-rating-tabs2">
+        <section id="secRatingCliente" data-build="20261024-rating-ordem-cores">
           <div class="sec-tempo-head">
             <h2 data-i18n="rating_titulo">Risco do cliente (rating)</h2>
             <div class="tabs-tempo" role="tablist" aria-label="Vista rating">
@@ -1673,8 +1673,8 @@
               <select id="ordenRating" aria-label="Ordenar rating do cliente">
                 <option value="az" data-i18n="ord_az">A-Z</option>
                 <option value="za" data-i18n="ord_za">Z-A</option>
-                <option value="maior_risco" selected data-i18n="ord_maior_rating">Maior rating (E a A)</option>
-                <option value="menor_risco" data-i18n="ord_menor_rating">Menor rating (A a E)</option>
+                <option value="maior_risco" selected data-i18n="ord_maior_rating">Maior rating (A a E)</option>
+                <option value="menor_risco" data-i18n="ord_menor_rating">Menor rating (E a A)</option>
               </select>
             </label>
           </div>
@@ -1814,7 +1814,7 @@
       </div>
     </div>
   </div>
-  <script src="2026-09-15-dashboard-ejecutivo-aliado-datos.js?v=20261023-rating-tabs"></script>
+  <script src="2026-09-15-dashboard-ejecutivo-aliado-datos.js?v=20261024-rating-ordem-cores"></script>
   <script>
     (function () {
       const side = document.getElementById("sidebar");
@@ -1871,7 +1871,7 @@
     const CORES_RISCO = { Medium: "#c9a227", High: "#e07a2f", "Very High": "#DD0520" };
     const NIVEIS_RATING = ["A", "B", "C", "D", "E"];
     const ORDEM_RATING = { A: 1, B: 2, C: 3, D: 4, E: 5 };
-    const CORES_RATING = { A: "#16a34a", B: "#0d9488", C: "#c9a227", D: "#e07a2f", E: "#DD0520" };
+    const CORES_RATING = { A: "#15803d", B: "#22c55e", C: "#c9a227", D: "#e11d48", E: "#DD0520" };
     let idioma = "pt-BR";
     let TODAS = "Todas as lojas do aliado";
     let LABELS_RISCO = { Medium: "Médio", High: "Alto", "Very High": "Muito alto" };
@@ -1933,7 +1933,7 @@
         th_estado: "Estado", th_nivel: "Nível", th_rating: "Rating", th_total: "Total", th_criadas_row: "Criadas", th_var_pct: "Var. %",
         ord_az: "A–Z", ord_za: "Z–A", ord_maior_qtd: "Maior quantidade", ord_menor_qtd: "Menor quantidade",
         ord_maior_risco: "Maior nível de risco", ord_menor_risco: "Menor nível de risco",
-        ord_maior_rating: "Maior rating (E a A)", ord_menor_rating: "Menor rating (A a E)",
+        ord_maior_rating: "Maior rating (A a E)", ord_menor_rating: "Menor rating (E a A)",
         nota_tabela: "Criadas = solicitações com data de criação neste período. A porcentagem de cada situação é sobre as criadas da linha. Aprovada = o crédito já foi aprovado e a venda ainda não passou a Outorgada. Cancelada entra para o total fechar. Neste arquivo, o valor solicitado é igual ao valor aprovado.",
         todas: "Todas as lojas do aliado",
         status_OTORGADA: "Outorgada", status_APROBADA: "Aprovada", status_CANCELADA: "Cancelada", status_RECHAZADA: "Rejeitada",
@@ -2038,7 +2038,7 @@
         th_estado: "Estado", th_nivel: "Nivel", th_rating: "Rating", th_total: "Total", th_criadas_row: "Creadas", th_var_pct: "Var. %",
         ord_az: "A–Z", ord_za: "Z–A", ord_maior_qtd: "Mayor cantidad", ord_menor_qtd: "Menor cantidad",
         ord_maior_risco: "Mayor nivel de riesgo", ord_menor_risco: "Menor nivel de riesgo",
-        ord_maior_rating: "Mayor rating (E a A)", ord_menor_rating: "Menor rating (A a E)",
+        ord_maior_rating: "Mayor rating (A a E)", ord_menor_rating: "Menor rating (E a A)",
         nota_tabela: "Creadas = solicitudes con fecha de creación en este período. El porcentaje de cada situación es sobre las creadas de la fila. Aprobada = el crédito ya fue aprobado y la venta aún no pasó a Otorgada. Cancelada entra para que el total cierre. En este archivo, el valor solicitado es igual al valor aprobado.",
         todas: "Todas las tiendas del aliado",
         status_OTORGADA: "Otorgada", status_APROBADA: "Aprobada", status_CANCELADA: "Cancelada", status_RECHAZADA: "Rechazada",
@@ -3723,8 +3723,8 @@
         const oa = ORDEM_RATING[a.n] || 0;
         const ob = ORDEM_RATING[b.n] || 0;
         if (modo === "za") return lb.localeCompare(la, "pt-BR") || ob - oa;
-        if (modo === "maior_risco") return ob - oa || lb.localeCompare(la, "pt-BR");
-        if (modo === "menor_risco") return oa - ob || la.localeCompare(lb, "pt-BR");
+        if (modo === "maior_risco") return oa - ob || la.localeCompare(lb, "pt-BR");
+        if (modo === "menor_risco") return ob - oa || lb.localeCompare(la, "pt-BR");
         return la.localeCompare(lb, "pt-BR") || oa - ob;
       });
     }
